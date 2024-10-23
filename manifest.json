@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Progress Normalizer",
+  "version": "1.0",
+  "description": "Changes the playback progress color on YouTube back to normal.",
+  "permissions": [
+    "tabs",
+    "scripting"
+  ],
+  "icons": {
+    "256": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
