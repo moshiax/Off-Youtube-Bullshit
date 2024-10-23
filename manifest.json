@@ -1,19 +1,16 @@
 {
   "manifest_version": 3,
-  "name": "YouTube Progress Normalizer",
-  "version": "1.0",
-  "description": "Changes the playback progress color on YouTube back to normal.",
-  "permissions": [
-    "tabs",
-    "scripting"
-  ],
+  "version": "6.6.6",
+  "name": "Off Youtube Bullshit",
+  "description": "Disables or removes unnecessary YouTube elements.",
+  "content_scripts": [{
+    "matches": ["*://*.youtube.com/*"],
+    "css": ["style.css"],
+    "js": ["content.js"],
+    "run_at": "document_end",
+    "all_frames": true
+  }],
   "icons": {
     "256": "icon.png"
-  },
-  "content_scripts": [
-    {
-      "matches": ["*://*.youtube.com/*"],
-      "js": ["content.js"]
-    }
-  ]
+  }
 }
