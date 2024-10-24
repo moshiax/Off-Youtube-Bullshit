@@ -9,3 +9,8 @@ const intervalId = setInterval(() => {
         }
     }
 }, 50); 
+
+const s = document.createElement('script');
+s.src = chrome.runtime.getURL('autoconfirm.js');
+s.onload = function () { this.remove(); };
+(document.head || document.documentElement).appendChild(s);

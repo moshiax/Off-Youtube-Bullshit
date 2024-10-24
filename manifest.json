@@ -3,13 +3,28 @@
   "version": "6.6.6",
   "name": "Off Youtube Bullshit",
   "description": "Disables or removes unnecessary YouTube elements.",
-  "content_scripts": [{
-    "matches": ["*://*.youtube.com/*"],
-    "css": ["style.css"],
-    "js": ["content.js"],
-    "run_at": "document_end",
-    "all_frames": true
-  }],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*",
+        "https://www.youtube.com/*",
+        "https://music.youtube.com/*"
+      ],
+      "css": ["style.css"],
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["autoconfirm.js"],
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://music.youtube.com/*"
+      ]
+    }
+  ],
   "icons": {
     "256": "icon.png"
   }
