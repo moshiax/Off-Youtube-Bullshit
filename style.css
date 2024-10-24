@@ -12,3 +12,7 @@ ytd-masthead[frosted-glass=with-chipbar] #background.ytd-masthead {
     background: var(--yt-spec-base-background) !important;
 }
 
+
+.YtProgressBarLineProgressBarPlayedRefresh {
+    background: red !important;
+}
