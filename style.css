@@ -3,14 +3,6 @@
     background: var(--yt-spec-static-brand-red) !important;
 }
 
-.ytp-play-progress {
-    background: red !important;
-}
-
-#progress.ytd-thumbnail-overlay-resume-playback-renderer {
-    background: var(--yt-spec-static-brand-red) !important;
-}
-
 .ytd-thumbnail-overlay-resume-playback-renderer#progress {
     background: red !important;
 }
