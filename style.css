@@ -1,18 +1,45 @@
+.ytp-play-progress,
+#progress {
+    background: var(--yt-spec-static-brand-red) !important;
+}
 
 .ytp-play-progress {
     background: red !important;
+}
+
+#progress.ytd-thumbnail-overlay-resume-playback-renderer {
+    background: var(--yt-spec-static-brand-red) !important;
 }
 
 .ytd-thumbnail-overlay-resume-playback-renderer#progress {
     background: red !important;
 }
 
-#background.ytd-masthead,
-ytd-masthead[frosted-glass=with-chipbar] #background.ytd-masthead {
-    background: var(--yt-spec-base-background) !important;
+.YtThumbnailOverlayProgressBarHostWatchedProgressBarSegmentModern {
+    background: var(--yt-spec-static-brand-red) !important;
 }
 
+.YtChapteredProgressBarChapteredPlayerBarChapterRefresh {
+    background: var(--yt-spec-static-brand-red) !important;
+}
+
+.YtChapteredProgressBarChapteredPlayerBarFillRefresh {
+    background: var(--yt-spec-static-brand-red) !important;
+}
 
 .YtProgressBarLineProgressBarPlayedRefresh {
     background: red !important;
+}
+
+#progress.yt-page-navigation-progress {
+    background: var(--yt-spec-static-brand-red) !important;
+}
+
+.yt-icon-shape > div > svg > g:first-of-type > path:first-of-type {
+    fill: var(--yt-spec-static-brand-red) !important;
+}
+
+#background.ytd-masthead,
+ytd-masthead[frosted-glass=with-chipbar] #background.ytd-masthead {
+    background: var(--yt-spec-base-background) !important;
 }
