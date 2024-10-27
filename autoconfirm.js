@@ -95,15 +95,25 @@ function processInteraction(action) {
 
 function observeApp() {
   debug(`Observing ${appName}...`);
+  
+  const targetNode = document.querySelector(appName);
+  
+  if (!targetNode) {
+    return; 
+  }
+
   appObserver = new MutationObserver((mutations, observer) => {
     overrideVideoPause();
   });
 
-  appObserver.observe(document.querySelector(appName), {
+  appObserver.observe(targetNode, {
     childList: true,
     subtree: true
   });
+  
+  debug(`${appName} is being observed.`);
 }
+
 
 function listenForPopupEvent() {
   debug('Listening for popup event...');

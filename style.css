@@ -35,3 +35,13 @@
 ytd-masthead[frosted-glass=with-chipbar] #background.ytd-masthead {
     background: var(--yt-spec-base-background) !important;
 }
+
+.yt-spec-icon-badge-shape--type-notification-refresh .yt-spec-icon-badge-shape__badge {
+    background-color: red !important;
+    color: white !important;
+}
+
+#right-arrow-container {
+    display: none !important; 
+}
+
