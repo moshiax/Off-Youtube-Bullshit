@@ -45,3 +45,7 @@ ytd-masthead[frosted-glass=with-chipbar] #background.ytd-masthead {
     display: none !important; 
 }
 
+#teaser-carousel {
+    display: none !important; /* removes click to view premier chat icon bcz there is one already */
+}
+
