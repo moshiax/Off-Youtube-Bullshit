@@ -53,4 +53,6 @@ ytd-masthead[frosted-glass=with-chipbar] #background.ytd-masthead {
     display: none !important; /* removes games youtube */
 }
 
-
+tp-yt-paper-dialog {
+    display: none !important; /* removes sponsor this channel popup */
+}
