@@ -73,3 +73,6 @@ ytd-reel-shelf-renderer {
     display: none !important; /* removes shorts from video description and probably from some other places */
 }
 
+tp-yt-paper-toast#toast {
+    display: none !important; /* removes 'Still watching?' youtube popup */
+}
