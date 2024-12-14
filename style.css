@@ -76,3 +76,12 @@ ytd-reel-shelf-renderer {
 tp-yt-paper-toast#toast {
     display: none !important; /* removes 'Still watching?' youtube popup */
 }
+
+.ytSearchboxComponentSearchButtonDark,
+.ytSearchboxComponentInputBox {
+    background-color: transparent !important; /* sets search container transparent background not fucking grey */
+}
+
+#voice-search-button.ytd-masthead {
+    display: none !important; /* removes voice search button */
+}
