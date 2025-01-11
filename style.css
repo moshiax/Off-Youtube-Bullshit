@@ -85,3 +85,7 @@ tp-yt-paper-toast#toast {
 #voice-search-button.ytd-masthead {
     display: none !important; /* removes voice search button */
 }
+
+#tp-yt-paper-dialog.style-scope.ytd-popup-container {
+    display: none !important; /* removes clown youtube survey */
+}
