@@ -93,3 +93,7 @@ tp-yt-paper-toast#toast {
 html, body {
     overflow-x: hidden !important; /* Removes horizontal scrollbar (wtf you adding youtube) */
 }
+
+ytd-single-option-survey-renderer {
+    display: none !important; /* Removes the survey element */
+}
