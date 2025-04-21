@@ -10,7 +10,6 @@
         "https://www.youtube.com/*",
         "https://music.youtube.com/*"
       ],
-      "css": ["style.css"],
       "js": ["content.js"],
       "run_at": "document_end",
       "all_frames": true
