@@ -106,3 +106,6 @@ ytd-browse:is([page-subtype="home"], [page-subtype="subscriptions"]) ytd-rich-gr
     --ytd-rich-grid-item-margin: 16px !important;
 }
 
+#ticket-shelf {
+    display: none !important; /* Removes the events tickets */
+}
