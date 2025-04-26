@@ -1,5 +1,4 @@
-
-[lawfx/YoutubeNonStop](https://github.com/lawfx/YoutubeNonStop)
+[youtube-tweaks (not github)](https://chromewebstore.google.com/detail/youtube-tweaks/oeakphpfoaeggagmgphfejmfjbhjfhhh/reviews)
 
 [sveagruva/remove_youtube_tv_button](https://github.com/sveagruva/remove_youtube_tv_button)
 
