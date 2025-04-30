@@ -109,3 +109,7 @@ ytd-browse:is([page-subtype="home"], [page-subtype="subscriptions"]) ytd-rich-gr
 #ticket-shelf {
     display: none !important; /* Removes the events tickets */
 }
+
+#clarify-box {
+    display: none !important; /* Removes propaganda (support.google.com/youtube/answer/9004474)
+}
