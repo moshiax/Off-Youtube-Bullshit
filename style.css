@@ -124,5 +124,9 @@ ytd-browse:is([page-subtype="home"], [page-subtype="subscriptions"]) ytd-rich-gr
 }
 
 #clarify-box {
-    display: none !important; /* Removes propaganda (support.google.com/youtube/answer/9004474)
+    display: none !important; /* Removes propaganda (support.google.com/youtube/answer/9004474) */
+}
+
+#text-container.style-scope.yt-notification-action-renderer {
+    display: none !important; /* Removes mocking from hindus youtube devs 'Video is not loading?' */
 }

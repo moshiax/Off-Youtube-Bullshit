@@ -7,8 +7,7 @@
     {
       "matches": [
         "*://*.youtube.com/*",
-        "https://www.youtube.com/*",
-        "https://music.youtube.com/*"
+        "*://music.youtube.com/*"
       ],
       "css": ["style.css"],
       "js": ["content.js"],
@@ -20,8 +19,8 @@
     {
       "resources": ["autoconfirm.js"],
       "matches": [
-        "https://www.youtube.com/*",
-        "https://music.youtube.com/*"
+        "*://*.youtube.com/*",
+        "*://music.youtube.com/*"
       ]
     }
   ],
