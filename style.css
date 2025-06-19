@@ -128,5 +128,5 @@ ytd-browse:is([page-subtype="home"], [page-subtype="subscriptions"]) ytd-rich-gr
 }
 
 #text-container.style-scope.yt-notification-action-renderer {
-    display: none !important; /* Removes mocking from hindus youtube devs 'Video is not loading?' */
+    display: none !important; /* Removes mocking from hindus youtube devs 'Video is not loading?' (https://www.reddit.com/r/youtube/comments/1lafhcc/youtube_is_now_artificially_slowing_down_youtube/) */
 }
