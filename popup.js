@@ -4,7 +4,10 @@ document.addEventListener("DOMContentLoaded", () => {
   for (const [key, { label, description }] of Object.entries(vars)) {
     const switchEl = document.createElement("label");
     switchEl.classList.add("toggle-switch");
-    switchEl.dataset.hover = description || "";
+    const tooltip = document.createElement("div");
+    tooltip.classList.add("toggle-tooltip");
+    tooltip.innerHTML = description || "";
+    switchEl.appendChild(tooltip);
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.id = key;
@@ -36,8 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   for (const key in vars) {
     const cb = document.getElementById(key);
-    if (cb) cb.addEventListener("change", e => {
-      chrome.storage.local.set({ [key]: e.target.checked });
-    });
+    if (cb) {
+      cb.addEventListener("change", e => {
+        chrome.storage.local.set({ [key]: e.target.checked });
+      });
+    }
   }
 });

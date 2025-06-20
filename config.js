@@ -113,12 +113,12 @@ const vars = {
   hideClarifyBox: {
     label: "Hide 'Clarify Box'",
     default: true,
-    description: "Removes propaganda (support.google.com/youtube/answer/9004474)"
+    description: 'Removes propaganda (<a href="https://support.google.com/youtube/answer/9004474" target="_blank" rel="noopener noreferrer">support.google.com</a>)'
   },
   hideLoadingMocking: {
     label: "Hide 'Video is not loading?' Message",
     default: true,
-    description: "Removes mocking from hindus youtube devs 'Video is not loading?' (https://www.reddit.com/r/youtube/comments/1lafhcc/youtube_is_now_artificially_slowing_down_youtube/)"
+    description: 'Removes mocking from hindus youtube devs \'Video is not loading?\' (<a href="https://www.reddit.com/r/youtube/comments/1lafhcc/youtube_is_now_artificially_slowing_down_youtube/" target="_blank" rel="noopener noreferrer">reddit.com</a>)'
   }
 };
 
