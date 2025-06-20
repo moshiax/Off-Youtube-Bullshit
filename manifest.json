@@ -3,14 +3,19 @@
   "version": "6.6.6",
   "name": "Off Youtube Bullshit",
   "description": "Disables or removes unnecessary YouTube elements.",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "storage"
+  ],
   "content_scripts": [
     {
       "matches": [
         "*://*.youtube.com/*",
         "*://music.youtube.com/*"
       ],
-      "css": ["style.css"],
-      "js": ["content.js"],
+      "js": ["config.js", "content.js"],
       "run_at": "document_end",
       "all_frames": true
     }

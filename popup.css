@@ -1,0 +1,93 @@
+:root {
+  color-scheme: dark;
+
+  --primary: #ff0000;
+  --primary: #f44336;
+  --secondary: #1a1a1a;
+  --background: #121212;
+
+  --accent: #b71c1c;
+  --lightGrey: #999;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 17px;
+  margin-bottom: 1rem;
+}
+
+.toggle-switch input {
+  display: none;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--secondary);
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.toggle-slider::before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 2px;
+  bottom: 2px;
+  background: var(--primary);
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+  background: var(--accent);
+}
+
+input:checked + .toggle-slider::before {
+  transform: translateX(13px);
+  background: var(--primary);
+}
+
+.toggle-label {
+  margin-left: 0.5rem;
+  width: 250px !important;
+  transform: translateX(35px);
+  display: inline-block;
+  color: var(--primary);
+}
+
+.toggle-switch::before {
+  content: attr(data-hover);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.1s linear, opacity 0.1s linear;
+  width: 250px;
+  background-color: var(--secondary);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 160%;
+  color: var(--primary);
+}
+
+.toggle-switch:hover::before {
+  visibility: visible;
+  opacity: 1;
+}
+
+html,
+body {
+  background-color: var(--background);
+  color: var(--primary);
+  min-width: 310px;
+  min-height: 350px;
+  padding: 0.5em;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+}
