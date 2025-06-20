@@ -5,22 +5,22 @@ chrome.storage.local.get(Object.keys(vars), result => {
   const loggingEnabled = !!result.logging;
 
   for (const key in vars) {
-    if (result[key]) {
-      if (loggingEnabled) console.log(`Feature enabled: ${key}`);
+    if (result[key] && cssRules[key]) {
+      injectCss(key, cssRules[key], loggingEnabled);
+    }
+  }
 
-      if (key === 'nosponsored') {
-        injectScript('scripts/nosponsored.js', loggingEnabled);
-      }
-      if (key === 'nosleeptimer') {
-        injectScript('scripts/nosleeptimer.js', loggingEnabled);
-      }
-      if (key === 'autoconfirm') {
-        injectScript('scripts/autoconfirm.js', loggingEnabled);
-      }
+  for (const key in vars) {
+    if (!result[key]) continue;
 
-      if (cssRules[key]) {
-        injectCss(key, cssRules[key], loggingEnabled);
-      }
+    if (loggingEnabled) console.log(`Feature enabled: ${key}`);
+
+    if (key === 'nosponsored') {
+      injectScript('scripts/nosponsored.js', loggingEnabled);
+    } else if (key === 'nosleeptimer') {
+      injectScript('scripts/nosleeptimer.js', loggingEnabled);
+    } else if (key === 'autoconfirm') {
+      injectScript('scripts/autoconfirm.js', loggingEnabled);
     }
   }
 });
