@@ -85,20 +85,15 @@ const vars = {
     default: true,
     description: "Removes the voice search button in the header"
   },
-  hideYoutubeSurvey: {
+  hideYoutubeSurveys: {
     label: "Hide YouTube Surveys",
     default: true,
-    description: "Removes pop-up surveys and dialogs"
+    description: "Removes pop-up surveys and dialogs (How do you like this video?)"
   },
   hideHorizontalScrollbar: {
     label: "Hide Horizontal Scrollbar",
     default: true,
     description: "Removes horizontal scrollbar on the page"
-  },
-  hideSurveyElement: {
-    label: "Hide Survey Element",
-    default: true,
-    description: "Removes the survey element"
   },
   fixMainGrid: {
     label: "Fix Main Page Grid",
@@ -246,8 +241,16 @@ const cssRules = {
     }
   `,
 
-  hideYoutubeSurvey: `
+  hideYoutubeSurveys: `
     #tp-yt-paper-dialog.style-scope.ytd-popup-container {
+        display: none !important;
+    }
+
+    ytd-single-option-survey-renderer {
+        display: none !important;
+    }
+
+    ytd-inline-survey-renderer {
         display: none !important;
     }
   `,
@@ -255,12 +258,6 @@ const cssRules = {
   hideHorizontalScrollbar: `
     html, body {
         overflow-x: hidden !important;
-    }
-  `,
-
-  hideSurveyElement: `
-    ytd-single-option-survey-renderer {
-        display: none !important;
     }
   `,
 
