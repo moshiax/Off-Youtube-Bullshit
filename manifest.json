@@ -24,7 +24,8 @@
       "resources": [
         "scripts/autoconfirm.js",
         "scripts/nosponsored.js",
-        "scripts/nosleeptimer.js"
+        "scripts/nosleeptimer.js",
+        "scripts/nourltracking.js"
       ],
       "matches": [
         "*://*.youtube.com/*",

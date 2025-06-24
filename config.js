@@ -14,12 +14,16 @@ const vars = {
     default: true,
     description: "Removes sleep timer from YouTube video settings"
   },
+  nourltracking: {
+    label: "No url tracking",
+    default: true,
+    description: "Removes ?si tracking parameter from YouTube copied urls"
+  },
   autoconfirm: {
     label: "No 'Continue watching?'",
     default: true,
     description: "Removes YouTube function that randomly stops video"
   },
-
   youtubered: {
     label: "Return Youtube Red",
     default: true,
