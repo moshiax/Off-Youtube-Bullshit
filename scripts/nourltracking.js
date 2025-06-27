@@ -2,12 +2,13 @@ document.addEventListener("copy", async (e) => {
   try {
     let text = await navigator.clipboard.readText();
 
-    if (/(https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/[^\s]+)(\?si=[^&\s]+)?/.test(text)) {
-      text = text.replace(/(\?si=[^&\s]*)/, "");
+    if (/(https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/[^\s]+)/i.test(text) && /\?si=[^&\s]*/.test(text)) {
+      const originalText = text;
+      text = text.replace(/\?si=[^&\s]*/, "");
       await navigator.clipboard.writeText(text);
 
       if (document.documentElement.getAttribute('data-logging-enabled') === 'true') {
-        console.log(`${document.documentElement.getAttribute('data-extension-name')}: Parameter ?si= removed from copied YouTube link`);
+        console.log(`${document.documentElement.getAttribute('data-extension-name')}: Removed ?si= parameter: ${originalText} --> ${text}`);
       }
     }
   } catch (err) {
