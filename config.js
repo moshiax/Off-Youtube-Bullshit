@@ -118,6 +118,11 @@ const vars = {
     label: "Hide 'Video is not loading?' Message",
     default: true,
     description: 'Removes mocking from hindus youtube devs \'Video is not loading?\' (<a href="https://www.reddit.com/r/youtube/comments/1lafhcc/youtube_is_now_artificially_slowing_down_youtube/" target="_blank" rel="noopener noreferrer">reddit.com</a>)'
+  },
+  hideYoutubeSelfPromotions: {
+    label: "Hide YouTube Self Promotions",
+    default: true,
+    description: "Hides self promotions from YouTube such as YouTube Music and YouTube Premium"
   }
 };
 
@@ -288,6 +293,12 @@ const cssRules = {
 
   hideLoadingMocking: `
     #text-container.style-scope.yt-notification-action-renderer {
+        display: none !important;
+    }
+  `,
+  
+  hideYoutubeSelfPromotions: `
+    #statement-banner-content.style-scope.ytd-statement-banner-renderer {
         display: none !important;
     }
   `
