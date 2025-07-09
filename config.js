@@ -113,43 +113,32 @@ const vars = {
     label: "Clear Video Description",
     default: true,
     description: "Removes people mentioned, AI generated mark, event tickets, and transcripts from video description"
+  },
+  hideUselessThings: {
+    label: "Hide useless things",
+    default: true,
+    description: "Hides useless elements as copyright notifications etc."
   }
+
 };
 
 const cssRules = {
+
   youtubered: `
-    .ytp-play-progress,
-    #progress {
-        background: var(--yt-spec-static-brand-red) !important;
-    }
+  .ytp-play-progress,
+  #progress,
+  .ytd-thumbnail-overlay-resume-playback-renderer#progress,
+  .YtThumbnailOverlayProgressBarHostWatchedProgressBarSegmentModern,
+  .YtChapteredProgressBarChapteredPlayerBarChapterRefresh,
+  .YtChapteredProgressBarChapteredPlayerBarFillRefresh,
+  .YtProgressBarLineProgressBarPlayedRefresh,
+  #progress.yt-page-navigation-progress {
+      background: var(--yt-spec-static-brand-red) !important;
+  }
 
-    .ytd-thumbnail-overlay-resume-playback-renderer#progress {
-        background: red !important;
-    }
-
-    .YtThumbnailOverlayProgressBarHostWatchedProgressBarSegmentModern {
-        background: var(--yt-spec-static-brand-red) !important;
-    }
-
-    .YtChapteredProgressBarChapteredPlayerBarChapterRefresh {
-        background: var(--yt-spec-static-brand-red) !important;
-    }
-
-    .YtChapteredProgressBarChapteredPlayerBarFillRefresh {
-        background: var(--yt-spec-static-brand-red) !important;
-    }
-
-    .YtProgressBarLineProgressBarPlayedRefresh {
-        background: red !important;
-    }
-
-    #progress.yt-page-navigation-progress {
-        background: var(--yt-spec-static-brand-red) !important;
-    }
-
-    .yt-icon-shape > div > svg > g:first-of-type > path:first-of-type {
-        fill: var(--yt-spec-static-brand-red) !important;
-    }
+  .yt-icon-shape > div > svg > g:first-of-type > path:first-of-type {
+      fill: var(--yt-spec-static-brand-red) !important;
+  }
   `,
 
   fixHeader: `
@@ -229,15 +218,10 @@ const cssRules = {
   `,
 
   hideYoutubeSurveys: `
-    #tp-yt-paper-dialog.style-scope.ytd-popup-container {
-        display: none !important;
-    }
-
-    ytd-single-option-survey-renderer {
-        display: none !important;
-    }
-
-    ytd-inline-survey-renderer {
+    #tp-yt-paper-dialog.style-scope.ytd-popup-container,
+    ytd-single-option-survey-renderer,
+    ytd-inline-survey-renderer,
+    ytd-checkbox-survey-renderer {
         display: none !important;
     }
   `,
@@ -281,6 +265,12 @@ const cssRules = {
     .YtwHowThisWasMadeSectionViewModelHost,
     #ticket-shelf,
     ytd-video-description-transcript-section-renderer {
+      display: none !important;
+    }
+  `,
+  
+  hideUselessThings: `
+    #footer:has(#guide-links-primary) {
       display: none !important;
     }
   `
