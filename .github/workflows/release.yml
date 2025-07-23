@@ -22,9 +22,11 @@ jobs:
       - name: Install crx packager
         run: npm install -g crx
 
-      - name: Get short commit SHA
-        id: vars
-        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+      - name: Get commit number
+        id: get_commit_number
+        run: |
+          COMMIT_NUMBER=$(git rev-list --count HEAD)
+          echo "COMMIT_NUMBER=$COMMIT_NUMBER" >> $GITHUB_ENV
 
       - name: Generate random private key for signing
         run: |
@@ -33,17 +35,17 @@ jobs:
 
       - name: Pack extension to CRX
         run: |
-          crx pack ./ -o Off-Youtube-Bullshit_${{ env.SHORT_SHA }}.crx -p key.pem
+          crx pack ./ -o Off-Youtube-Bullshit_${{ env.COMMIT_NUMBER }}.crx -p key.pem
         shell: bash
 
       - name: Create GitHub Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ env.SHORT_SHA }}
-          release_name: Release ${{ env.SHORT_SHA }}
+          tag_name: v${{ env.COMMIT_NUMBER }}
+          release_name: "Commit #${{ env.COMMIT_NUMBER }}"
           draft: false
           prerelease: false
 
@@ -53,10 +55,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./Off-Youtube-Bullshit_${{ env.SHORT_SHA }}.crx
-          asset_name: Off-Youtube-Bullshit_${{ env.SHORT_SHA }}.crx
+          asset_path: ./Off-Youtube-Bullshit_${{ env.COMMIT_NUMBER }}.crx
+          asset_name: Off-Youtube-Bullshit_${{ env.COMMIT_NUMBER }}.crx
           asset_content_type: application/x-chrome-extension
 
       - name: Cleanup key file and CRX
         run: |
-          rm key.pem Off-Youtube-Bullshit_${{ env.SHORT_SHA }}.crx
+          rm key.pem Off-Youtube-Bullshit_${{ env.COMMIT_NUMBER }}.crx
