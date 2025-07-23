@@ -25,10 +25,13 @@ jobs:
         id: vars
         run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
 
+      - name: Generate random private key for signing
+        run: |
+          openssl genpkey -algorithm RSA -out key.pem -pkeyopt rsa_keygen_bits:2048
+          openssl rsa -in key.pem -out key.pem
+
       - name: Pack extension to CRX
         run: |
-          # Генерируем рандомный ключ для подписи
-          openssl rand -hex 16 > key.pem
           crx pack ./ -o extension.crx -p key.pem
         shell: bash
 
@@ -53,5 +56,6 @@ jobs:
           asset_name: extension_${{ steps.vars.outputs.SHORT_SHA }}.crx
           asset_content_type: application/x-chrome-extension
 
-      - name: Cleanup key file
-        run: rm key.pem extension.crx
+      - name: Cleanup key file and CRX
+        run: |
+          rm key.pem extension.crx
