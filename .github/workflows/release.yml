@@ -24,7 +24,7 @@ jobs:
 
       - name: Get short commit SHA
         id: vars
-        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
 
       - name: Generate random private key for signing
         run: |
@@ -33,7 +33,7 @@ jobs:
 
       - name: Pack extension to CRX
         run: |
-          crx pack ./ -o extension.crx -p key.pem
+          crx pack ./ -o Off-Youtube-Bullshit_${{ env.SHORT_SHA }}.crx -p key.pem
         shell: bash
 
       - name: Create GitHub Release
@@ -42,8 +42,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ steps.vars.outputs.SHORT_SHA }}
-          release_name: Release ${{ steps.vars.outputs.SHORT_SHA }}
+          tag_name: v${{ env.SHORT_SHA }}
+          release_name: Release ${{ env.SHORT_SHA }}
           draft: false
           prerelease: false
 
@@ -53,10 +53,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./extension.crx
-          asset_name: extension_${{ steps.vars.outputs.SHORT_SHA }}.crx
+          asset_path: ./Off-Youtube-Bullshit_${{ env.SHORT_SHA }}.crx
+          asset_name: Off-Youtube-Bullshit_${{ env.SHORT_SHA }}.crx
           asset_content_type: application/x-chrome-extension
 
       - name: Cleanup key file and CRX
         run: |
-          rm key.pem extension.crx
+          rm key.pem Off-Youtube-Bullshit_${{ env.SHORT_SHA }}.crx
