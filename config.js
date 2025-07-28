@@ -265,7 +265,7 @@ const cssRules = {
 		.YtwHowThisWasMadeSectionViewModelHost,
 		#ticket-shelf,
 		ytd-video-description-transcript-section-renderer,
-		ytd-expandable-metadata-renderer {
+		#expandable-metadata {
 			display: none !important;
 		}
 	`,
