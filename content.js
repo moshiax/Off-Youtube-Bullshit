@@ -3,15 +3,16 @@ const injectedCssKeys = new Set();
 const extensionName = chrome.runtime.getManifest().name || 'unknown';
 
 chrome.storage.local.get(Object.keys(vars), result => {
+
+	const loggingEnabled = !!result.logging;
+	document.documentElement.setAttribute('data-logging-enabled', loggingEnabled ? 'true' : 'false');
+	document.documentElement.setAttribute('data-extension-name', extensionName);
+
 	for (const key in vars) {
 		if (result[key] && cssRules[key]) {
 			injectCss(key, cssRules[key], !!result.logging);
 		}
 	}
-
-	const loggingEnabled = !!result.logging;
-	document.documentElement.setAttribute('data-logging-enabled', loggingEnabled ? 'true' : 'false');
-	document.documentElement.setAttribute('data-extension-name', extensionName);
 
 	for (const key in vars) {
 		if (!result[key]) continue;
