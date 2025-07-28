@@ -112,7 +112,7 @@ const vars = {
   clearVideoDescription: {
     label: "Clear Video Description",
     default: true,
-    description: "Removes people mentioned, AI generated mark, event tickets, and transcripts from video description"
+    description: "Removes people mentioned, AI generated mark, event tickets, ai generated shit and transcripts from video description"
   },
   hideUselessThings: {
     label: "Hide useless things",
@@ -124,154 +124,155 @@ const vars = {
 
 const cssRules = {
 
-  youtubered: `
-  .ytp-play-progress,
-  #progress,
-  .ytd-thumbnail-overlay-resume-playback-renderer#progress,
-  .YtThumbnailOverlayProgressBarHostWatchedProgressBarSegmentModern,
-  .YtChapteredProgressBarChapteredPlayerBarChapterRefresh,
-  .YtChapteredProgressBarChapteredPlayerBarFillRefresh,
-  .YtProgressBarLineProgressBarPlayedRefresh,
-  #progress.yt-page-navigation-progress {
-      background: var(--yt-spec-static-brand-red) !important;
-  }
+	youtubered: `
+		.ytp-play-progress,
+		#progress,
+		.ytd-thumbnail-overlay-resume-playback-renderer#progress,
+		.YtThumbnailOverlayProgressBarHostWatchedProgressBarSegmentModern,
+		.YtChapteredProgressBarChapteredPlayerBarChapterRefresh,
+		.YtChapteredProgressBarChapteredPlayerBarFillRefresh,
+		.YtProgressBarLineProgressBarPlayedRefresh,
+		#progress.yt-page-navigation-progress {
+			background: var(--yt-spec-static-brand-red) !important;
+		}
 
-  .yt-icon-shape > div > svg > g:first-of-type > path:first-of-type {
-      fill: var(--yt-spec-static-brand-red) !important;
-  }
-  `,
+		.yt-icon-shape > div > svg > g:first-of-type > path:first-of-type {
+			fill: var(--yt-spec-static-brand-red) !important;
+		}
+	`,
 
-  fixHeader: `
-    ytd-masthead {
-        background: var(--yt-spec-base-background) !important;
-    }
+	fixHeader: `
+		ytd-masthead {
+			background: var(--yt-spec-base-background) !important;
+		}
 
-    #header.style-scope.ytd-rich-grid-renderer {
-        display: none !important;
-    }
+		#header.style-scope.ytd-rich-grid-renderer {
+			display: none !important;
+		}
 
-    #frosted-glass.loading-with-chipbar,
-    #frosted-glass.with-chipbar.ytd-app {
-        background: transparent !important;
-        backdrop-filter: none !important;
-    }
+		#frosted-glass.loading-with-chipbar,
+		#frosted-glass.with-chipbar.ytd-app {
+			background: transparent !important;
+			backdrop-filter: none !important;
+		}
 
-    .yt-spec-icon-badge-shape--type-notification-refresh .yt-spec-icon-badge-shape__badge {
-        background-color: red !important;
-        color: white !important;
-    }
-  `,
+		.yt-spec-icon-badge-shape--type-notification-refresh .yt-spec-icon-badge-shape__badge {
+			background-color: red !important;
+			color: white !important;
+		}
+	`,
 
-  hideRightArrow: `
-    #right-arrow-container {
-        display: none !important;
-    }
-  `,
+	hideRightArrow: `
+		#right-arrow-container {
+			display: none !important;
+		}
+	`,
 
-  hideTeaserCarousel: `
-    #teaser-carousel {
-        display: none !important;
-    }
-  `,
+	hideTeaserCarousel: `
+		#teaser-carousel {
+			display: none !important;
+		}
+	`,
 
-  hideGamesShelf: `
-    .ytd-rich-shelf-renderer {
-        display: none !important;
-    }
-  `,
+	hideGamesShelf: `
+		.ytd-rich-shelf-renderer {
+			display: none !important;
+		}
+	`,
 
-  hideSponsorPopup: `
-    yt-mealbar-promo-renderer {
-        display: none !important;
-    }
-  `,
+	hideSponsorPopup: `
+		yt-mealbar-promo-renderer {
+			display: none !important;
+		}
+	`,
 
-  hideSecondChannelIcon: `
-    ytd-video-description-infocards-section-renderer a#header {
-        display: none !important;
-    }
-  `,
+	hideSecondChannelIcon: `
+		ytd-video-description-infocards-section-renderer a#header {
+			display: none !important;
+		}
+	`,
 
-  hideShortsShelf: `
-    ytd-reel-shelf-renderer {
-        display: none !important;
-    }
-  `,
+	hideShortsShelf: `
+		ytd-reel-shelf-renderer {
+			display: none !important;
+		}
+	`,
 
-  hideStillWatchingPopup: `
-    tp-yt-paper-toast#toast {
-        display: none !important;
-    }
-  `,
+	hideStillWatchingPopup: `
+		tp-yt-paper-toast#toast {
+			display: none !important;
+		}
+	`,
 
-  transparentSearchBox: `
-    .ytSearchboxComponentSearchButtonDark,
-    .ytSearchboxComponentInputBox {
-        background-color: transparent !important;
-    }
-  `,
+	transparentSearchBox: `
+		.ytSearchboxComponentSearchButtonDark,
+		.ytSearchboxComponentInputBox {
+			background-color: transparent !important;
+		}
+	`,
 
-  hideVoiceSearchButton: `
-    #voice-search-button.ytd-masthead {
-        display: none !important;
-    }
-  `,
+	hideVoiceSearchButton: `
+		#voice-search-button.ytd-masthead {
+			display: none !important;
+		}
+	`,
 
-  hideYoutubeSurveys: `
-    #tp-yt-paper-dialog.style-scope.ytd-popup-container,
-    ytd-single-option-survey-renderer,
-    ytd-inline-survey-renderer,
-    ytd-checkbox-survey-renderer {
-        display: none !important;
-    }
-  `,
+	hideYoutubeSurveys: `
+		#tp-yt-paper-dialog.style-scope.ytd-popup-container,
+		ytd-single-option-survey-renderer,
+		ytd-inline-survey-renderer,
+		ytd-checkbox-survey-renderer {
+			display: none !important;
+		}
+	`,
 
-  hideHorizontalScrollbar: `
-    html, body {
-        overflow-x: hidden !important;
-    }
-  `,
+	hideHorizontalScrollbar: `
+		html, body {
+			overflow-x: hidden !important;
+		}
+	`,
 
-  fixMainGrid: `
-    ytd-browse:is([page-subtype="home"], [page-subtype="subscriptions"]) ytd-rich-grid-renderer {
-        --ytd-rich-grid-items-per-row: 5 !important;
-        --ytd-rich-grid-posts-per-row: 5 !important;
-        --ytd-rich-grid-row-margin: 16px !important;
-        --ytd-rich-grid-item-margin: 16px !important;
-    }
-  `,
+	fixMainGrid: `
+		ytd-browse:is([page-subtype="home"], [page-subtype="subscriptions"]) ytd-rich-grid-renderer {
+			--ytd-rich-grid-items-per-row: 5 !important;
+			--ytd-rich-grid-posts-per-row: 5 !important;
+			--ytd-rich-grid-row-margin: 16px !important;
+			--ytd-rich-grid-item-margin: 16px !important;
+		}
+	`,
 
-  hideClarifyBox: `
-    #clarify-box {
-        display: none !important;
-    }
-  `,
+	hideClarifyBox: `
+		#clarify-box {
+			display: none !important;
+		}
+	`,
 
-  hideLoadingMocking: `
-    #text-container.style-scope.yt-notification-action-renderer {
-        display: none !important;
-    }
-  `,
-  
-  hideYoutubeSelfPromotions: `
-    #statement-banner-content.style-scope.ytd-statement-banner-renderer {
-        display: none !important;
-    }
-  `,
+	hideLoadingMocking: `
+		#text-container.style-scope.yt-notification-action-renderer {
+			display: none !important;
+		}
+	`,
 
-  clearVideoDescription: `
-    yt-video-attributes-section-view-model,
-    how-this-was-made-section-view-model,
-    .YtwHowThisWasMadeSectionViewModelHost,
-    #ticket-shelf,
-    ytd-video-description-transcript-section-renderer {
-      display: none !important;
-    }
-  `,
-  
-  hideUselessThings: `
-    #footer:has(#guide-links-primary) {
-      display: none !important;
-    }
-  `
+	hideYoutubeSelfPromotions: `
+		#statement-banner-content.style-scope.ytd-statement-banner-renderer {
+			display: none !important;
+		}
+	`,
+
+	clearVideoDescription: `
+		yt-video-attributes-section-view-model,
+		how-this-was-made-section-view-model,
+		.YtwHowThisWasMadeSectionViewModelHost,
+		#ticket-shelf,
+		ytd-video-description-transcript-section-renderer,
+		ytd-expandable-metadata-renderer {
+			display: none !important;
+		}
+	`,
+
+	hideUselessThings: `
+		#footer:has(#guide-links-primary) {
+			display: none !important;
+		}
+	`
 };
