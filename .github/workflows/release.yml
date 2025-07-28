@@ -24,9 +24,10 @@ jobs:
       - name: Install crx packager
         run: npm install -g crx
 
-      - name: Get short commit SHA
-        id: vars
-        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+      - name: Get commit info
+        run: |
+          echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+          echo "COMMIT_SUMMARY=$(git log -1 --pretty=%s)" >> $GITHUB_ENV
 
       - name: Save private key
         run: echo "${{ secrets.SIGNING_KEY }}" > key.pem
@@ -42,8 +43,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ env.SHORT_SHA }}
-          release_name: Release ${{ env.SHORT_SHA }}
+          tag_name: ${{ env.SHORT_SHA }}
+          release_name: "Release ${{ env.SHORT_SHA }} - ${{ env.COMMIT_SUMMARY }}"
           draft: false
           prerelease: false
 

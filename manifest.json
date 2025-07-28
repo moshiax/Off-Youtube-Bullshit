@@ -1,39 +1,39 @@
 {
-  "manifest_version": 3,
-  "version": "6.6.6",
-  "name": "Off Youtube Bullshit",
-  "description": "Disables or removes unnecessary YouTube elements.",
-  "action": {
-    "default_popup": "popup.html"
-  },
-  "permissions": [
-    "storage"
-  ],
-  "content_scripts": [
-    {
-      "matches": [
-        "*://*.youtube.com/*",
-        "*://music.youtube.com/*"
-      ],
-      "js": ["config.js", "content.js"],
-      "run_at": "document_start"
-    }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "scripts/autoconfirm.js",
-        "scripts/nosponsored.js",
-        "scripts/nosleeptimer.js",
-        "scripts/nourltracking.js"
-      ],
-      "matches": [
-        "*://*.youtube.com/*",
-        "*://music.youtube.com/*"
-      ]
-    }
-  ],
-  "icons": {
-    "256": "icon.png"
-  }
+	"manifest_version": 3,
+	"version": "6.6.6",
+	"name": "Off Youtube Bullshit",
+	"description": "Disables or removes unnecessary YouTube elements.",
+	"action": {
+		"default_popup": "popup.html"
+	},
+	"permissions": [
+		"storage"
+	],
+	"content_scripts": [
+		{
+			"matches": [
+				"*://*.youtube.com/*",
+				"*://music.youtube.com/*"
+			],
+			"js": ["config.js", "content.js"],
+			"run_at": "document_start"
+		}
+	],
+	"web_accessible_resources": [
+		{
+			"resources": [
+				"scripts/autoconfirm.js",
+				"scripts/nosponsored.js",
+				"scripts/nosleeptimer.js",
+				"scripts/nourltracking.js"
+			],
+			"matches": [
+				"*://*.youtube.com/*",
+				"*://music.youtube.com/*"
+			]
+		}
+	],
+	"icons": {
+		"256": "icon.png"
+	}
 }

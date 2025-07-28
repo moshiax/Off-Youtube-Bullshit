@@ -1,141 +1,141 @@
 :root {
-  color-scheme: dark;
+	color-scheme: dark;
 
-  --primary: #ff0000;
-  --primary: #f44336;
-  --secondary: #1a1a1a;
-  --background: #121212;
+	--primary: #ff0000;
+	--primary: #f44336;
+	--secondary: #1a1a1a;
+	--background: #121212;
 
-  --accent: #b71c1c;
-  --lightGrey: #999;
+	--accent: #b71c1c;
+	--lightGrey: #999;
 }
 
 .toggle-switch {
-  position: relative;
-  display: inline-block;
-  width: 30px;
-  height: 17px;
-  margin-bottom: 1rem;
+	position: relative;
+	display: inline-block;
+	width: 30px;
+	height: 17px;
+	margin-bottom: 1rem;
 
-  background: var(--background);
-  border-radius: 34px;
-  box-sizing: border-box;
-  padding: 2px;
+	background: var(--background);
+	border-radius: 34px;
+	box-sizing: border-box;
+	padding: 2px;
 }
 
 .toggle-switch input {
-  display: none;
+	display: none;
 }
 
 .toggle-slider {
-  position: absolute;
-  cursor: pointer;
-  top: 2px; left: 2px; right: 2px; bottom: 2px;
-  background: var(--secondary);
-  transition: 0.4s;
-  border-radius: 30px;
-  border: 1px solid var(--primary);
+	position: absolute;
+	cursor: pointer;
+	top: 2px; left: 2px; right: 2px; bottom: 2px;
+	background: var(--secondary);
+	transition: 0.4s;
+	border-radius: 30px;
+	border: 1px solid var(--primary);
 }
 
 .toggle-tooltip {
-  position: absolute;
-  top: 160%;
-  left: 0;
-  width: 250px;
-  background-color: var(--secondary);
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  color: var(--primary);
-  font-size: 12px;
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0.1s linear, opacity 0.1s linear;
-  z-index: 10;
+	position: absolute;
+	top: 160%;
+	left: 0;
+	width: 250px;
+	background-color: var(--secondary);
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+	color: var(--primary);
+	font-size: 12px;
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0.1s linear, opacity 0.1s linear;
+	z-index: 10;
 }
 
 .toggle-switch:hover .toggle-tooltip {
-  visibility: visible;
-  opacity: 1;
+	visibility: visible;
+	opacity: 1;
 }
 
 .toggle-tooltip a {
-  color: var(--primary);
-  text-decoration: underline;
+	color: var(--primary);
+	text-decoration: underline;
 }
 
 .toggle-tooltip a:hover {
-  color: var(--accent);
+	color: var(--accent);
 }
 
 input:checked + .toggle-slider {
-  background: var(--accent);
-  border-color: var(--accent);
+	background: var(--accent);
+	border-color: var(--accent);
 }
 
 input:checked + .toggle-slider::before {
-  transform: translateX(13px);
-  background: var(--primary);
+	transform: translateX(13px);
+	background: var(--primary);
 }
 
 .toggle-label {
-  margin-left: 0.5rem;
-  width: 250px !important;
-  transform: translateX(35px);
-  display: inline-block;
-  color: var(--primary);
+	margin-left: 0.5rem;
+	width: 250px !important;
+	transform: translateX(35px);
+	display: inline-block;
+	color: var(--primary);
 }
 
 .toggle-switch::before {
-  content: attr(data-hover);
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0.1s linear, opacity 0.1s linear;
-  width: 250px;
-  background-color: var(--secondary);
-  border-radius: 0.5rem;
-  padding: 0.5rem;
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  top: 160%;
-  color: var(--primary);
+	content: attr(data-hover);
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0.1s linear, opacity 0.1s linear;
+	width: 250px;
+	background-color: var(--secondary);
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	top: 160%;
+	color: var(--primary);
 }
 
 .toggle-switch:hover::before {
-  visibility: visible;
-  opacity: 1;
+	visibility: visible;
+	opacity: 1;
 }
 
 html,
 body {
-  background-color: var(--background);
-  color: var(--primary);
-  min-width: 310px;
-  min-height: 350px;
-  padding: 0.5em;
-  font-family: "Roboto", Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent) var(--secondary);
+	background-color: var(--background);
+	color: var(--primary);
+	min-width: 310px;
+	min-height: 350px;
+	padding: 0.5em;
+	font-family: "Roboto", Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--accent) var(--secondary);
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+	width: 8px;
+	height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--secondary);
-  border-radius: 4px;
+	background: var(--secondary);
+	border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--accent);
-  border-radius: 4px;
-  border: 2px solid var(--secondary);
-  transition: background-color 0.3s;
+	background-color: var(--accent);
+	border-radius: 4px;
+	border: 2px solid var(--secondary);
+	transition: background-color 0.3s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--primary);
+	background-color: var(--primary);
 }

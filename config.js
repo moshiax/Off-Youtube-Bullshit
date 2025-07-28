@@ -1,125 +1,124 @@
 const vars = {
-  logging: {
-    label: "Logging",
-    default: false,
-    description: "Logging things extension doing in console"
-  },
-  nosponsored: {
-    label: "No 'Sponsored video'",
-    default: false,
-    description: "Removes YouTube videos with 'Only for sponsors' from recommendations (Unstable)"
-  },
-  nosleeptimer: {
-    label: "No 'Sleep timer'",
-    default: true,
-    description: "Removes sleep timer from YouTube video settings"
-  },
-  nourltracking: {
-    label: "No url tracking",
-    default: true,
-    description: "Removes ?si tracking parameter from YouTube copied urls"
-  },
-  autoconfirm: {
-    label: "No 'Continue watching?'",
-    default: true,
-    description: "Removes YouTube function that randomly stops video"
-  },
-  youtubered: {
-    label: "Return Youtube Red",
-    default: true,
-    description: "Colors progress bars and interface elements with YouTube's red color"
-  },
-  fixHeader: {
-    label: "Fix Youtube headers",
-    default: true,
-    description: "Removes blur and background from YouTube's header"
-  },
-  hideRightArrow: {
-    label: "Hide Right Navigation Arrow",
-    default: true,
-    description: "Removes the right navigation arrow"
-  },
-  hideTeaserCarousel: {
-    label: "Hide Teaser Carousel",
-    default: true,
-    description: "Removes the premiere chat icon teaser carousel"
-  },
-  hideGamesShelf: {
-    label: "Hide Games Shelf",
-    default: true,
-    description: "Removes the games block on YouTube"
-  },
-  hideSponsorPopup: {
-    label: "Hide Sponsor This Channel Popup",
-    default: true,
-    description: "Removes the 'Sponsor this channel' popup"
-  },
-  hideSecondChannelIcon: {
-    label: "Hide Second Channel Icon",
-    default: true,
-    description: "Removes the second channel icon in video descriptions"
-  },
-  hideShortsShelf: {
-    label: "Hide Shorts Shelf",
-    default: true,
-    description: "Removes Shorts section from descriptions and other places"
-  },
-  hideStillWatchingPopup: {
-    label: "Hide 'Still watching?' Popup",
-    default: true,
-    description: "Removes the 'Still watching?' YouTube popup"
-  },
-  transparentSearchBox: {
-    label: "Transparent Search Box",
-    default: true,
-    description: "Makes the search background transparent instead of grey"
-  },
-  hideVoiceSearchButton: {
-    label: "Hide Voice Search Button",
-    default: true,
-    description: "Removes the voice search button in the header"
-  },
-  hideYoutubeSurveys: {
-    label: "Hide YouTube Surveys",
-    default: true,
-    description: "Removes pop-up surveys and dialogs (How do you like this video?)"
-  },
-  hideHorizontalScrollbar: {
-    label: "Hide Horizontal Scrollbar",
-    default: true,
-    description: "Removes horizontal scrollbar on the page"
-  },
-  fixMainGrid: {
-    label: "Fix Main Page Grid",
-    default: true,
-    description: "Sets 5 items per row on YouTube's main page"
-  },
-  hideClarifyBox: {
-    label: "Hide 'Clarify Box'",
-    default: true,
-    description: 'Removes propaganda (<a href="https://support.google.com/youtube/answer/9004474" target="_blank" rel="noopener noreferrer">support.google.com</a>)'
-  },
-  hideLoadingMocking: {
-    label: "Hide 'Video is not loading?' Message",
-    default: true,
-    description: 'Removes mocking from hindus youtube devs \'Video is not loading?\' (<a href="https://www.reddit.com/r/youtube/comments/1lafhcc/youtube_is_now_artificially_slowing_down_youtube/" target="_blank" rel="noopener noreferrer">reddit.com</a>)'
-  },
-  hideYoutubeSelfPromotions: {
-    label: "Hide YouTube Self Promotions",
-    default: true,
-    description: "Hides self promotions from YouTube such as YouTube Music and YouTube Premium"
-  },
-  clearVideoDescription: {
-    label: "Clear Video Description",
-    default: true,
-    description: "Removes people mentioned, AI generated mark, event tickets, ai generated shit and transcripts from video description"
-  },
-  hideUselessThings: {
-    label: "Hide useless things",
-    default: true,
-    description: "Hides useless elements as copyright notifications etc."
-  }
-
+	logging: {
+		label: "Logging",
+		default: false,
+		description: "Logging things extension doing in console"
+	},
+	nosponsored: {
+		label: "No 'Sponsored video'",
+		default: false,
+		description: "Removes YouTube videos with 'Only for sponsors' from recommendations (Unstable)"
+	},
+	nosleeptimer: {
+		label: "No 'Sleep timer'",
+		default: true,
+		description: "Removes sleep timer from YouTube video settings"
+	},
+	nourltracking: {
+		label: "No url tracking",
+		default: true,
+		description: "Removes ?si tracking parameter from YouTube copied urls"
+	},
+	autoconfirm: {
+		label: "No 'Continue watching?'",
+		default: true,
+		description: "Removes YouTube function that randomly stops video"
+	},
+	youtubered: {
+		label: "Return Youtube Red",
+		default: true,
+		description: "Colors progress bars and interface elements with YouTube's red color"
+	},
+	fixHeader: {
+		label: "Fix Youtube headers",
+		default: true,
+		description: "Removes blur and background from YouTube's header"
+	},
+	hideRightArrow: {
+		label: "Hide Right Navigation Arrow",
+		default: true,
+		description: "Removes the right navigation arrow"
+	},
+	hideTeaserCarousel: {
+		label: "Hide Teaser Carousel",
+		default: true,
+		description: "Removes the premiere chat icon teaser carousel"
+	},
+	hideGamesShelf: {
+		label: "Hide Games Shelf",
+		default: true,
+		description: "Removes the games block on YouTube"
+	},
+	hideSponsorPopup: {
+		label: "Hide Sponsor This Channel Popup",
+		default: true,
+		description: "Removes the 'Sponsor this channel' popup"
+	},
+	hideSecondChannelIcon: {
+		label: "Hide Second Channel Icon",
+		default: true,
+		description: "Removes the second channel icon in video descriptions"
+	},
+	hideShortsShelf: {
+		label: "Hide Shorts Shelf",
+		default: true,
+		description: "Removes Shorts section from descriptions and other places"
+	},
+	hideStillWatchingPopup: {
+		label: "Hide 'Still watching?' Popup",
+		default: true,
+		description: "Removes the 'Still watching?' YouTube popup"
+	},
+	transparentSearchBox: {
+		label: "Transparent Search Box",
+		default: true,
+		description: "Makes the search background transparent instead of grey"
+	},
+	hideVoiceSearchButton: {
+		label: "Hide Voice Search Button",
+		default: true,
+		description: "Removes the voice search button in the header"
+	},
+	hideYoutubeSurveys: {
+		label: "Hide YouTube Surveys",
+		default: true,
+		description: "Removes pop-up surveys and dialogs (How do you like this video?)"
+	},
+	hideHorizontalScrollbar: {
+		label: "Hide Horizontal Scrollbar",
+		default: true,
+		description: "Removes horizontal scrollbar on the page"
+	},
+	fixMainGrid: {
+		label: "Fix Main Page Grid",
+		default: true,
+		description: "Sets 5 items per row on YouTube's main page"
+	},
+	hideClarifyBox: {
+		label: "Hide 'Clarify Box'",
+		default: true,
+		description: 'Removes propaganda (<a href="https://support.google.com/youtube/answer/9004474" target="_blank" rel="noopener noreferrer">support.google.com</a>)'
+	},
+	hideLoadingMocking: {
+		label: "Hide 'Video is not loading?' Message",
+		default: true,
+		description: 'Removes mocking from hindus youtube devs \'Video is not loading?\' (<a href="https://www.reddit.com/r/youtube/comments/1lafhcc/youtube_is_now_artificially_slowing_down_youtube/" target="_blank" rel="noopener noreferrer">reddit.com</a>)'
+	},
+	hideYoutubeSelfPromotions: {
+		label: "Hide YouTube Self Promotions",
+		default: true,
+		description: "Hides self promotions from YouTube such as YouTube Music and YouTube Premium"
+	},
+	clearVideoDescription: {
+		label: "Clear Video Description",
+		default: true,
+		description: "Removes people mentioned, AI generated mark, event tickets, ai generated shit and transcripts from video description"
+	},
+	hideUselessThings: {
+		label: "Hide useless things",
+		default: true,
+		description: "Hides useless elements as copyright notifications etc."
+	}
 };
 
 const cssRules = {
