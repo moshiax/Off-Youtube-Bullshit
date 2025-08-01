@@ -2,16 +2,19 @@ document.addEventListener("copy", async () => {
 	try {
 		let text = await navigator.clipboard.readText();
 
-		if (/https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/[^\s]+/i.test(text) && /\?si=[^&\s]*/.test(text)) {
+		if (/https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/\S+/i.test(text) && /[?&]si=[^&\s]*/.test(text)) {
 			const originalText = text;
 
-			// Removes ?si
-			text = text.replace(/([?&])si=[^&\s]*/g, '');
+			// Remove 'si' param but keep others
+			text = text.replace(/([?&])si=[^&\s]*/g, (m, p1, i, s) =>
+				p1 === '?' && s.indexOf('&', i) !== -1 ? '?' : ''
+			).replace(/\?&/, '?').replace(/[?&]$/, '');
 
-			// Youtu.be ---> youtube.com
-			const shortMatch = text.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
-			if (shortMatch) {
-				text = `www.youtube.com/watch?v=${shortMatch[1]}`;
+			// Convert youtu.be short URL to youtube.com full URL, fix param separator
+			const m = text.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+			if (m) {
+				const params = text.split('?')[1] || '';
+				text = `www.youtube.com/watch?v=${m[1]}` + (params ? `&${params}` : '');
 			}
 
 			await navigator.clipboard.writeText(text);
