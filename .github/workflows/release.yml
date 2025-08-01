@@ -55,6 +55,7 @@ jobs:
           prerelease: false
           artifacts: Off-Youtube-Bullshit_${{ env.SHORT_SHA }}.crx
           artifactContentType: application/x-chrome-extension
+          generateReleaseNotes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
