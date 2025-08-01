@@ -17,7 +17,7 @@ const vars = {
 	nourltracking: {
 		label: "No url tracking",
 		default: true,
-		description: "Removes ?si tracking parameter from YouTube copied urls"
+		description: "Converts youtu.be copied links with ?si= parameter to standard youtube.com/watch?v= format (removes tracking, adds previews)"
 	},
 	autoconfirm: {
 		label: "No 'Continue watching?'",
