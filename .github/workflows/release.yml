@@ -41,7 +41,7 @@ jobs:
 
       - name: Pack extension to CRX
         run: |
-          crx pack ./ -o Off-Youtube-Bullshit_${{ env.SHORT_SHA }}.crx -p key.pem
+          crx pack ./ -o Off-Youtube-Bullshit.crx -p key.pem
         shell: bash
 
       - name: Create GitHub Release
@@ -53,7 +53,7 @@ jobs:
           body: ${{ env.COMMIT_BODY != '' && env.COMMIT_BODY || env.COMMIT_SUMMARY }}
           draft: false
           prerelease: false
-          artifacts: Off-Youtube-Bullshit_${{ env.SHORT_SHA }}.crx
+          artifacts: Off-Youtube-Bullshit.crx
           artifactContentType: application/x-chrome-extension
           generateReleaseNotes: true
           makeLatest: true
@@ -62,4 +62,4 @@ jobs:
 
       - name: Cleanup key file and CRX
         run: |
-          rm key.pem Off-Youtube-Bullshit_${{ env.SHORT_SHA }}.crx
+          rm key.pem Off-Youtube-Bullshit.crx
