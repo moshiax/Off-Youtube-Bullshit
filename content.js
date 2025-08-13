@@ -21,9 +21,7 @@ chrome.storage.local.get(Object.keys(vars), result => {
 			console.log(`${document.documentElement.getAttribute('data-extension-name')}: Feature enabled: ${key}`);
 		}
 
-		if (key === 'nosponsored') {
-			injectScript('scripts/nosponsored.js', loggingEnabled);
-		} else if (key === 'nosleeptimer') {
+		if (key === 'nosleeptimer') {
 			injectScript('scripts/nosleeptimer.js', loggingEnabled);
 		} else if (key === 'autoconfirm') {
 			injectScript('scripts/autoconfirm.js', loggingEnabled);

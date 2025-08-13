@@ -6,8 +6,8 @@ const vars = {
 	},
 	nosponsored: {
 		label: "No 'Sponsored video'",
-		default: false,
-		description: "Removes YouTube videos with 'Only for sponsors' from recommendations (Unstable)"
+		default: true,
+		description: "Removes YouTube videos with 'Only for sponsors'"
 	},
 	nosleeptimer: {
 		label: "No 'Sleep timer'",
@@ -274,5 +274,11 @@ const cssRules = {
 		#footer:has(#guide-links-primary) {
 			display: none !important;
 		}
-	`
+	`,
+
+	nosponsored: `
+        ytd-rich-item-renderer:has(.badge.badge-style-type-members-only) {
+            display: none !important;
+        }
+	`,
 };
