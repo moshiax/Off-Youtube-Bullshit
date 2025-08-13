@@ -131,7 +131,8 @@ const cssRules = {
 		.YtChapteredProgressBarChapteredPlayerBarChapterRefresh,
 		.YtChapteredProgressBarChapteredPlayerBarFillRefresh,
 		.YtProgressBarLineProgressBarPlayedRefresh,
-		#progress.yt-page-navigation-progress {
+		#progress.yt-page-navigation-progress,
+		.ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment {
 			background: var(--yt-spec-static-brand-red) !important;
 		}
 
