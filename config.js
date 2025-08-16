@@ -266,6 +266,7 @@ const cssRules = {
 		.YtwHowThisWasMadeSectionViewModelHost,
 		#ticket-shelf,
 		ytd-video-description-transcript-section-renderer,
+		a[href="/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ"].yt-spec-button-shape-next,
 		#expandable-metadata {
 			display: none !important;
 		}
