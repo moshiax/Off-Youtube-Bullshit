@@ -95,9 +95,9 @@ const vars = {
 		description: "Sets 5 items per row on YouTube's main page"
 	},
 	hideClarifyBox: {
-		label: "Hide 'Clarify Box'",
+		label: "Hide clarify boxes",
 		default: true,
-		description: 'Removes propaganda (<a href="https://support.google.com/youtube/answer/9004474" target="_blank" rel="noopener noreferrer">support.google.com</a>)'
+		description: 'Removes propaganda (<a href="https://support.google.com/youtube/answer/9004474" target="_blank" rel="noopener noreferrer">support.google.com</a>) and elements that thinking instead of you'
 	},
 	hideLoadingMocking: {
 		label: "Hide 'Video is not loading?' Message",
@@ -242,7 +242,8 @@ const cssRules = {
 	`,
 
 	hideClarifyBox: `
-		#clarify-box {
+		#clarify-box,
+		.ytp-paid-content-overlay {
 			display: none !important;
 		}
 	`,
