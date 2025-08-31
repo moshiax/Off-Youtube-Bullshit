@@ -118,6 +118,11 @@ const vars = {
 		label: "Hide useless things",
 		default: true,
 		description: "Hides useless elements as copyright notifications etc."
+	},
+	noFoodForGaza: {
+		label: "Hide 'donations' containers",
+		default: true,
+		description: "Hides offers to donate on something"
 	}
 };
 
@@ -282,5 +287,11 @@ const cssRules = {
         ytd-rich-item-renderer:has(.badge.badge-style-type-members-only) {
             display: none !important;
         }
+	`,
+
+	noFoodForGaza: `
+		#donation-shelf {
+			display: none !important;
+		},
 	`,
 };
