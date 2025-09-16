@@ -123,7 +123,12 @@ const vars = {
 		label: "Hide 'donations' containers",
 		default: true,
 		description: "Hides offers to donate on something"
-	}
+	},
+	restoreFullscreenScroll: {
+		label: "Restore fullscreen scroll",
+		default: true,
+		description: "Restoring page scrolling in fullscreen"
+	},
 };
 
 const cssRules = {
@@ -294,4 +299,23 @@ const cssRules = {
 			display: none !important;
 		},
 	`,
+	
+	restoreFullscreenScroll: `
+		ytd-app[fullscreen] {
+			overflow: auto !important;
+		}
+		ytd-app[scrolling] {
+			bottom: 0 !important;
+			scrollbar-width: none !important;
+			-ms-overflow-style: none !important;
+		}
+		ytd-app[fullscreen]::-webkit-scrollbar,
+		ytd-app[scrolling]::-webkit-scrollbar {
+			display: none !important;
+		}
+		ytd-watch-flexy[fullscreen] #columns {
+			display: flex !important;
+		}
+	`,
+
 };
