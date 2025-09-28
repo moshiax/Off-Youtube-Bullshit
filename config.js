@@ -1,321 +1,249 @@
-const vars = {
+const config = {
 	logging: {
 		label: "Logging",
-		default: false,
-		description: "Logging things extension doing in console"
+		description: "Logging things extension doing in console",
+		default: false
 	},
-	nosponsored: {
-		label: "No 'Sponsored video'",
-		default: true,
-		description: "Removes YouTube videos with 'Only for sponsors'"
-	},
+
 	nosleeptimer: {
 		label: "No 'Sleep timer'",
-		default: true,
-		description: "Removes sleep timer from YouTube video settings"
+		description: "Removes sleep timer from YouTube video settings",
+		script: 'scripts/nosleeptimer.js',
+		default: true
 	},
+
+	noStops: {
+		label: "No random video stops",
+		description: "Removes YouTube function that randomly stops video and 'Still watching?' popup",
+		style: `tp-yt-paper-toast#toast { display: none !important; }`,
+		script: 'scripts/autoconfirm.js',
+		default: true
+	},
+
 	nourltracking: {
-		label: "No url tracking",
-		default: true,
-		description: "Converts youtu.be copied links with ?si= parameter to standard youtube.com/watch?v= format (removes tracking, adds previews)"
+		label: "No URL tracking",
+		description: "Converts youtu.be copied links with ?si= parameter to standard youtube.com/watch?v= format (removes tracking, adds previews)",
+		script: 'scripts/nourltracking.js',
+		default: true
 	},
-	autoconfirm: {
-		label: "No 'Continue watching?'",
-		default: true,
-		description: "Removes YouTube function that randomly stops video"
-	},
+
 	youtubered: {
 		label: "Return Youtube Red",
-		default: true,
-		description: "Colors progress bars and interface elements with YouTube's red color"
+		description: "Colors progress bars and interface elements with YouTube's red color",
+		style: `
+			.ytp-play-progress,
+			#progress,
+			.ytd-thumbnail-overlay-resume-playback-renderer#progress,
+			.YtThumbnailOverlayProgressBarHostWatchedProgressBarSegmentModern,
+			.YtChapteredProgressBarChapteredPlayerBarChapterRefresh,
+			.YtChapteredProgressBarChapteredPlayerBarFillRefresh,
+			.YtProgressBarLineProgressBarPlayedRefresh,
+			#progress.yt-page-navigation-progress,
+			.ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment {
+				background: var(--yt-spec-static-brand-red) !important;
+			}
+
+			.yt-icon-shape > div > svg > g:first-of-type > path:first-of-type {
+				fill: var(--yt-spec-static-brand-red) !important;
+			}
+		`,
+		default: true
 	},
+
 	fixHeader: {
 		label: "Fix Youtube headers",
-		default: true,
-		description: "Removes blur and background from YouTube's header"
+		description: "Removes blur and background from YouTube's header",
+		style: `
+			ytd-masthead { background: var(--yt-spec-base-background) !important; }
+			#header.style-scope.ytd-rich-grid-renderer { display: none !important; }
+			#frosted-glass.loading-with-chipbar,
+			#frosted-glass.with-chipbar.ytd-app {
+				background: transparent !important;
+				backdrop-filter: none !important;
+			}
+			.yt-spec-icon-badge-shape--type-notification-refresh .yt-spec-icon-badge-shape__badge {
+				background-color: red !important;
+				color: white !important;
+			}
+		`,
+		default: true
 	},
+
 	hideRightArrow: {
 		label: "Hide Right Navigation Arrow",
-		default: true,
-		description: "Removes the right navigation arrow"
+		description: "Removes the right navigation arrow",
+		style: `#right-arrow-container { display: none !important; }`,
+		default: true
 	},
+
 	hideTeaserCarousel: {
 		label: "Hide Teaser Carousel",
-		default: true,
-		description: "Removes the premiere chat icon teaser carousel"
+		description: "Removes the premiere chat icon teaser carousel",
+		style: `#teaser-carousel { display: none !important; }`,
+		default: true
 	},
+
 	hideGamesShelf: {
 		label: "Hide Games Shelf",
-		default: true,
-		description: "Removes the games block on YouTube"
+		description: "Removes the games block on YouTube",
+		style: `.ytd-rich-shelf-renderer { display: none !important; }`,
+		default: true
 	},
-	hideSponsorPopup: {
-		label: "Hide Sponsor This Channel Popup",
-		default: true,
-		description: "Removes the 'Sponsor this channel' popup"
-	},
-	hideSecondChannelIcon: {
-		label: "Hide Second Channel Icon",
-		default: true,
-		description: "Removes the second channel icon in video descriptions"
-	},
+
 	hideShortsShelf: {
 		label: "Hide Shorts Shelf",
-		default: true,
-		description: "Removes Shorts section from descriptions and other places"
+		description: "Removes Shorts section from descriptions and other places",
+		style: `ytd-reel-shelf-renderer { display: none !important; }`,
+		default: true
 	},
-	hideStillWatchingPopup: {
-		label: "Hide 'Still watching?' Popup",
-		default: true,
-		description: "Removes the 'Still watching?' YouTube popup"
-	},
+
 	transparentSearchBox: {
 		label: "Transparent Search Box",
-		default: true,
-		description: "Makes the search background transparent instead of grey"
+		description: "Makes the search background transparent instead of grey",
+		style: `.ytSearchboxComponentSearchButtonDark, .ytSearchboxComponentInputBox { background-color: transparent !important; }`,
+		default: true
 	},
+
 	hideVoiceSearchButton: {
 		label: "Hide Voice Search Button",
-		default: true,
-		description: "Removes the voice search button in the header"
+		description: "Removes the voice search button in the header",
+		style: `#voice-search-button.ytd-masthead { display: none !important; }`,
+		default: true
 	},
+
 	hideYoutubeSurveys: {
 		label: "Hide YouTube Surveys",
-		default: true,
-		description: "Removes pop-up surveys and dialogs (How do you like this video?)"
+		description: "Removes pop-up surveys and dialogs (How do you like this video?)",
+		style: `
+			#tp-yt-paper-dialog.style-scope.ytd-popup-container,
+			ytd-single-option-survey-renderer,
+			ytd-inline-survey-renderer,
+			ytd-checkbox-survey-renderer {
+				display: none !important;
+			}
+		`,
+		default: true
 	},
+
 	hideHorizontalScrollbar: {
 		label: "Hide Horizontal Scrollbar",
-		default: true,
-		description: "Removes horizontal scrollbar on the page"
+		description: "Removes horizontal scrollbar on the page",
+		style: `html, body { overflow-x: hidden !important; }`,
+		default: true
 	},
+
 	fixMainGrid: {
 		label: "Fix Main Page Grid",
-		default: true,
-		description: "Sets 5 items per row on YouTube's main page"
+		description: "Sets 5 items per row on YouTube's main page",
+		style: `
+			ytd-browse:is([page-subtype="home"], [page-subtype="subscriptions"]) ytd-rich-grid-renderer {
+				--ytd-rich-grid-items-per-row: 5 !important;
+				--ytd-rich-grid-posts-per-row: 5 !important;
+				--ytd-rich-grid-row-margin: 16px !important;
+				--ytd-rich-grid-item-margin: 16px !important;
+			}
+		`,
+		default: true
 	},
+
 	hideClarifyBox: {
 		label: "Hide clarify boxes",
-		default: true,
-		description: 'Removes propaganda (<a href="https://support.google.com/youtube/answer/9004474" target="_blank" rel="noopener noreferrer">support.google.com</a>) and elements that thinking instead of you'
+		description: 'Removes propaganda (support.google.com) and elements that thinking instead of you',
+		style: `#clarify-box, .ytp-paid-content-overlay { display: none !important; }`,
+		default: true
 	},
+
 	hideLoadingMocking: {
 		label: "Hide 'Video is not loading?' Message",
-		default: true,
-		description: 'Removes mocking from hindus youtube devs \'Video is not loading?\' (<a href="https://www.reddit.com/r/youtube/comments/1lafhcc/youtube_is_now_artificially_slowing_down_youtube/" target="_blank" rel="noopener noreferrer">reddit.com</a>)'
+		description: "Removes mocking from 'Video is not loading?'",
+		style: `#text-container.style-scope.yt-notification-action-renderer { display: none !important; }`,
+		default: true
 	},
+
 	hideYoutubeSelfPromotions: {
 		label: "Hide YouTube Self Promotions",
-		default: true,
-		description: "Hides self promotions from YouTube such as YouTube Music and YouTube Premium"
+		description: "Hides self promotions from YouTube such as YouTube Music and YouTube Premium",
+		style: `#statement-banner-content.style-scope.ytd-statement-banner-renderer { display: none !important; }`,
+		default: true
 	},
+
 	clearVideoDescription: {
 		label: "Clear Video Description",
-		default: true,
-		description: "Removes people mentioned, AI generated mark, event tickets, ai generated shit and transcripts from video description"
+		description: "Removes people mentioned, AI generated mark, event tickets, ai generated content and transcripts from video description",
+		style: `
+			yt-video-attributes-section-view-model,
+			how-this-was-made-section-view-model,
+			.YtwHowThisWasMadeSectionViewModelHost,
+			#ticket-shelf,
+			ytd-merch-shelf-renderer,
+			#offer-module,
+			ytd-video-description-transcript-section-renderer,
+			a[href="/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ"].yt-spec-button-shape-next,
+			#expandable-metadata,
+			ytd-video-description-infocards-section-renderer a#header {
+				display: none !important;
+			}
+		`,
+		default: true
 	},
+
 	hideUselessThings: {
 		label: "Hide useless things",
-		default: true,
-		description: "Hides useless elements as copyright notifications etc."
+		description: "Hides useless elements as copyright notifications etc.",
+		style: `#footer:has(#guide-links-primary) { display: none !important; }`,
+		default: true
 	},
+
+	nosponsored: {
+		label: "No 'Sponsored'",
+		description: "Removes YouTube videos with 'Only for sponsors', promos, etc",
+		style: `
+			ytd-rich-item-renderer:has(.badge.badge-style-type-members-only),
+			#masthead-ad,
+			#big-yoodle ytd-statement-banner-renderer,
+			ytd-rich-section-renderer:has(> #content > ytd-statement-banner-renderer),
+			ytd-rich-section-renderer:has(> #content > ytd-rich-shelf-renderer[has-paygated-featured-badge]),
+			ytd-rich-section-renderer:has(> #content > ytd-brand-video-shelf-renderer),
+			ytd-rich-section-renderer:has(> #content > ytd-brand-video-singleton-renderer),
+			ytd-rich-section-renderer:has(> #content > ytd-inline-survey-renderer),
+			tp-yt-paper-dialog:has(> #mealbar-promo-renderer),
+			ytd-rich-item-renderer:has(> .ytd-rich-item-renderer > ytd-ad-slot-renderer),
+			ytd-search-pyv-renderer.ytd-item-section-renderer,
+			ytd-ad-slot-renderer.ytd-item-section-renderer,
+			ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-ads"],
+			#movie_player .ytp-suggested-action,
+			#below #panels,
+			.ytp-ad-action-interstitial,
+			.ytp-paid-content-overlay,
+			ytm-paid-content-overlay-renderer,
+			#items > ytd-ad-slot-renderer {
+				display: none !important;
+			}
+		`,
+		default: true
+	},
+	
 	noFoodForGaza: {
 		label: "Hide 'donations' containers",
-		default: true,
-		description: "Hides offers to donate on something"
+		description: "Hides offers to donate on something",
+		style: `#donation-shelf { display: none !important; }`,
+		default: true
 	},
+
 	restoreFullscreenScroll: {
 		label: "Restore fullscreen scroll",
-		default: true,
-		description: "Restoring page scrolling in fullscreen"
-	},
-};
-
-const cssRules = {
-
-	youtubered: `
-		.ytp-play-progress,
-		#progress,
-		.ytd-thumbnail-overlay-resume-playback-renderer#progress,
-		.YtThumbnailOverlayProgressBarHostWatchedProgressBarSegmentModern,
-		.YtChapteredProgressBarChapteredPlayerBarChapterRefresh,
-		.YtChapteredProgressBarChapteredPlayerBarFillRefresh,
-		.YtProgressBarLineProgressBarPlayedRefresh,
-		#progress.yt-page-navigation-progress,
-		.ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment {
-			background: var(--yt-spec-static-brand-red) !important;
-		}
-
-		.yt-icon-shape > div > svg > g:first-of-type > path:first-of-type {
-			fill: var(--yt-spec-static-brand-red) !important;
-		}
-	`,
-
-	fixHeader: `
-		ytd-masthead {
-			background: var(--yt-spec-base-background) !important;
-		}
-
-		#header.style-scope.ytd-rich-grid-renderer {
-			display: none !important;
-		}
-
-		#frosted-glass.loading-with-chipbar,
-		#frosted-glass.with-chipbar.ytd-app {
-			background: transparent !important;
-			backdrop-filter: none !important;
-		}
-
-		.yt-spec-icon-badge-shape--type-notification-refresh .yt-spec-icon-badge-shape__badge {
-			background-color: red !important;
-			color: white !important;
-		}
-	`,
-
-	hideRightArrow: `
-		#right-arrow-container {
-			display: none !important;
-		}
-	`,
-
-	hideTeaserCarousel: `
-		#teaser-carousel {
-			display: none !important;
-		}
-	`,
-
-	hideGamesShelf: `
-		.ytd-rich-shelf-renderer {
-			display: none !important;
-		}
-	`,
-
-	hideSponsorPopup: `
-		yt-mealbar-promo-renderer {
-			display: none !important;
-		}
-	`,
-
-	hideSecondChannelIcon: `
-		ytd-video-description-infocards-section-renderer a#header {
-			display: none !important;
-		}
-	`,
-
-	hideShortsShelf: `
-		ytd-reel-shelf-renderer {
-			display: none !important;
-		}
-	`,
-
-	hideStillWatchingPopup: `
-		tp-yt-paper-toast#toast {
-			display: none !important;
-		}
-	`,
-
-	transparentSearchBox: `
-		.ytSearchboxComponentSearchButtonDark,
-		.ytSearchboxComponentInputBox {
-			background-color: transparent !important;
-		}
-	`,
-
-	hideVoiceSearchButton: `
-		#voice-search-button.ytd-masthead {
-			display: none !important;
-		}
-	`,
-
-	hideYoutubeSurveys: `
-		#tp-yt-paper-dialog.style-scope.ytd-popup-container,
-		ytd-single-option-survey-renderer,
-		ytd-inline-survey-renderer,
-		ytd-checkbox-survey-renderer {
-			display: none !important;
-		}
-	`,
-
-	hideHorizontalScrollbar: `
-		html, body {
-			overflow-x: hidden !important;
-		}
-	`,
-
-	fixMainGrid: `
-		ytd-browse:is([page-subtype="home"], [page-subtype="subscriptions"]) ytd-rich-grid-renderer {
-			--ytd-rich-grid-items-per-row: 5 !important;
-			--ytd-rich-grid-posts-per-row: 5 !important;
-			--ytd-rich-grid-row-margin: 16px !important;
-			--ytd-rich-grid-item-margin: 16px !important;
-		}
-	`,
-
-	hideClarifyBox: `
-		#clarify-box,
-		.ytp-paid-content-overlay {
-			display: none !important;
-		}
-	`,
-
-	hideLoadingMocking: `
-		#text-container.style-scope.yt-notification-action-renderer {
-			display: none !important;
-		}
-	`,
-
-	hideYoutubeSelfPromotions: `
-		#statement-banner-content.style-scope.ytd-statement-banner-renderer {
-			display: none !important;
-		}
-	`,
-
-	clearVideoDescription: `
-		yt-video-attributes-section-view-model,
-		how-this-was-made-section-view-model,
-		.YtwHowThisWasMadeSectionViewModelHost,
-		#ticket-shelf,
-		ytd-video-description-transcript-section-renderer,
-		a[href="/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ"].yt-spec-button-shape-next,
-		#expandable-metadata {
-			display: none !important;
-		}
-	`,
-
-	hideUselessThings: `
-		#footer:has(#guide-links-primary) {
-			display: none !important;
-		}
-	`,
-
-	nosponsored: `
-        ytd-rich-item-renderer:has(.badge.badge-style-type-members-only) {
-            display: none !important;
-        }
-	`,
-
-	noFoodForGaza: `
-		#donation-shelf {
-			display: none !important;
-		},
-	`,
-	
-	restoreFullscreenScroll: `
-		ytd-app[fullscreen] {
-			overflow: auto !important;
-		}
-		ytd-app[scrolling] {
-			bottom: 0 !important;
-			scrollbar-width: none !important;
-			-ms-overflow-style: none !important;
-		}
-		ytd-app[fullscreen]::-webkit-scrollbar,
-		ytd-app[scrolling]::-webkit-scrollbar {
-			display: none !important;
-		}
-		ytd-watch-flexy[fullscreen] #columns {
-			display: flex !important;
-		}
-	`,
-
+		description: "Restoring page scrolling in fullscreen",
+		style: `
+			ytd-app[fullscreen] { overflow: auto !important; }
+			ytd-app[scrolling] {
+				bottom: 0 !important;
+				scrollbar-width: none !important;
+				-ms-overflow-style: none !important;
+			}
+			ytd-app[fullscreen]::-webkit-scrollbar,
+			ytd-app[scrolling]::-webkit-scrollbar { display: none !important; }
+			ytd-watch-flexy[fullscreen] #columns { display: flex !important; }
+		`,
+		default: true
+	}
 };

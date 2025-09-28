@@ -2,46 +2,33 @@ const injectedScripts = new Set();
 const injectedCssKeys = new Set();
 const extensionName = chrome.runtime.getManifest().name || 'unknown';
 
-chrome.storage.local.get(Object.keys(vars), result => {
-
+chrome.storage.local.get(Object.keys(config), result => {
 	const loggingEnabled = !!result.logging;
 	document.documentElement.setAttribute('data-logging-enabled', loggingEnabled ? 'true' : 'false');
 	document.documentElement.setAttribute('data-extension-name', extensionName);
 
-	for (const key in vars) {
-		if (result[key] && cssRules[key]) {
-			injectCss(key, cssRules[key], !!result.logging);
-		}
-	}
-
-	for (const key in vars) {
+	for (const key in config) {
 		if (!result[key]) continue;
 
-		if (loggingEnabled) {
-			console.log(`${document.documentElement.getAttribute('data-extension-name')}: Feature enabled: ${key}`);
+		const setting = config[key];
+
+		if (setting.style) {
+			injectCss(key, setting.style, loggingEnabled);
 		}
 
-		if (key === 'nosleeptimer') {
-			injectScript('scripts/nosleeptimer.js', loggingEnabled);
-		} else if (key === 'autoconfirm') {
-			injectScript('scripts/autoconfirm.js', loggingEnabled);
-		} else if (key === 'nourltracking') {
-			injectScript('scripts/nourltracking.js', loggingEnabled);
+		if (setting.script) {
+			injectScript(setting.script, loggingEnabled);
 		}
 	}
 });
 
 function injectScript(file, loggingEnabled) {
-	if (injectedScripts.has(file)) {
-		return;
-	}
+	if (injectedScripts.has(file)) return;
 
 	const s = document.createElement('script');
 	s.src = chrome.runtime.getURL(file);
 	s.onload = () => {
-		if (loggingEnabled) {
-			console.log(`${document.documentElement.getAttribute('data-extension-name')}: Injected ${file}`);
-		}
+		if (loggingEnabled) console.log(`${extensionName}: Injected ${file}`);
 		s.remove();
 	};
 	(document.head || document.documentElement).appendChild(s);
@@ -49,15 +36,12 @@ function injectScript(file, loggingEnabled) {
 }
 
 function injectCss(key, cssText, loggingEnabled) {
-	if (injectedCssKeys.has(key)) {
-		return;
-	}
+	if (injectedCssKeys.has(key)) return;
 
 	const style = document.createElement('style');
 	style.textContent = cssText;
 	document.head.appendChild(style);
 	injectedCssKeys.add(key);
-	if (loggingEnabled) {
-		console.log(`${document.documentElement.getAttribute('data-extension-name')}: Injected CSS rule for ${key}`);
-	}
+
+	if (loggingEnabled) console.log(`${extensionName}: Injected CSS for ${key}`);
 }

@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("checkbox-container");
 
-  for (const [key, { label, description }] of Object.entries(vars)) {
+  for (const [key, { label, description }] of Object.entries(config)) {
     const switchEl = document.createElement("label");
     switchEl.classList.add("toggle-switch");
     const tooltip = document.createElement("div");
@@ -22,22 +22,22 @@ document.addEventListener("DOMContentLoaded", () => {
     container.appendChild(document.createElement("br"));
   }
 
-  chrome.storage.local.get(Object.keys(vars), result => {
+  chrome.storage.local.get(Object.keys(config), result => {
     const updates = {};
-    for (const key in vars) {
-      if (result[key] === undefined) updates[key] = vars[key].default;
+    for (const key in config) {
+      if (result[key] === undefined) updates[key] = config[key].default;
     }
     if (Object.keys(updates).length) {
       chrome.storage.local.set(updates);
       Object.assign(result, updates);
     }
-    for (const key in vars) {
+    for (const key in config) {
       const cb = document.getElementById(key);
       if (cb) cb.checked = result[key];
     }
   });
 
-  for (const key in vars) {
+  for (const key in config) {
     const cb = document.getElementById(key);
     if (cb) {
       cb.addEventListener("change", e => {
