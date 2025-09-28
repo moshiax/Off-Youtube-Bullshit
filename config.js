@@ -27,6 +27,17 @@ const config = {
 		default: true
 	},
 
+	returnNextButton: {
+		label: "Return 'Next' button",
+		description: "Returns next button in video player",
+		style: `
+			.ytp-next-button {
+				display: block !important;
+			}
+		`,
+		default: true
+	},
+	
 	youtubered: {
 		label: "Return Youtube Red",
 		description: "Colors progress bars and interface elements with YouTube's red color",

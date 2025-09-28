@@ -8,7 +8,11 @@ chrome.storage.local.get(Object.keys(config), result => {
 	document.documentElement.dataset.extensionName = extensionName;
 
 	for (const key in config) {
-		if (!result[key]) continue;
+		const value = result[key] !== undefined ? result[key] : config[key].default;
+
+		if (!value) {
+			continue;
+		}
 
 		const setting = config[key];
 
