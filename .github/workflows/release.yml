@@ -37,7 +37,11 @@ jobs:
           echo "COMMIT_BODY=$COMMIT_BODY" >> $GITHUB_ENV
 
       - name: Save private key
-        run: echo "${{ secrets.SIGNING_KEY }}" > key.pem
+        run: |
+          cat > key.pem
+        shell: bash
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
 
       - name: Pack extension to CRX
         run: |
@@ -46,7 +50,7 @@ jobs:
 
       - name: Create GitHub Release
         id: create_release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@b7eabc95ff50cbeeedec83973935c8f306dfcd0b
         with:
           tag: ${{ env.SHORT_SHA }}
           name: "Release ${{ env.SHORT_SHA }} - ${{ env.COMMIT_SUMMARY }}"
