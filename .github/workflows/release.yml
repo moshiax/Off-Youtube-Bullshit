@@ -36,17 +36,13 @@ jobs:
           echo "COMMIT_SUMMARY=$COMMIT_SUMMARY" >> $GITHUB_ENV
           echo "COMMIT_BODY=$COMMIT_BODY" >> $GITHUB_ENV
 
-      - name: Save private key
+      - name: Pack extension to CRX
         run: |
-          cat > key.pem
+          echo "$SIGNING_KEY" > key.pem
+          crx pack ./ -o Off-Youtube-Bullshit.crx -p key.pem
         shell: bash
         env:
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-
-      - name: Pack extension to CRX
-        run: |
-          crx pack ./ -o Off-Youtube-Bullshit.crx -p key.pem
-        shell: bash
 
       - name: Create GitHub Release
         id: create_release
@@ -63,7 +59,3 @@ jobs:
           makeLatest: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Cleanup key file and CRX
-        run: |
-          rm key.pem Off-Youtube-Bullshit.crx
