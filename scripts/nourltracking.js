@@ -19,13 +19,13 @@ document.addEventListener("copy", async () => {
 
 			await navigator.clipboard.writeText(text);
 
-			if (document.documentElement.getAttribute('data-logging-enabled') === 'true') {
-				console.log(`${document.documentElement.getAttribute('data-extension-name')}: Cleaned YouTube URL: ${originalText} --> ${text}`);
+			if (document.documentElement.dataset.loggingEnabled === 'true') {
+				console.log(`${document.documentElement.dataset.extensionName}: Cleaned YouTube URL: ${originalText} --> ${text}`);
 			}
 		}
 	} catch (err) {
-		if (document.documentElement.getAttribute('data-logging-enabled') === 'true') {
-			console.error(`${document.documentElement.getAttribute('data-extension-name')}: Error processing copy event:`, err);
+		if (document.documentElement.dataset.loggingEnabled === 'true') {
+			console.error(`${document.documentElement.dataset.extensionName}: Error processing copy event:`, err);
 		}
 	}
 });

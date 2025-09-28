@@ -4,8 +4,8 @@ const extensionName = chrome.runtime.getManifest().name || 'unknown';
 
 chrome.storage.local.get(Object.keys(config), result => {
 	const loggingEnabled = !!result.logging;
-	document.documentElement.setAttribute('data-logging-enabled', loggingEnabled ? 'true' : 'false');
-	document.documentElement.setAttribute('data-extension-name', extensionName);
+	document.documentElement.dataset.loggingEnabled = loggingEnabled ? 'true' : 'false';
+	document.documentElement.dataset.extensionName = extensionName;
 
 	for (const key in config) {
 		if (!result[key]) continue;

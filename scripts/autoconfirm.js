@@ -4,8 +4,8 @@ document.addEventListener('pause', function(e) {
 		e.target.play();
 		dialog.querySelector('button').click();
 
-		if (document.documentElement.getAttribute('data-logging-enabled') === 'true') {
-			console.log(`${document.documentElement.getAttribute('data-extension-name')}: Autoconfirm.js triggered`);
+		if (document.documentElement.dataset.loggingEnabled === 'true') {
+			console.log(`${document.documentElement.dataset.extensionName}: Autoconfirm.js triggered`);
 		}
 	}
 }, true);
