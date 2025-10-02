@@ -10,6 +10,41 @@
 	--lightGrey: #999;
 }
 
+html,
+body {
+	background-color: var(--background);
+	color: var(--primary);
+	min-width: 310px;
+	min-height: 350px;
+	user-select: none;
+	padding: 0.5em;
+	font-family: "Roboto", Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	scrollbar-width: thin;
+	scrollbar-color: var(--accent) var(--secondary);
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--secondary);
+	border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--accent);
+	border-radius: 4px;
+	border: 2px solid var(--secondary);
+	transition: background-color 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: var(--primary);
+}
+
 .toggle-switch {
 	position: relative;
 	display: inline-block;
@@ -39,8 +74,9 @@
 
 .toggle-tooltip {
 	position: absolute;
-	top: 160%;
-	left: 0;
+	top: 50%;
+	left: 110%;
+	transform: translateY(-50%);
 	width: 250px;
 	background-color: var(--secondary);
 	border-radius: 0.5rem;
@@ -83,59 +119,4 @@ input:checked + .toggle-slider::before {
 	transform: translateX(35px);
 	display: inline-block;
 	color: var(--primary);
-}
-
-.toggle-switch::before {
-	content: attr(data-hover);
-	visibility: hidden;
-	opacity: 0;
-	transition: visibility 0.1s linear, opacity 0.1s linear;
-	width: 250px;
-	background-color: var(--secondary);
-	border-radius: 0.5rem;
-	padding: 0.5rem;
-	position: absolute;
-	z-index: 1;
-	left: 0;
-	top: 160%;
-	color: var(--primary);
-}
-
-.toggle-switch:hover::before {
-	visibility: visible;
-	opacity: 1;
-}
-
-html,
-body {
-	background-color: var(--background);
-	color: var(--primary);
-	min-width: 310px;
-	min-height: 350px;
-	padding: 0.5em;
-	font-family: "Roboto", Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	scrollbar-width: thin;
-	scrollbar-color: var(--accent) var(--secondary);
-}
-
-::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
-}
-
-::-webkit-scrollbar-track {
-	background: var(--secondary);
-	border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb {
-	background-color: var(--accent);
-	border-radius: 4px;
-	border: 2px solid var(--secondary);
-	transition: background-color 0.3s;
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background-color: var(--primary);
 }

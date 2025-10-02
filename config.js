@@ -161,16 +161,16 @@ const config = {
 		default: true
 	},
 
-	hideClarifyBox: {
-		label: "Hide clarify boxes",
-		description: 'Removes propaganda (support.google.com) and elements that thinking instead of you',
+	hidePropaganda: {
+		label: "Hide propaganda",
+		description: 'Removes propaganda (<a href="https://support.google.com/youtube/answer/9004474" target="_blank" rel="noopener noreferrer">support.google.com</a>) and elements that thinking instead of you',
 		style: `#clarify-box, .ytp-paid-content-overlay { display: none !important; }`,
 		default: true
 	},
 
 	hideLoadingMocking: {
 		label: "Hide 'Video is not loading?' Message",
-		description: "Removes mocking from 'Video is not loading?'",
+		description: 'Removes mocking from hindus youtube devs \'Video is not loading?\' (<a href="https://www.reddit.com/r/youtube/comments/1lafhcc/youtube_is_now_artificially_slowing_down_youtube/" target="_blank" rel="noopener noreferrer">reddit.com</a>)',
 		style: `#text-container.style-scope.yt-notification-action-renderer { display: none !important; }`,
 		default: true
 	},
