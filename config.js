@@ -8,9 +8,13 @@ const config = {
 	nosleeptimer: {
 		label: "No 'Sleep timer'",
 		description: "Removes sleep timer from YouTube video settings",
-		script: 'scripts/nosleeptimer.js',
+		style: `
+			.ytp-menuitem:has(svg path[d="M16.67,4.31C19.3,5.92,21,8.83,21,12c0,4.96-4.04,9-9,9c-2.61,0-5.04-1.12-6.72-3.02C5.52,17.99,5.76,18,6,18 c6.07,0,11-4.93,11-11C17,6.08,16.89,5.18,16.67,4.31 M14.89,2.43C15.59,3.8,16,5.35,16,7c0,5.52-4.48,10-10,10 c-1,0-1.97-0.15-2.89-0.43C4.77,19.79,8.13,22,12,22c5.52,0,10-4.48,10-10C22,7.48,19,3.67,14.89,2.43L14.89,2.43z M12,6H6v1h4.5 L6,10.99v0.05V12h6v-1H7.5L12,7.01V6.98V6L12,6z"]) {
+				display: none !important;
+			}
+		`,
 		default: true
-	},
+	}, // TODO: Make this multirule to hide various .ytp-menuitem entries  
 
 	noStops: {
 		label: "No random video stops",
@@ -210,6 +214,7 @@ const config = {
 		description: "Removes YouTube videos with 'Only for sponsors', promos, etc",
 		style: `
 			ytd-rich-item-renderer:has(.badge.badge-style-type-members-only),
+			/* ytd-grid-video-renderer.style-scope:has(.badge.badge-style-type-members-only), Meant to hide sponsored on channel page but breaks playlist arrows (how? wtf youtube) */
 			#masthead-ad,
 			#big-yoodle ytd-statement-banner-renderer,
 			ytd-rich-section-renderer:has(> #content > ytd-statement-banner-renderer),
@@ -227,6 +232,8 @@ const config = {
 			.ytp-ad-action-interstitial,
 			.ytp-paid-content-overlay,
 			ytm-paid-content-overlay-renderer,
+			ytd-item-section-renderer.ytd-section-list-renderer.style-scope:nth-of-type(2), /* 'Our sponsors' block on channel page */
+			ytd-item-section-renderer.ytd-section-list-renderer.style-scope:nth-of-type(3), /* 'Sponsored videos' block on channel page */
 			#items > ytd-ad-slot-renderer {
 				display: none !important;
 			}
