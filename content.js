@@ -8,12 +8,14 @@ chrome.storage.local.get(Object.keys(config), result => {
 	document.documentElement.dataset.extensionName = extensionName;
 
 	for (const key in config) {
-		let value = result[key];
-		if (value === undefined) {
-			value = config[key].default;
-		}
-
 		const setting = config[key];
+		let value = result[key];
+
+		if (value === undefined) value = setting.default;
+
+		if (!value) {
+			continue;
+		}
 
 		if (setting.style) {
 			injectCss(key, setting.style, loggingEnabled);

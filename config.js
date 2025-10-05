@@ -232,8 +232,6 @@ const config = {
 			.ytp-ad-action-interstitial,
 			.ytp-paid-content-overlay,
 			ytm-paid-content-overlay-renderer,
-			ytd-item-section-renderer.ytd-section-list-renderer.style-scope:nth-of-type(2), /* 'Our sponsors' block on channel page */
-			ytd-item-section-renderer.ytd-section-list-renderer.style-scope:nth-of-type(3), /* 'Sponsored videos' block on channel page */
 			#items > ytd-ad-slot-renderer {
 				display: none !important;
 			}
