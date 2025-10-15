@@ -250,15 +250,55 @@ const config = {
 		label: "Restore fullscreen scroll",
 		description: "Restoring page scrolling in fullscreen",
 		style: `
-			ytd-app[fullscreen] { overflow: auto !important; }
-			ytd-app[scrolling] {
-				bottom: 0 !important;
-				scrollbar-width: none !important;
-				-ms-overflow-style: none !important;
+			/* https://greasyfork.org/en/scripts/547663-youtube-restore-scrollable-fullscreen */
+			ytd-app[fullscreen] {
+				overflow: auto !important;
 			}
-			ytd-app[fullscreen]::-webkit-scrollbar,
-			ytd-app[scrolling]::-webkit-scrollbar { display: none !important; }
-			ytd-watch-flexy[fullscreen] #columns { display: flex !important; }
+			ytd-app[scrolling] {
+				position: absolute !important;
+				top: 0 !important;
+				left: 0 !important;
+				right: calc((var(--ytd-app-fullerscreen-scrollbar-width) + 1px)*-1) !important;
+				bottom: 0 !important;
+				overflow-x: auto !important;
+			}
+			ytd-watch-flexy[fullscreen] #single-column-container.ytd-watch-flexy,
+			ytd-watch-flexy[fullscreen] #columns.ytd-watch-flexy {
+				display: flex !important;
+			}
+
+			/* Hide the fullscreen grid with recommended videos */
+			.ytp-fullscreen-grid,
+			.ytp-fullscreen-grid-main-content,
+			.ytp-fullscreen-grid-stills-container,
+			.ytp-modern-videowall-still,
+			.ytp-fullscreen-grid-expand-button,
+			.ytp-fullscreen-grid-hover-overlay {
+				display: none !important;
+				opacity: 0 !important;
+				visibility: hidden !important;
+				pointer-events: none !important;
+				height: 0 !important;
+				max-height: 0 !important;
+				overflow: hidden !important;
+			}
+
+			/* Completely disable grid scrolling CSS variables */
+			.html5-video-player.ytp-grid-scrollable,
+			.html5-video-player {
+				--ytp-grid-scroll-percentage: 0 !important;
+				--ytp-grid-peek-height: 0px !important;
+			}
+
+			/* Hide any fullscreen education panels and overlays */
+			.ytp-fullerscreen-edu-panel,
+			.ytp-cards-teaser,
+			.ytp-cards-teaser-box,
+			div[class*="fullerscreen"] {
+				display: none !important;
+				opacity: 0 !important;
+				visibility: hidden !important;
+			}
 		`,
 		default: true
 	},
