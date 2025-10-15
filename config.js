@@ -265,7 +265,7 @@ const config = {
 	
 	restoreOldControls: {
 		label: "Restore old player controls",
-		description: "Restores old player controls layout (not the icons yet)",
+		description: "Restores old player controls layout",
 		style: `
 			/* 	https://www.reddit.com/r/youtube/comments/1ni5tre/make_new_youtube_ui_look_like_an_old_ui/ */
 			/* 	https://github.com/code-charity/youtube/issues/3257										   */
