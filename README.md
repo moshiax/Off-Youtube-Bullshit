@@ -5,3 +5,5 @@
 [insin/control-panel-for-youtube](https://github.com/insin/control-panel-for-youtube/)
 
 [Anarios/return-youtube-dislike](https://github.com/Anarios/return-youtube-dislike)
+
+[code-charity/improvedtube](https://github.com/code-charity/youtube)
