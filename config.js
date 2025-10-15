@@ -261,5 +261,111 @@ const config = {
 			ytd-watch-flexy[fullscreen] #columns { display: flex !important; }
 		`,
 		default: true
+	},
+	
+	restoreOldControls: {
+		label: "Restore old player controls",
+		description: "Restores old player controls layout (not the icons yet)",
+		style: `
+			/* https://www.reddit.com/r/youtube/comments/1ni5tre/make_new_youtube_ui_look_like_an_old_ui/ */
+
+			@-moz-document domain("youtube.com") {
+			:root{
+				--toolbar-height: 52px;
+				--element-margin: 2px;
+				--element-height: calc(var(--toolbar-height) - var(--element-margin));
+				--bg-color: #0000;
+			}
+
+			/* SIZE */
+			.ytp-delhi-modern .ytp-tooltip{margin-top:12px !important;}
+			.ytp-delhi-modern .ytp-chrome-bottom,
+			.ytp-delhi-modern .ytp-chrome-controls,
+			.ytp-delhi-modern.ytp-big-mode:not(.ytp-xsmall-width-mode) .ytp-chrome-bottom,
+			.ytp-delhi-modern.ytp-big-mode:not(.ytp-xsmall-width-mode) .ytp-right-controls .ytp-right-controls-right,
+			.ytp-delhi-modern.ytp-big-mode:not(.ytp-xsmall-width-mode) .ytp-right-controls .ytp-right-controls-left{
+				height:var(--toolbar-height) !important;
+				line-height:var(--toolbar-height) !important;
+			}
+			.ytp-delhi-modern.ytp-big-mode:not(.ytp-xsmall-width-mode) .ytp-progress-bar-container,
+			.ytp-delhi-modern:not(.ytp-player-minimized) .ytp-progress-bar-container{bottom:var(--toolbar-height) !important;}
+
+			/* Overlays container */
+			.ytp-delhi-modern.ytp-big-mode.ytp-fullscreen-grid-peeking .ytp-overlays-container,
+			.ytp-delhi-modern.ytp-fullscreen-grid-peeking .ytp-overlays-container{bottom:calc(var(--toolbar-height)+20px) !important;}
+
+			.ytp-delhi-modern .ytp-chrome-controls .ytp-right-controls,
+			.ytp-delhi-modern .ytp-prev-button:not(.ytp-miniplayer-button-container>*),
+			.ytp-delhi-modern .ytp-chrome-controls .ytp-next-button:not(.ytp-miniplayer-button-container>*).ytp-playlist-ui,
+			.ytp-delhi-modern .ytp-chrome-controls .ytp-play-button,
+			.ytp-delhi-modern.ytp-delhi-horizontal-volume-controls .ytp-volume-area,
+			.ytp-delhi-modern .ytp-time-display:not(.ytp-miniplayer-ui *),
+			.ytp-delhi-modern .ytp-chapter-container{margin:var(--element-margin) 0 !important;padding:0 !important;}
+
+			/* Play button */
+			.ytp-delhi-modern .ytp-chrome-controls .ytp-play-button{
+				--size: var(--element-height);
+				height: var(--size) !important;
+				width: var(--size) !important;	
+			}
+
+			/* Play icon */
+			.ytp-delhi-modern-icons .ytp-chrome-controls .ytp-play-button svg{
+				padding: 11px !important;
+				--size: 28px;
+				height: var(--size) !important;
+				width: var(--size) !important;
+			}
+
+			/* gradient */
+			.ytp-chrome-bottom:after{
+				content:'';
+				position:absolute;
+				left:-100px;
+				bottom:-2px;
+				width:calc(100%+200px);
+				background:linear-gradient(0deg,#000a,#0000);
+				height:calc(var(--toolbar-height)+10px);
+				z-index:-1;
+			}
+
+			/* fullscreen fixes */
+			.ytp-delhi-modern.ytp-delhi-horizontal-volume-controls.ytp-big-mode:not(.ytp-xsmall-width-mode) .ytp-volume-area,
+			.ytp-big-mode .ytp-volume-slider,
+			.ytp-delhi-modern .ytp-chrome-controls .ytp-mute-button,
+			.ytp-delhi-modern.ytp-big-mode:not(.ytp-xsmall-width-mode) .ytp-time-display,
+			.ytp-delhi-modern.ytp-big-mode:not(.ytp-xsmall-width-mode) .ytp-chrome-controls .ytp-next-button:not(.ytp-miniplayer-button-container>*),
+			.ytp-big-mode.ytp-delhi-modern .ytp-chrome-controls .ytp-prev-button:not(ytp-miniplayer-button-container>*),
+			.ytp-delhi-modern.ytp-big-mode:not(.ytp-xsmall-width-mode) .ytp-time-wrapper,
+			.ytp-delhi-modern.ytp-big-mode:not(.ytp-xsmall-width-mode) .ytp-chapter-title.ytp-button{
+				height:var(--element-height) !important;
+				min-height:var(--element-height) !important;
+				line-height:var(--element-height) !important;
+				margin-top:0 !important;
+				margin-bottom:0 !important;
+			}
+
+			.ytp-big-mode.ytp-delhi-modern-icons .ytp-chrome-controls .ytp-button svg,
+			.ytp-delhi-modern.ytp-big-mode:not(.ytp-xsmall-width-mode) .ytp-chrome-controls .ytp-next-button:not(.ytp-miniplayer-button-container>*) svg,
+			.ytp-big-mode.ytp-delhi-modern .ytp-chrome-controls .ytp-prev-button:not(ytp-miniplayer-button-container>*) svg{padding-top:14px;}
+			.ytp-big-mode.ytp-delhi-modern.ytp-delhi-horizontal-volume-controls .ytp-volume-area .ytp-volume-icon svg{padding-top:10px;}
+
+			/* COLORS */
+			.ytp-delhi-modern .ytp-time-wrapper:not(.ytp-miniplayer-ui *),
+			.ytp-delhi-modern.ytp-delhi-horizontal-volume-controls .ytp-volume-area,
+			.ytp-delhi-modern .ytp-chrome-controls .ytp-play-button,
+			.ytp-delhi-modern .ytp-chrome-controls .ytp-right-controls,
+			.ytp-delhi-modern .ytp-chrome-controls>*>*,
+			.ytp-delhi-modern .ytp-chapter-title.ytp-button{background:var(--bg-color) !important;}
+
+			/* Video endscreen fix */
+			.ytp-fullscreen-grid-active.html5-video-player.ended-mode .ytp-modern-videowall-still:nth-child(n+4){display:block;}
+			.ytp-fullscreen-grid-active.html5-video-player.ended-mode .ytp-modern-videowall-still:nth-child(n+11),
+			.ytp-fullscreen-grid-expand-button{display:none;}
+			.ytp-fullscreen-grid-active.ytp-grid-scrollable .ytp-fullscreen-grid{top:10%;}
+			.ytp-fullscreen-grid-stills-container{grid-template-columns:repeat(5,1fr);}
+			}
+		`,
+		default: true
 	}
 };
