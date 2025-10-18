@@ -22,8 +22,7 @@
 	"web_accessible_resources": [
 		{
 			"resources": [
-				"scripts/autoconfirm.js",
-				"scripts/nourltracking.js"
+				"scripts/*"
 			],
 			"matches": [
 				"*://*.youtube.com/*",

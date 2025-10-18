@@ -20,15 +20,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      - name: Install crx packager
-        run: npm install -g crx
-
       - name: Get commit info
+        id: commit_info
         run: |
           echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
           COMMIT_SUMMARY=$(git log -1 --pretty=%s)
@@ -36,7 +29,28 @@ jobs:
           echo "COMMIT_SUMMARY=$COMMIT_SUMMARY" >> $GITHUB_ENV
           echo "COMMIT_BODY=$COMMIT_BODY" >> $GITHUB_ENV
 
+          if echo "$COMMIT_SUMMARY $COMMIT_BODY" | grep -qi "\-norelease"; then
+            echo "SKIP_RELEASE=true" >> $GITHUB_ENV
+          else
+            echo "SKIP_RELEASE=false" >> $GITHUB_ENV
+          fi
+
+      - name: Skip check
+        if: env.SKIP_RELEASE == 'true'
+        run: echo "Release skipped due to '-norelease' flag in commit message."
+
+      - name: Set up Node.js
+        if: env.SKIP_RELEASE == 'false'
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install crx packager
+        if: env.SKIP_RELEASE == 'false'
+        run: npm install -g crx
+
       - name: Pack extension to CRX
+        if: env.SKIP_RELEASE == 'false'
         run: |
           echo "$SIGNING_KEY" > key.pem
           crx pack ./ -o Off-Youtube-Bullshit.crx -p key.pem
@@ -45,10 +59,11 @@ jobs:
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
 
       - name: Create GitHub Release
+        if: env.SKIP_RELEASE == 'false'
         id: create_release
         uses: ncipollo/release-action@b7eabc95ff50cbeeedec83973935c8f306dfcd0b
         with:
-          tag: ${{ env.SHORT_SHA }}
+          tag: release
           name: "Release ${{ env.SHORT_SHA }} - ${{ env.COMMIT_SUMMARY }}"
           body: ${{ env.COMMIT_BODY != '' && env.COMMIT_BODY || env.COMMIT_SUMMARY }}
           draft: false
