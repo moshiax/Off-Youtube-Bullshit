@@ -31,6 +31,13 @@ const config = {
 		default: true
 	},
 
+	nocontentwarning: {
+		label: "No content warning",
+		description: "Automatically clicks on 'viewer discretion is advised' banners",
+		script: 'scripts/nocontentwarning.js',
+		default: true
+	},
+
 	returnNextButton: {
 		label: "Return 'Next' button",
 		description: "Returns next button in video player",
