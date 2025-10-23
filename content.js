@@ -32,6 +32,7 @@ function injectScript(file, loggingEnabled) {
 
 	const s = document.createElement('script');
 	s.src = chrome.runtime.getURL(file);
+	s.dataset.name = file.split('/').pop();
 	s.onload = () => {
 		if (loggingEnabled) console.log(`${extensionName}: Injected ${file}`);
 		s.remove();
