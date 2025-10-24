@@ -4,18 +4,26 @@ const extensionName = chrome.runtime.getManifest().name || 'unknown';
 document.documentElement.dataset.extensionName = extensionName;
 
 chrome.storage.local.get(Object.keys(config), result => {
-	const loggingEnabled = !!result.logging;
+	const toSet = {};
+
+	for (const key in config) {
+		if (result[key] === undefined) {
+			toSet[key] = config[key].default;
+		}
+	}
+
+	if (Object.keys(toSet).length > 0) {
+		chrome.storage.local.set(toSet);
+	}
+
+	let loggingEnabled = result.logging ?? toSet.logging;
 	document.documentElement.dataset.loggingEnabled = loggingEnabled ? 'true' : 'false';
 
 	for (const key in config) {
 		const setting = config[key];
 		let value = result[key];
-
-		if (value === undefined) value = setting.default;
-
-		if (!value) {
-			continue;
-		}
+		if (value === undefined) value = toSet[key];
+		if (!value) continue;
 		if (setting.style) injectCss(key, setting.style);
 		if (setting.script) injectScript(setting.script);
 	}
