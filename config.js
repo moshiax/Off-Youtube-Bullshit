@@ -320,6 +320,7 @@ const config = {
 	restoreOldUI: {
 		label: "Restore 2025 UI",
 		description: "Restores old Youtube UI before 2025 update (partly)",
+		script: 'scripts/disabledelhi.js',
 		style: `
 			/* 	https://www.reddit.com/r/youtube/comments/1ni5tre/make_new_youtube_ui_look_like_an_old_ui/ */
 			/* 	https://github.com/code-charity/youtube/issues/3257										   */
