@@ -20,9 +20,6 @@
 	  rateBarEnabled: false, 				 // [true, false*] Enables ratio bar under like/dislike buttons
 	};
 
-	const LIKED_STATE = "LIKED_STATE";
-	const DISLIKED_STATE = "DISLIKED_STATE";
-	const NEUTRAL_STATE = "NEUTRAL_STATE";
 	let previousState = 3; //1=LIKED, 2=DISLIKED, 3=NEUTRAL
 	let likesvalue = 0;
 	let dislikesvalue = 0;
@@ -100,19 +97,27 @@
 	}
 
 	function getLikeButton() {
-	  return getButtons().children[0].tagName === "YTD-SEGMENTED-LIKE-DISLIKE-BUTTON-RENDERER"
-		? document.querySelector("#segmented-like-button") !== null
-		  ? document.querySelector("#segmented-like-button")
-		  : getButtons().children[0].children[0]
-		: getButtons().querySelector("like-button-view-model") ?? getButtons().children[0];
+		const buttons = getButtons();
+		const firstChild = buttons.children[0];
+
+		if (firstChild.tagName === "YTD-SEGMENTED-LIKE-DISLIKE-BUTTON-RENDERER") {
+			const segmentedButton = document.querySelector("#segmented-like-button");
+			if (segmentedButton !== null) {
+				return segmentedButton;
+			}
+			return firstChild.children[0];
+		}
+
+		return buttons.querySelector("like-button-view-model") ?? firstChild;
 	}
 
 	function getLikeTextContainer() {
-	  return (
-		getLikeButton().querySelector("#text") ??
-		getLikeButton().getElementsByTagName("yt-formatted-string")[0] ??
-		getLikeButton().querySelector("span[role='text']")
-	  );
+		const likeButton = getLikeButton();
+		return (
+			likeButton.querySelector("#text") ??
+			likeButton.getElementsByTagName("yt-formatted-string")[0] ??
+			likeButton.querySelector("span[role='text']")
+		);
 	}
 
 	function getDislikeTextContainer() {
@@ -175,20 +180,6 @@
 		  });
 		},
 	  );
-	}
-
-	function isVideoLiked() {
-	  if (isMobile) {
-		return getLikeButton().querySelector("button").getAttribute("aria-label") == "true";
-	  }
-	  return getLikeButton().classList.contains("style-default-active");
-	}
-
-	function isVideoDisliked() {
-	  if (isMobile) {
-		return getDislikeButton()?.querySelector("button").getAttribute("aria-label") == "true";
-	  }
-	  return getDislikeButton()?.classList.contains("style-default-active");
 	}
 
 	function checkForUserAvatarButton() {
@@ -288,11 +279,11 @@
 
 	  const widthPercent = likes + dislikes > 0 ? (likes / (likes + dislikes)) * 100 : 50;
 
-	  var likePercentage = parseFloat(widthPercent.toFixed(1));
+	  let likePercentage = parseFloat(widthPercent.toFixed(1));
 	  const dislikePercentage = (100 - likePercentage).toLocaleString();
 	  likePercentage = likePercentage.toLocaleString();
 
-	  var tooltipInnerHTML;
+	  let tooltipInnerHTML;
 	  switch (extConfig.tooltipPercentageMode) {
 		case "dash_like":
 		  tooltipInnerHTML = `${likes.toLocaleString()}&nbsp;/&nbsp;${dislikes.toLocaleString()}&nbsp;&nbsp;-&nbsp;&nbsp;${likePercentage}%`;
@@ -593,7 +584,7 @@
 	  let jsInitChecktimer;
 
 	  function checkForJS_Finish() {
-		//console.log();
+
 		if (isShorts() || (getButtons()?.offsetParent && isVideoLoaded())) {
 		  const buttons = getButtons();
 		  const dislikeButton = getDislikeButton();
