@@ -317,9 +317,9 @@ const config = {
 		default: true
 	},
 	
-	restoreOldControls: {
-		label: "Restore old player controls",
-		description: "Restores old player controls layout",
+	restoreOldUI: {
+		label: "Restore 2025 UI",
+		description: "Restores old Youtube UI before 2025 update (partly)",
 		style: `
 			/* 	https://www.reddit.com/r/youtube/comments/1ni5tre/make_new_youtube_ui_look_like_an_old_ui/ */
 			/* 	https://github.com/code-charity/youtube/issues/3257										   */
@@ -455,6 +455,57 @@ const config = {
 
 			.ytp-fullscreen-grid-stills-container {
 				grid-template-columns: repeat(5, 1fr);
+			},
+
+			/* Disable color on hover */
+			html {
+				--cpfyt-title-color: #0f0f0f;
+				--cpfyt-metadata-color: #606060;
+			}
+			html[dark] {
+				--cpfyt-title-color: #f1f1f1;
+				--cpfyt-metadata-color: #aaa;
+			}
+			ytd-browse[page-subtype="home"] {
+				.yt-spec-touch-feedback-shape__hover-effect {
+					display: none !important;
+				}
+				.yt-lockup-metadata-view-model__title {
+					color: var(--cpfyt-title-color) !important;
+				}
+				.yt-lockup-metadata-view-model__metadata {
+					color: var(--cpfyt-metadata-color) !important;
+				}
+			}
+
+			ytd-browse[page-subtype="home"] ytd-rich-item-renderer[rich-grid-hover-highlight] {
+				background: none !important;
+				box-shadow: none !important;
+			}
+
+			ytd-watch-metadata {
+				--yt-saturated-base-background: unset !important;
+				--yt-saturated-raised-background: unset !important;
+				--yt-saturated-additive-background: unset !important;
+				--yt-saturated-text-primary: unset !important;
+				--yt-saturated-text-secondary: unset !important;
+				--yt-saturated-outline: unset !important;
+				--yt-saturated-key-light: unset !important;
+				--yt-saturated-collection-stack: unset !important;
+				--yt-saturated-inverted-background: unset !important;
+				--yt-saturated-text-primary-inverse: unset !important;
+				--yt-saturated-text-disabled: unset !important;
+				--yt-saturated-drop-shadow: unset !important;
+				--yt-saturated-card-outline: unset !important;
+				--yt-saturated-overlay-background: unset !important;
+				--yt-saturated-overlay-text-primary: unset !important;
+			}
+			#description.ytd-watch-metadata:hover #snippet-text.ytd-text-inline-expander .yt-core-attributed-string--link-inherit-color[style] {
+				color: inherit !important;
+			}
+			#info.ytd-watch-info-text a,
+			#description.ytd-watch-metadata #snippet-text.ytd-text-inline-expander a {
+				color: var(--yt-spec-call-to-action);
 			}
 
 			/* Restore old player icons */
