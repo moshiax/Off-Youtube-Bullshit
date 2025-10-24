@@ -9,7 +9,7 @@
 	  showUpdatePopup: false,				 // [true, false*] Show a popup tab after extension update (See what's new)
 	  disableVoteSubmission: false,			 // [true, false*] Disable like/dislike submission (Stops counting your likes and dislikes)
 	  // disableLogging: true, 				 // [true*, false] Disable Logging API Response in JavaScript Console.
-	  disableLogging: !(document.documentElement.dataset.loggingEnabled === 'true'),
+	  disableLogging: document.documentElement.dataset.loggingEnabled !== 'true',
 	  coloredThumbs: false, 				 // [true, false*] Colorize thumbs (Use custom colors for thumb icons)
 	  coloredBar: false, 					 // [true, false*] Colorize ratio bar (Use custom colors for ratio bar)
 	  colorTheme: "classic",			 	 // [classic*, accessible, neon] Color theme (red/green, blue/yellow, pink/cyan)
@@ -191,39 +191,9 @@
 	  return getDislikeButton()?.classList.contains("style-default-active");
 	}
 
-	function isVideoNotLiked() {
-	  if (isMobile) {
-		return !isVideoLiked();
-	  }
-	  return getLikeButton().classList.contains("style-text");
-	}
-
-	function isVideoNotDisliked() {
-	  if (isMobile) {
-		return !isVideoDisliked();
-	  }
-	  return getDislikeButton()?.classList.contains("style-text");
-	}
-
 	function checkForUserAvatarButton() {
-	  if (isMobile) {
-		return;
-	  }
-	  if (document.querySelector("#avatar-btn")) {
-		return true;
-	  } else {
-		return false;
-	  }
-	}
-
-	function getState() {
-	  if (isVideoLiked()) {
-		return LIKED_STATE;
-	  }
-	  if (isVideoDisliked()) {
-		return DISLIKED_STATE;
-	  }
-	  return NEUTRAL_STATE;
+		if (isMobile) return;
+		return !!document.querySelector("#avatar-btn");
 	}
 
 	function setLikes(likesCount) {
@@ -248,20 +218,20 @@
 	}
 
 	function getLikeCountFromButton() {
-	  try {
-		if (isShorts()) {
-		  //Youtube Shorts don't work with this query. It's not necessary; we can skip it and still see the results.
-		  //It should be possible to fix this function, but it's not critical to showing the dislike count.
-		  return false;
-		}
-		let likeButton =
-		  getLikeButton().querySelector("yt-formatted-string#text") ?? getLikeButton().querySelector("button");
+		try {
+			if (isShorts()) {
+				return -1;
+			}
 
-		let likesStr = likeButton.getAttribute("aria-label").replace(/\D/g, "");
-		return likesStr.length > 0 ? parseInt(likesStr) : false;
-	  } catch {
-		return false;
-	  }
+			const likeButton =
+				getLikeButton().querySelector("yt-formatted-string#text") ??
+				getLikeButton().querySelector("button");
+
+			const likesStr = likeButton.getAttribute("aria-label").replace(/\D/g, "");
+			return likesStr.length > 0 ? parseInt(likesStr, 10) : -1;
+		} catch {
+			return -1;
+		}
 	}
 
 	(typeof GM_addStyle != "undefined"
@@ -386,46 +356,56 @@
 	  }
 	}
 
-	function setState() {
-	  let statsSet = false;
+	async function setState() {
+		let statsSet = false;
 
-	  fetch(`https://returnyoutubedislikeapi.com/votes?videoId=${getVideoId()}`).then((response) => {
-		response.json().then((json) => {
-		  if (json && !("traceId" in response) && !statsSet) {
+		try {
+			const response = await fetch(`https://returnyoutubedislikeapi.com/votes?videoId=${getVideoId()}`);
+			const json = await response.json();
+
+			if (!json || statsSet || "traceId" in response) return;
+
 			const { dislikes, likes } = json;
 			cLog("ReturnYouTubeDislike API response:", JSON.stringify(json, null, 2));
+
 			likesvalue = likes;
 			dislikesvalue = dislikes;
+
 			setDislikes(numberFormat(dislikes));
-			if (extConfig.numberDisplayReformatLikes === true) {
-			  const nativeLikes = getLikeCountFromButton();
-			  if (nativeLikes !== false) {
-				setLikes(numberFormat(nativeLikes));
-			  }
+
+			if (extConfig.numberDisplayReformatLikes) {
+				const nativeLikes = getLikeCountFromButton();
+				if (nativeLikes >= 0) {
+					setLikes(numberFormat(nativeLikes));
+				}
 			}
+
 			createRateBar(likes, dislikes);
-			if (extConfig.coloredThumbs === true) {
-			  const dislikeButton = getDislikeButton();
-			  if (isShorts()) {
-				// for shorts, leave deactived buttons in default color
-				const shortLikeButton = getLikeButton().querySelector("tp-yt-paper-button#button");
-				const shortDislikeButton = dislikeButton?.querySelector("tp-yt-paper-button#button");
-				if (shortLikeButton.getAttribute("aria-pressed") === "true") {
-				  shortLikeButton.style.color = getColorFromTheme(true);
+
+			if (extConfig.coloredThumbs) {
+				const dislikeButton = getDislikeButton();
+
+				if (isShorts()) {
+					const shortLikeButton = getLikeButton().querySelector("tp-yt-paper-button#button");
+					const shortDislikeButton = dislikeButton?.querySelector("tp-yt-paper-button#button");
+
+					if (shortLikeButton?.getAttribute("aria-pressed") === "true") {
+						shortLikeButton.style.color = getColorFromTheme(true);
+					}
+					if (shortDislikeButton?.getAttribute("aria-pressed") === "true") {
+						shortDislikeButton.style.color = getColorFromTheme(false);
+					}
+
+					shortsObserver.observe(shortLikeButton);
+					shortsObserver.observe(shortDislikeButton);
+				} else {
+					getLikeButton().style.color = getColorFromTheme(true);
+					if (dislikeButton) dislikeButton.style.color = getColorFromTheme(false);
 				}
-				if (shortDislikeButton && shortDislikeButton.getAttribute("aria-pressed") === "true") {
-				  shortDislikeButton.style.color = getColorFromTheme(false);
-				}
-				shortsObserver.observe(shortLikeButton);
-				shortsObserver.observe(shortDislikeButton);
-			  } else {
-				getLikeButton().style.color = getColorFromTheme(true);
-				if (dislikeButton) dislikeButton.style.color = getColorFromTheme(false);
-			  }
 			}
-		  }
-		});
-	  });
+		} catch (err) {
+			cLog("Failed to fetch dislike/like data:", err);
+		}
 	}
 
 	function updateDOMDislikes() {
@@ -434,53 +414,55 @@
 	}
 
 	function likeClicked() {
-	  if (checkForUserAvatarButton() == true) {
-		if (previousState == 1) {
-		  likesvalue--;
-		  updateDOMDislikes();
-		  previousState = 3;
-		} else if (previousState == 2) {
-		  likesvalue++;
-		  dislikesvalue--;
-		  updateDOMDislikes();
-		  previousState = 1;
-		} else if (previousState == 3) {
-		  likesvalue++;
-		  updateDOMDislikes();
-		  previousState = 1;
+		if (!checkForUserAvatarButton()) return;
+
+		if (previousState === 1) {
+			likesvalue--;
+			updateDOMDislikes();
+			previousState = 3;
+		} else if (previousState === 2) {
+			likesvalue++;
+			dislikesvalue--;
+			updateDOMDislikes();
+			previousState = 1;
+		} else if (previousState === 3) {
+			likesvalue++;
+			updateDOMDislikes();
+			previousState = 1;
 		}
-		if (extConfig.numberDisplayReformatLikes === true) {
-		  const nativeLikes = getLikeCountFromButton();
-		  if (nativeLikes !== false) {
-			setLikes(numberFormat(nativeLikes));
-		  }
+
+		if (extConfig.numberDisplayReformatLikes) {
+			const nativeLikes = getLikeCountFromButton();
+			if (nativeLikes >= 0) {
+				setLikes(numberFormat(nativeLikes));
+			}
 		}
-	  }
 	}
 
 	function dislikeClicked() {
-	  if (checkForUserAvatarButton() == true) {
-		if (previousState == 3) {
-		  dislikesvalue++;
-		  updateDOMDislikes();
-		  previousState = 2;
-		} else if (previousState == 2) {
-		  dislikesvalue--;
-		  updateDOMDislikes();
-		  previousState = 3;
-		} else if (previousState == 1) {
-		  likesvalue--;
-		  dislikesvalue++;
-		  updateDOMDislikes();
-		  previousState = 2;
-		  if (extConfig.numberDisplayReformatLikes === true) {
-			const nativeLikes = getLikeCountFromButton();
-			if (nativeLikes !== false) {
-			  setLikes(numberFormat(nativeLikes));
+		if (!checkForUserAvatarButton()) return;
+
+		if (previousState === 3) {
+			dislikesvalue++;
+			updateDOMDislikes();
+			previousState = 2;
+		} else if (previousState === 2) {
+			dislikesvalue--;
+			updateDOMDislikes();
+			previousState = 3;
+		} else if (previousState === 1) {
+			likesvalue--;
+			dislikesvalue++;
+			updateDOMDislikes();
+			previousState = 2;
+
+			if (extConfig.numberDisplayReformatLikes) {
+				const nativeLikes = getLikeCountFromButton();
+				if (nativeLikes >= 0) {
+					setLikes(numberFormat(nativeLikes));
+				}
 			}
-		  }
 		}
-	  }
 	}
 
 	function setInitialState() {
