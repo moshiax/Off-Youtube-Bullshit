@@ -38,6 +38,13 @@ const config = {
 		default: true
 	},
 
+	returnyoutubedislike: {
+		label: "Return Youtube Dislike",
+		description: 'Integration with (<a href="https://github.com/Anarios/return-youtube-dislike" target="_blank" rel="noopener noreferrer">Return Youtube Dislike</a>) userscript (only GET)',
+		script: 'scripts/returnyoutubedislike.js',
+		default: true
+	},
+
 	returnNextButton: {
 		label: "Return 'Next' button",
 		description: "Returns next button in video player",
