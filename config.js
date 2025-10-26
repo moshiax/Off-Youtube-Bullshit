@@ -122,7 +122,12 @@ const config = {
 	hideShortsShelf: {
 		label: "Hide Shorts Shelf",
 		description: "Removes Shorts section from descriptions and other places",
-		style: `ytd-reel-shelf-renderer { display: none !important; }`,
+		style: `
+			ytd-reel-shelf-renderer,
+			ytd-rich-section-renderer:has(> #content > ytd-rich-shelf-renderer[is-shorts]) {
+				display: none !important;
+			}
+		`,
 		default: true
 	},
 

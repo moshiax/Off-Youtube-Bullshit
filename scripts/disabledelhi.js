@@ -1,23 +1,18 @@
 (function() {
 	const scriptName = document.currentScript?.dataset.name;
+	let attempts = 0;
 
-	function disableDelhiFlags() {
-		const config = window?.yt?.config_?.WEB_PLAYER_CONTEXT_CONFIGS?.WEB_PLAYER_CONTEXT_CONFIG_ID_KEVLAR_WATCH;
-		if (!config || typeof config.serializedExperimentFlags !== "string") return;
+	const interval = setInterval(() => {
+		const watchConfig = window.yt?.config_?.WEB_PLAYER_CONTEXT_CONFIGS?.WEB_PLAYER_CONTEXT_ID_KEVLAR_WATCH;
 
-		const before = config.serializedExperimentFlags;
-		config.serializedExperimentFlags = before
-			.replace(/&?delhi_modern_web_player=true/g, "")
-			.replace(/&?delhi_modern_web_player_icons=true/g, "");
-
-		if (before !== config.serializedExperimentFlags && document.documentElement.dataset.loggingEnabled === "true") {
+		if (watchConfig?.serializedExperimentFlags) {
+			watchConfig.serializedExperimentFlags = watchConfig.serializedExperimentFlags
+				.replace(/&delhi_modern_web_player=true/g, '')
+				.replace(/&delhi_modern_web_player_icons=true/g, '');
 			console.log(`${document.documentElement.dataset.extensionName}: [${scriptName}] disabled delhi_modern_web_player flags.`);
+			clearInterval(interval);
+		} else if (++attempts >= 50) {
+			clearInterval(interval);
 		}
-	}
-
-	document.addEventListener("yt-navigate-finish", () => {
-		setTimeout(disableDelhiFlags, 200);
-	});
-
-	disableDelhiFlags();
+	}, 100);
 })();
