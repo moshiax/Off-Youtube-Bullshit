@@ -3,7 +3,7 @@
 	let attempts = 0;
 
 	const interval = setInterval(() => {
-		const watchConfig = window.yt?.config_?.WEB_PLAYER_CONTEXT_CONFIGS?.WEB_PLAYER_CONTEXT_ID_KEVLAR_WATCH;
+		const watchConfig = window.yt?.config_?.WEB_PLAYER_CONTEXT_CONFIGS?.WEB_PLAYER_CONTEXT_CONFIG_ID_KEVLAR_WATCH;
 
 		if (watchConfig?.serializedExperimentFlags) {
 			watchConfig.serializedExperimentFlags = watchConfig.serializedExperimentFlags
