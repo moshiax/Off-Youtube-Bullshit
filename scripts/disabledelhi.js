@@ -1,5 +1,4 @@
 (function() {
-	const scriptName = document.currentScript?.dataset.name;
 	let attempts = 0;
 
 	const interval = setInterval(() => {
@@ -9,7 +8,9 @@
 			watchConfig.serializedExperimentFlags = watchConfig.serializedExperimentFlags
 				.replace(/&delhi_modern_web_player=true/g, '')
 				.replace(/&delhi_modern_web_player_icons=true/g, '');
-			console.log(`${document.documentElement.dataset.extensionName}: [${scriptName}] disabled delhi_modern_web_player flags.`);
+			if (document.documentElement.dataset.loggingEnabled === 'true') {
+				console.log(`${document.documentElement.dataset.extensionName}: disabled delhi_modern_web_player flags.`);
+			}
 			clearInterval(interval);
 		} else if (++attempts >= 50) {
 			clearInterval(interval);

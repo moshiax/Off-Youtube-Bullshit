@@ -1,6 +1,4 @@
 (function() {
-	const scriptName = document.currentScript?.dataset.name;
-
 	document.addEventListener('pause', function(e) {
 		const dialog = document.body.querySelector('yt-confirm-dialog-renderer');
 		if (dialog?.parentElement.__data.opened) {
@@ -8,7 +6,7 @@
 			dialog.querySelector('button').click();
 
 			if (document.documentElement.dataset.loggingEnabled === 'true') {
-				console.log(`${document.documentElement.dataset.extensionName}: [${scriptName}] triggered.`);
+				console.log(`${document.documentElement.dataset.extensionName}: triggered.`);
 			}
 		}
 	}, true);

@@ -1,6 +1,4 @@
 (function() {
-	const scriptName = document.currentScript?.dataset.name || 'unknown';
-
 	document.addEventListener("copy", async () => {
 		try {
 			let text = await navigator.clipboard.readText();
@@ -23,12 +21,12 @@
 				await navigator.clipboard.writeText(text);
 
 				if (document.documentElement.dataset.loggingEnabled === 'true') {
-					console.log(`${document.documentElement.dataset.extensionName}: [${scriptName}] Cleaned YouTube URL: ${originalText} --> ${text}`);
+					console.log(`${document.documentElement.dataset.extensionName}: Cleaned YouTube URL: ${originalText} --> ${text}`);
 				}
 			}
 		} catch (err) {
 			if (document.documentElement.dataset.loggingEnabled === 'true') {
-				console.error(`${document.documentElement.dataset.extensionName}: [${scriptName}] Error processing copy event:`, err);
+				console.error(`${document.documentElement.dataset.extensionName}: Error processing copy event:`, err);
 			}
 		}
 	});
