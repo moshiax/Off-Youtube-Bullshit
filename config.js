@@ -120,11 +120,15 @@ const config = {
 	},
 
 	hideShortsShelf: {
-		label: "Hide Shorts Shelf",
-		description: "Removes Shorts section from descriptions and other places",
+		label: "Hide Suggested Shorts",
+		description: "Removes suggested shorts section from descriptions and other places",
 		style: `
-			ytd-reel-shelf-renderer,
-			ytd-rich-section-renderer:has(> #content > ytd-rich-shelf-renderer[is-shorts]) {
+			ytd-browse[page-subtype="home"] ytd-rich-grid-group, /* Group of 3 Shorts in Home grid */
+			ytd-browse[page-subtype="home"] ytd-rich-item-renderer[is-slim-media][rendered-from-rich-grid], /* Individual Short in Home grid */
+			#structured-description ytd-reel-shelf-renderer, /* Under video */
+			#related ytd-reel-shelf-renderer, /* Related shelf */
+			#related ytd-compact-video-renderer:has(a[href^="/shorts"]), /* Related shorts item */
+			ytd-rich-section-renderer:has(> #content > ytd-rich-shelf-renderer[is-shorts]) /* Grid Shelf */	 {
 				display: none !important;
 			}
 		`,
@@ -162,7 +166,7 @@ const config = {
 	hideHorizontalScrollbar: {
 		label: "Hide Horizontal Scrollbar",
 		description: "Removes horizontal scrollbar on the page",
-		style: `html, body { overflow-x: hidden !important; }`,
+		style: `* { scrollbar-width: none !important; }`,
 		default: true
 	},
 
@@ -512,6 +516,39 @@ const config = {
 			#info.ytd-watch-info-text a,
 			#description.ytd-watch-metadata #snippet-text.ytd-text-inline-expander a {
 				color: var(--yt-spec-call-to-action);
+			}
+
+			/* Return old theater mode */
+			ytd-app {
+				overflow: auto !important;
+			}
+			ytd-app[scrolling] {
+				position: absolute !important;
+				top: 0 !important;
+				left: 0 !important;
+				right: calc((var(--ytd-app-fullerscreen-scrollbar-width) + 1px)*-1) !important;
+				bottom: 0 !important;
+				overflow-x: auto !important;
+			}
+			ytd-watch-flexy[full-bleed-player] #single-column-container.ytd-watch-flexy,
+			ytd-watch-flexy[full-bleed-player] #columns.ytd-watch-flexy {
+				display: flex !important;
+			}
+			.ytp-fullscreen-grid-peeking.ytp-full-bleed-player.ytp-delhi-modern:not(.ytp-autohide) .ytp-chrome-bottom {
+				bottom: 0 !important;
+				opacity: 1 !important;
+			}
+			#movie_player:not(.ytp-grid-ended-state) .ytp-fullscreen-grid {
+				display: none !important;
+				top: 100% !important;
+				opacity: 0 !important;
+			}
+			.ytp-overlays-container {
+				display: none !important;
+			}
+			ytd-watch-flexy[full-bleed-player][i-max-theater-mode][theater]:not([fullscreen]) #full-bleed-container.ytd-watch-flexy {
+				height: 56.25vw;
+				max-height: 81.5vh;
 			}
 
 			/* Restore old player icons */
