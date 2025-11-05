@@ -13,12 +13,12 @@
 					p1 === '?' && s.includes('&', i) ? '?' : ''
 				).replace(/\?&/, '?').replace(/[?&]$/, '');
 
-				// Convert youtu.be short URL to youtube.com full URL, fix param separator
-				const m = /youtu\.be\/([a-zA-Z0-9_-]{11})/.exec(text);
-				if (m) {
-					const params = text.split('?')[1] || '';
-					text = `www.youtube.com/watch?v=${m[1]}` + (params ? `&${params}` : '');
-				}
+				// Convert youtu.be short URL to youtube.com full URL
+				// const m = /youtu\.be\/([a-zA-Z0-9_-]{11})/.exec(text);
+				// if (m) {
+					// const params = text.split('?')[1] || '';
+					// text = `www.youtube.com/watch?v=${m[1]}` + (params ? `&${params}` : '');
+				// }
 
 				await navigator.clipboard.writeText(text);
 
