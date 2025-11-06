@@ -163,13 +163,6 @@ const config = {
 		default: true
 	},
 
-	hideHorizontalScrollbar: {
-		label: "Hide Horizontal Scrollbar",
-		description: "Removes horizontal scrollbar on the page",
-		style: `* { scrollbar-width: none !important; }`,
-		default: true
-	},
-
 	fixMainGrid: {
 		label: "Fix Main Page Grid",
 		description: "Sets 5 items per row on YouTube's main page",
