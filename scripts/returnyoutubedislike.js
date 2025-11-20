@@ -78,25 +78,35 @@
 	}
 
 	function getDislikeButton() {
-		if (getButtons().children[0].tagName === "YTD-SEGMENTED-LIKE-DISLIKE-BUTTON-RENDERER") {
-			if (getButtons().children[0].children[1] === undefined) {
+		const buttons = getButtons();
+		if (!buttons || !buttons.children) {
+			return null;
+		}
+
+		if (buttons.children[0].tagName === "YTD-SEGMENTED-LIKE-DISLIKE-BUTTON-RENDERER") {
+			if (buttons.children[0].children[1] === undefined) {
 				return document.querySelector("#segmented-dislike-button");
 			} else {
-				return getButtons().children[0].children[1];
+				return buttons.children[0].children[1];
 			}
 		} else {
-			if (getButtons().querySelector("segmented-like-dislike-button-view-model")) {
-				const dislikeViewModel = getButtons().querySelector("dislike-button-view-model");
+			if (buttons.querySelector("segmented-like-dislike-button-view-model")) {
+				const dislikeViewModel = buttons.querySelector("dislike-button-view-model");
 				if (!dislikeViewModel) cLog("Dislike button wasn't added to DOM yet...");
 				return dislikeViewModel;
 			} else {
-				return getButtons().children[1];
+				return buttons.children[1];
 			}
 		}
 	}
 
 	function getLikeButton() {
 		const buttons = getButtons();
+
+		if (!buttons || !buttons.children) {
+			return null;
+		}
+
 		const firstChild = buttons.children[0];
 
 		if (firstChild.tagName === "YTD-SEGMENTED-LIKE-DISLIKE-BUTTON-RENDERER") {
@@ -104,7 +114,9 @@
 			if (segmentedButton !== null) {
 				return segmentedButton;
 			}
-			return firstChild.children[0];
+			if (firstChild.children[0]) {
+				return firstChild.children[0];
+			}
 		}
 
 		return buttons.querySelector("like-button-view-model") ?? firstChild;
