@@ -211,7 +211,8 @@ const config = {
 			ytd-video-description-transcript-section-renderer,
 			a[href="/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ"].yt-spec-button-shape-next,
 			#expandable-metadata,
-			ytd-video-description-infocards-section-renderer a#header {
+			ytd-video-description-infocards-section-renderer a#header,
+			ytd-metadata-row-container-renderer {
 				display: none !important;
 			}
 		`,
