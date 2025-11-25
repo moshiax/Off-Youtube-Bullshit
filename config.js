@@ -230,32 +230,22 @@ const config = {
 		label: "No 'Sponsored'",
 		description: "Removes YouTube videos with 'Only for sponsors', promos, etc",
 		style: `
-			ytd-rich-item-renderer:has(.badge.badge-style-type-members-only),
-			/* ytd-grid-video-renderer.style-scope:has(.badge.badge-style-type-members-only), Meant to hide sponsored on channel page but breaks playlist arrows (how? wtf youtube) */
-			#masthead-ad,
-			#big-yoodle ytd-statement-banner-renderer,
-			ytd-rich-section-renderer:has(> #content > ytd-statement-banner-renderer),
-			ytd-rich-section-renderer:has(> #content > ytd-rich-shelf-renderer[has-paygated-featured-badge]),
-			ytd-rich-section-renderer:has(> #content > ytd-brand-video-shelf-renderer),
-			ytd-rich-section-renderer:has(> #content > ytd-brand-video-singleton-renderer),
-			ytd-rich-section-renderer:has(> #content > ytd-inline-survey-renderer),
-			tp-yt-paper-dialog:has(> #mealbar-promo-renderer),
-			ytd-rich-item-renderer:has(> .ytd-rich-item-renderer > ytd-ad-slot-renderer),
-			ytd-search-pyv-renderer.ytd-item-section-renderer,
-			ytd-ad-slot-renderer.ytd-item-section-renderer,
-			ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-ads"],
-			#movie_player .ytp-suggested-action,
-			#below #panels,
-			.ytp-ad-action-interstitial,
-			.ytp-paid-content-overlay,
-			ytm-paid-content-overlay-renderer,
-			#items > ytd-ad-slot-renderer {
+			html:not([cpfyt-channel-tab="membership"]) ytd-app ytd-item-section-renderer[page-subtype="channels"] ytd-grid-video-renderer:has(.badge-style-type-members-only),
+			html:not([cpfyt-channel-tab="membership"]) ytd-app ytd-item-section-renderer[page-subtype="channels"] ytd-grid-video-renderer:has(.yt-badge-shape--membership),
+			ytd-rich-item-renderer:has(.badge-style-type-members-only),
+			ytd-rich-item-renderer:has(.yt-badge-shape--commerce > .yt-badge-shape__icon),
+			ytd-rich-item-renderer:has(.yt-badge-shape--membership),
+			ytd-video-renderer:has(.badge-style-type-members-only),
+			ytd-video-renderer:has(.yt-badge-shape--membership),
+			ytd-compact-video-renderer:has(.badge-style-type-members-only),
+			#related yt-lockup-view-model:has(.yt-badge-shape--commerce > .yt-badge-shape__icon),
+			#related yt-lockup-view-model:has(.yt-badge-shape--membership) {
 				display: none !important;
 			}
 		`,
 		default: true
 	},
-	
+
 	noFoodForGaza: {
 		label: "Hide 'donations' containers",
 		description: "Hides offers to donate on something",
