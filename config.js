@@ -83,14 +83,18 @@ const config = {
 		label: "Fix Youtube headers",
 		description: "Removes blur and background from YouTube's header",
 		style: `
-			ytd-masthead { background: var(--yt-spec-base-background) !important; }
-			#header.style-scope.ytd-rich-grid-renderer { display: none !important; }
-			#frosted-glass.loading-with-chipbar,
-			#frosted-glass.with-chipbar.ytd-app {
-				background: transparent !important;
+			ytd-masthead {
+				background: var(--yt-spec-base-background) !important;
+			}
+
+			#frosted-glass.with-chipbar.ytd-app,
+			#frosted-glass.loading-with-chipbar {
+				background: var(--yt-spec-base-background) !important;
 				backdrop-filter: none !important;
 			}
-			.yt-spec-icon-badge-shape--type-notification-refresh .yt-spec-icon-badge-shape__badge {
+
+			.yt-spec-icon-badge-shape--type-notification-refresh
+			.yt-spec-icon-badge-shape__badge {
 				background-color: red !important;
 				color: white !important;
 			}
