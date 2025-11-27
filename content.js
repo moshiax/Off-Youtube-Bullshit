@@ -1,7 +1,13 @@
-const injectedScripts = new Set();
-const injectedCssKeys = new Set();
+const injectedCssMap = new Map();
+
 const extensionName = chrome.runtime.getManifest().name || 'unknown';
 document.documentElement.dataset.extensionName = extensionName;
+
+function log(...args) {
+	if (document.documentElement.dataset.loggingEnabled === 'true') {
+		console.log(...args);
+	}
+}
 
 chrome.storage.local.get(Object.keys(config), result => {
 	const toSet = {};
@@ -30,30 +36,62 @@ chrome.storage.local.get(Object.keys(config), result => {
 });
 
 function injectScript(file) {
-	if (injectedScripts.has(file)) return;
-
 	const s = document.createElement('script');
 	s.src = chrome.runtime.getURL(file);
 	s.dataset.name = file.split('/').pop();
 	s.onload = () => {
-		if (document.documentElement.dataset.loggingEnabled === 'true') {
-			console.log(`${extensionName}: Injected ${file}`);
-		}
+		log(`${extensionName}: Injected ${file}`);
 		s.remove();
 	};
 	(document.head || document.documentElement).appendChild(s);
-	injectedScripts.add(file);
 }
 
 function injectCss(key, cssText) {
-	if (injectedCssKeys.has(key)) return;
+	if (injectedCssMap.has(key)) return;
 
 	const style = document.createElement('style');
 	style.textContent = cssText;
 	document.head.appendChild(style);
-	injectedCssKeys.add(key);
+	injectedCssMap.set(key, style);
 
-	if (document.documentElement.dataset.loggingEnabled === 'true') {
-		console.log(`${extensionName}: Injected CSS for ${key}`);
-	}
+	log(`${extensionName}: Injected CSS for ${key}`);
 }
+
+function removeCss(key) {
+	const style = injectedCssMap.get(key);
+	if (!style) return;
+	style.remove();
+	injectedCssMap.delete(key);
+
+	log(`${extensionName}: Removed CSS for ${key}`);
+}
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+
+	if (message.type === 'toggleSetting' && message.key === 'logging') {
+		document.documentElement.dataset.loggingEnabled = message.value ? 'true' : 'false';
+	}
+
+	log(`${extensionName}: Received message`, message);
+
+	if (message.type === 'toggleSetting') {
+		const { key, value } = message;
+
+		const setting = config[key];
+		if (!setting) {
+			return;
+		}
+
+		if (setting.style) {
+			if (value) {
+				injectCss(key, setting.style);
+			} else {
+				removeCss(key);
+			}
+		}
+
+		if (setting.script && value) {
+			injectScript(setting.script);
+		}
+	}
+});
