@@ -1,4 +1,5 @@
 const injectedCssMap = new Map();
+const injectedScripts = new Set();
 
 const extensionName = chrome.runtime.getManifest().name || 'unknown';
 document.documentElement.dataset.extensionName = extensionName;
@@ -36,6 +37,7 @@ chrome.storage.local.get(Object.keys(config), result => {
 });
 
 function injectScript(file) {
+    if (injectedScripts.has(file)) return;
 	const s = document.createElement('script');
 	s.src = chrome.runtime.getURL(file);
 	s.dataset.name = file.split('/').pop();
@@ -44,6 +46,7 @@ function injectScript(file) {
 		s.remove();
 	};
 	(document.head || document.documentElement).appendChild(s);
+	injectedScripts.add(file);
 }
 
 function injectCss(key, cssText) {
