@@ -204,7 +204,9 @@ const config = {
 			a[href="/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ"].yt-spec-button-shape-next,
 			#expandable-metadata,
 			ytd-video-description-infocards-section-renderer a#header,
-			ytd-metadata-row-container-renderer {
+			ytd-metadata-row-container-renderer,
+			#teaser-carousel
+			{
 				display: none !important;
 			}
 		`,
@@ -249,7 +251,6 @@ const config = {
 		label: "Youtube AMOLED Black",
 		description: "AMOLED Black Youtube theme",
 		style: `
-
 			#background.ytd-masthead,
 			ytd-masthead[frosted-glass=with-chipbar] #background.ytd-masthead {
 				background: black !important;
@@ -274,13 +275,15 @@ const config = {
 				background: black !important;
 			}
 
-			html[dark], [dark] {
+			:root,
+			html[dark],
+			[dark] {
 				--yt-spec-base-background: black !important;
 				--yt-spec-raised-background: black !important;
 				--yt-spec-menu-background: black !important;
-				--yt-spec-text-primary-inverse white !important;
+				--yt-spec-text-primary-inverse: white !important;
 			}
-			
+
 			#voice-search-button.ytd-masthead {
 				background-color: black !important;
 			}
@@ -311,13 +314,10 @@ const config = {
 			}
 
 			button#search-icon-legacy.style-scope.ytd-searchbox {
-				background-color: black !important
-			}
-
-			ytd-multi-page-menu-renderer {
 				background-color: black !important;
 			}
 
+			ytd-multi-page-menu-renderer,
 			ytd-simple-menu-header-renderer {
 				background-color: black !important;
 			}
@@ -331,7 +331,8 @@ const config = {
 			}
 
 			div#description.item.style-scope.ytd-watch-metadata {
-				background: rgba(120, 120, 120, 0.1) !important; 
+				background: rgba(120, 120, 120, 0.1) !important;
+				background-color: black !important;
 			}
 
 			.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--tonal {
@@ -344,7 +345,7 @@ const config = {
 			}
 
 			.yt-spec-button-shape-next--call-to-action.yt-spec-button-shape-next--filled {
-				background: #000000 !important; 
+				background: black !important; 
 				color: #3ea6ff !important; 
 				border: 1px solid rgba(255, 255, 255, 0.2); 
 				transition: background 0.3s ease, color 0.3s ease; 
@@ -353,7 +354,6 @@ const config = {
 			.yt-spec-button-shape-next--call-to-action.yt-spec-button-shape-next--filled:hover {
 				background: rgba(0, 79, 124, 0.6) !important; 
 				color: rgba(90, 183, 255, 0.9) !important;
-
 			}
 
 			.YtSearchboxComponentInputBox.YtSearchboxComponentInputBoxDark {
@@ -364,31 +364,32 @@ const config = {
 				background: black !important;
 			}
 
-			.yt-chip-cloud-chip-renderer {
-				background: #000000 !important; /* search panel */
-			}
-
-			.YtSuggestionComponentRemoveLink {
-				color: hsla(0, 100%, 69%, 1) !important; /* search result deletion text-button */
-			}
-
-			div#description.item.style-scope.ytd-watch-metadata {
+			.yt-chip-cloud-chip-renderer { /* search panel */
+				background: black !important; 
 				background-color: black !important;
+			}
+
+			.YtSuggestionComponentRemoveLink { /* search result deletion text-button */
+				color: hsla(0, 100%, 69%, 1) !important; 
 			}
 
 			yt-chip-cloud-chip-renderer[chip-style] {
 				background-color: black !important;
 			}
 
-			.ytSearchboxComponentSearchButtonDark,
+			.ytSearchboxComponentSearchButtonDark, /* search container */
 			.ytSearchboxComponentInputBox {
-				background-color: transparent !important; /* search container */
+				background-color: transparent !important; 
 			}
 
-			.ytSearchboxComponentSuggestionsContainer.ytSearchboxComponentSuggestionsContainerDark {
-				background-color: black !important;  /* search results list */
+			.ytSearchboxComponentSuggestionsContainer.ytSearchboxComponentSuggestionsContainerDark {  /* search results list */
+				background-color: black !important; 
 			}
-			`,
+			
+			.ytVideoMetadataCarouselViewModelHost {
+				background: black !important;
+			}
+		`,
 		default: false
 	},
 
