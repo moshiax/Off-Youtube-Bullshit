@@ -146,20 +146,6 @@ const config = {
 		default: true
 	},
 
-	transparentSearchBox: {
-		label: "Transparent Search Box",
-		description: "Makes the search background transparent instead of grey",
-		style: `.ytSearchboxComponentSearchButtonDark, .ytSearchboxComponentInputBox { background-color: transparent !important; }`,
-		default: true
-	},
-
-	hideVoiceSearchButton: {
-		label: "Hide Voice Search Button",
-		description: "Removes the voice search button in the header",
-		style: `#voice-search-button.ytd-masthead { display: none !important; }`,
-		default: true
-	},
-
 	hideYoutubeSurveys: {
 		label: "Hide YouTube Surveys",
 		description: "Removes pop-up surveys and dialogs (How do you like this video?)",
@@ -276,63 +262,6 @@ const config = {
 		default: true
 	},
 
-	restoreFullscreenScroll: {
-		label: "Restore fullscreen scroll",
-		description: "Restoring page scrolling in fullscreen",
-		style: `
-			/* https://greasyfork.org/en/scripts/547663-youtube-restore-scrollable-fullscreen */
-			ytd-app[fullscreen] {
-				overflow: auto !important;
-			}
-			ytd-app[scrolling] {
-				position: absolute !important;
-				top: 0 !important;
-				left: 0 !important;
-				right: calc((var(--ytd-app-fullerscreen-scrollbar-width) + 1px)*-1) !important;
-				bottom: 0 !important;
-				overflow-x: auto !important;
-			}
-			ytd-watch-flexy[fullscreen] #single-column-container.ytd-watch-flexy,
-			ytd-watch-flexy[fullscreen] #columns.ytd-watch-flexy {
-				display: flex !important;
-			}
-
-			/* Hide the fullscreen grid with recommended videos */
-			.ytp-fullscreen-grid,
-			.ytp-fullscreen-grid-main-content,
-			.ytp-fullscreen-grid-stills-container,
-			.ytp-modern-videowall-still,
-			.ytp-fullscreen-grid-expand-button,
-			.ytp-fullscreen-grid-hover-overlay {
-				display: none !important;
-				opacity: 0 !important;
-				visibility: hidden !important;
-				pointer-events: none !important;
-				height: 0 !important;
-				max-height: 0 !important;
-				overflow: hidden !important;
-			}
-
-			/* Completely disable grid scrolling CSS variables */
-			.html5-video-player.ytp-grid-scrollable,
-			.html5-video-player {
-				--ytp-grid-scroll-percentage: 0 !important;
-				--ytp-grid-peek-height: 0px !important;
-			}
-
-			/* Hide any fullscreen education panels and overlays */
-			.ytp-fullerscreen-edu-panel,
-			.ytp-cards-teaser,
-			.ytp-cards-teaser-box,
-			div[class*="fullerscreen"] {
-				display: none !important;
-				opacity: 0 !important;
-				visibility: hidden !important;
-			}
-		`,
-		default: true
-	},
-	
 	restoreOldUI: {
 		label: "Restore 2025 UI",
 		description: "Restores old Youtube UI before 2025 update (partly)",
@@ -525,7 +454,7 @@ const config = {
 				color: var(--yt-spec-call-to-action);
 			}
 
-			/* Return old theater mode */
+			/* Return old theater mode (+fullscreen scroll)*/
 			ytd-app {
 				overflow: auto !important;
 			}
@@ -538,17 +467,30 @@ const config = {
 				overflow-x: auto !important;
 			}
 			ytd-watch-flexy[full-bleed-player] #single-column-container.ytd-watch-flexy,
-			ytd-watch-flexy[full-bleed-player] #columns.ytd-watch-flexy {
+			ytd-watch-flexy[full-bleed-player] #columns.ytd-watch-flexy,
+			ytd-watch-flexy[fullscreen] #single-column-container.ytd-watch-flexy,
+			ytd-watch-flexy[fullscreen] #columns.ytd-watch-flexy {
 				display: flex !important;
 			}
 			.ytp-fullscreen-grid-peeking.ytp-full-bleed-player.ytp-delhi-modern:not(.ytp-autohide) .ytp-chrome-bottom {
 				bottom: 0 !important;
 				opacity: 1 !important;
 			}
-			#movie_player:not(.ytp-grid-ended-state) .ytp-fullscreen-grid {
+
+			#movie_player:not(.ytp-grid-ended-state) .ytp-fullscreen-grid,
+			.ytp-fullscreen-grid,
+			.ytp-fullscreen-grid-main-content,
+			.ytp-fullscreen-grid-stills-container,
+			.ytp-modern-videowall-still,
+			.ytp-fullscreen-grid-expand-button,
+			.ytp-fullscreen-grid-hover-overlay {
 				display: none !important;
-				top: 100% !important;
 				opacity: 0 !important;
+				visibility: hidden !important;
+				pointer-events: none !important;
+				height: 0 !important;
+				max-height: 0 !important;
+				overflow: hidden !important;
 			}
 			.ytp-overlays-container {
 				display: none !important;
@@ -558,6 +500,20 @@ const config = {
 				max-height: 81.5vh;
 			}
 
+			.html5-video-player.ytp-grid-scrollable,
+			.html5-video-player {
+				--ytp-grid-scroll-percentage: 0 !important;
+				--ytp-grid-peek-height: 0px !important;
+			}
+
+			.ytp-fullerscreen-edu-panel,
+			.ytp-cards-teaser,
+			.ytp-cards-teaser-box,
+			div[class*="fullerscreen"] {
+				display: none !important;
+				opacity: 0 !important;
+				visibility: hidden !important;
+			}
 			/* Disable player shadows */
 			.ytp-gradient-top,
 			.ytp-gradient-bottom {
