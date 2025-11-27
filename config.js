@@ -123,16 +123,23 @@ const config = {
 		default: true
 	},
 
-	hideShortsShelf: {
-		label: "Hide Suggested Shorts",
-		description: "Removes suggested shorts section from descriptions and other places",
+	hideSuggestedSections: {
+		label: "Hide Suggested sections",
+		description: "Removes suggested sections from descriptions and other places",
 		style: `
 			ytd-browse[page-subtype="home"] ytd-rich-grid-group, /* Group of 3 Shorts in Home grid */
 			ytd-browse[page-subtype="home"] ytd-rich-item-renderer[is-slim-media][rendered-from-rich-grid], /* Individual Short in Home grid */
 			#structured-description ytd-reel-shelf-renderer, /* Under video */
 			#related ytd-reel-shelf-renderer, /* Related shelf */
 			#related ytd-compact-video-renderer:has(a[href^="/shorts"]), /* Related shorts item */
-			ytd-rich-section-renderer:has(> #content > ytd-rich-shelf-renderer[is-shorts]) /* Grid Shelf */	 {
+			ytd-rich-section-renderer:has(> #content > ytd-rich-shelf-renderer[is-shorts]), /* Grid Shelf */
+			ytd-browse[page-subtype="home"] ytd-rich-section-renderer:not(:has(> #content > ytd-rich-shelf-renderer[is-shorts])), /* Shelves in Home */
+			ytd-browse[page-subtype="home"] ytd-rich-item-renderer:has(> #content > ytd-feed-nudge-renderer), /* Looking for something different? tile in Home */
+			ytd-search #contents.ytd-item-section-renderer > ytd-shelf-renderer, /* Suggested content shelves in Search */
+			ytd-search #contents.ytd-item-section-renderer > ytd-horizontal-card-list-renderer, /* People also search for in Search */
+			ytd-browse[page-subtype="playlist"] ytd-item-section-renderer[is-playlist-video-container], /* Recommended videos in a Playlist */
+			ytd-browse[page-subtype="playlist"] ytd-item-section-renderer[is-playlist-video-container] + ytd-item-section-renderer /* Recommended playlists in a Playlist */
+			{
 				display: none !important;
 			}
 		`,
@@ -176,6 +183,18 @@ const config = {
 				--ytd-rich-grid-posts-per-row: 5 !important;
 				--ytd-rich-grid-row-margin: 16px !important;
 				--ytd-rich-grid-item-margin: 16px !important;
+			}
+
+			ytd-browse:is([page-subtype="home"], [page-subtype="subscriptions"], [page-subtype="channels"]) ytd-rich-item-renderer[rendered-from-rich-grid][is-in-first-column] {
+				margin-left: calc(var(--ytd-rich-grid-item-margin, 16px) / 2) !important;
+			}
+
+			ytd-browse:is([page-subtype="home"], [page-subtype="subscriptions"], [page-subtype="channels"]) #contents.ytd-rich-grid-renderer {
+				padding-left: calc(var(--ytd-rich-grid-gutter-margin, 16px) * 2) !important;
+			}
+
+			ytd-browse:is([page-subtype="home"], [page-subtype="subscriptions"]) #contents.ytd-rich-grid-renderer > :not(ytd-rich-item-renderer) {
+				margin-left: calc(var(--ytd-rich-grid-gutter-margin, 16px) * -1) !important;
 			}
 		`,
 		default: true
