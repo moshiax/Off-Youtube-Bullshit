@@ -75,6 +75,10 @@ const config = {
 			.yt-icon-shape > div > svg > g:first-of-type > path:first-of-type {
 				fill: var(--yt-spec-static-brand-red) !important;
 			}
+
+			.yt-spec-icon-badge-shape--type-notification-refresh .yt-spec-icon-badge-shape__badge {
+				background-color: red !important;
+			}
 		`,
 		default: true
 	},
@@ -99,27 +103,6 @@ const config = {
 				color: white !important;
 			}
 		`,
-		default: true
-	},
-
-	hideRightArrow: {
-		label: "Hide Right Navigation Arrow",
-		description: "Removes the right navigation arrow",
-		style: `#right-arrow-container { display: none !important; }`,
-		default: true
-	},
-
-	hideTeaserCarousel: {
-		label: "Hide Teaser Carousel",
-		description: "Removes the premiere chat icon teaser carousel",
-		style: `#teaser-carousel { display: none !important; }`,
-		default: true
-	},
-
-	hideGamesShelf: {
-		label: "Hide Games Shelf",
-		description: "Removes the games block on YouTube",
-		style: `.ytd-rich-shelf-renderer { display: none !important; }`,
 		default: true
 	},
 
@@ -260,6 +243,153 @@ const config = {
 		description: "Hides offers to donate on something",
 		style: `#donation-shelf { display: none !important; }`,
 		default: true
+	},
+
+	youtubeAmoledBlack: {
+		label: "Youtube AMOLED Black",
+		description: "AMOLED Black Youtube theme",
+		style: `
+
+			#background.ytd-masthead,
+			ytd-masthead[frosted-glass=with-chipbar] #background.ytd-masthead {
+				background: black !important;
+			}
+
+			.yt-spec-icon-badge-shape--type-notification-refresh .yt-spec-icon-badge-shape__badge {
+				color: white !important;
+			}
+
+			html,
+			ytd-app,
+			div.video.style-scope.ytd-miniplayer,
+			div#items.playlist-items.style-scope.ytd-playlist-panel-renderer,
+			div#background.style-scope.ytd-masthead,
+			div#skip-navigation.style-scope.ytd-masthead,
+			div#contentContainer.style-scope.tp-yt-app-drawer,
+			div#guide-content.style-scope.ytd-app,
+			yt-contextual-sheet-layout.yt-contextual-sheet-layout-wiz,
+			ytd-miniplayer-info-bar,
+			ytd-mini-guide-renderer.style-scope.ytd-app,
+			.ytContextualSheetLayoutContentContainer {
+				background: black !important;
+			}
+
+			html[dark], [dark] {
+				--yt-spec-base-background: black !important;
+				--yt-spec-raised-background: black !important;
+				--yt-spec-menu-background: black !important;
+				--yt-spec-text-primary-inverse white !important;
+			}
+			
+			#voice-search-button.ytd-masthead {
+				background-color: black !important;
+			}
+
+			yt-chip-cloud-chip-renderer[chip-style=STYLE_DEFAULT][selected],
+			yt-chip-cloud-chip-renderer[chip-style=STYLE_HOME_FILTER][selected] {
+				background-color: rgba(145, 145, 145, 0.1) !important;
+				color: white !important;
+				border-radius: 8px !important; 
+			}
+
+			yt-chip-cloud-chip-renderer[chip-style=STYLE_DEFAULT][selected]:nth-of-type(odd),
+			yt-chip-cloud-chip-renderer[chip-style=STYLE_HOME_FILTER][selected]:nth-of-type(odd) {
+				border: 2px solid rgba(86, 191, 209, 0.3) !important;
+			}
+
+			yt-chip-cloud-chip-renderer[chip-style=STYLE_DEFAULT][selected]:nth-of-type(even),
+			yt-chip-cloud-chip-renderer[chip-style=STYLE_HOME_FILTER][selected]:nth-of-type(even) {
+				border: 2px solid rgba(255, 99, 71, 0.3) !important; 
+			}
+
+			#text.yt-chip-cloud-chip-renderer {
+				color: white !important;
+			}
+
+			div#container.style-scope.ytd-searchbox {
+				background-color: black !important;
+			}
+
+			button#search-icon-legacy.style-scope.ytd-searchbox {
+				background-color: black !important
+			}
+
+			ytd-multi-page-menu-renderer {
+				background-color: black !important;
+			}
+
+			ytd-simple-menu-header-renderer {
+				background-color: black !important;
+			}
+
+			.ytp-panel-menu {
+				background: rgba(0, 0, 0, 0.3) !important; 
+			}
+
+			.ytp-popup {
+				background: rgb(0 0 0 / 90%) !important;
+			}
+
+			div#description.item.style-scope.ytd-watch-metadata {
+				background: rgba(120, 120, 120, 0.1) !important; 
+			}
+
+			.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--tonal {
+				background: rgba(30, 30, 30, 0.45) !important;
+				transition: background 0.3s ease;
+			}
+
+			.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--tonal:hover {
+				background: rgba(30, 30, 30, 0.8) !important; 
+			}
+
+			.yt-spec-button-shape-next--call-to-action.yt-spec-button-shape-next--filled {
+				background: #000000 !important; 
+				color: #3ea6ff !important; 
+				border: 1px solid rgba(255, 255, 255, 0.2); 
+				transition: background 0.3s ease, color 0.3s ease; 
+			}
+
+			.yt-spec-button-shape-next--call-to-action.yt-spec-button-shape-next--filled:hover {
+				background: rgba(0, 79, 124, 0.6) !important; 
+				color: rgba(90, 183, 255, 0.9) !important;
+
+			}
+
+			.YtSearchboxComponentInputBox.YtSearchboxComponentInputBoxDark {
+				background-color: black !important;
+			}
+
+			.yt-spec-button-shape-next--mono.yt-spec-button-shape-next--tonal {
+				background: black !important;
+			}
+
+			.yt-chip-cloud-chip-renderer {
+				background: #000000 !important; /* search panel */
+			}
+
+			.YtSuggestionComponentRemoveLink {
+				color: hsla(0, 100%, 69%, 1) !important; /* search result deletion text-button */
+			}
+
+			div#description.item.style-scope.ytd-watch-metadata {
+				background-color: black !important;
+			}
+
+			yt-chip-cloud-chip-renderer[chip-style] {
+				background-color: black !important;
+			}
+
+			.ytSearchboxComponentSearchButtonDark,
+			.ytSearchboxComponentInputBox {
+				background-color: transparent !important; /* search container */
+			}
+
+			.ytSearchboxComponentSuggestionsContainer.ytSearchboxComponentSuggestionsContainerDark {
+				background-color: black !important;  /* search results list */
+			}
+			`,
+		default: false
 	},
 
 	restoreOldUI: {
