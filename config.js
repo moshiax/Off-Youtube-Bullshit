@@ -136,6 +136,7 @@ const config = {
 			#tp-yt-paper-dialog.style-scope.ytd-popup-container,
 			ytd-single-option-survey-renderer,
 			ytd-inline-survey-renderer,
+			.ytLockupAttachmentsViewModelHost,
 			ytd-checkbox-survey-renderer {
 				display: none !important;
 			}
@@ -281,32 +282,11 @@ const config = {
 				--yt-spec-base-background: black !important;
 				--yt-spec-raised-background: black !important;
 				--yt-spec-menu-background: black !important;
-				--yt-spec-text-primary-inverse: white !important;
+				--yt-spec-text-primary-inverse: black !important;
 			}
 
 			#voice-search-button.ytd-masthead {
 				background-color: black !important;
-			}
-
-			yt-chip-cloud-chip-renderer[chip-style=STYLE_DEFAULT][selected],
-			yt-chip-cloud-chip-renderer[chip-style=STYLE_HOME_FILTER][selected] {
-				background-color: rgba(145, 145, 145, 0.1) !important;
-				color: white !important;
-				border-radius: 8px !important; 
-			}
-
-			yt-chip-cloud-chip-renderer[chip-style=STYLE_DEFAULT][selected]:nth-of-type(odd),
-			yt-chip-cloud-chip-renderer[chip-style=STYLE_HOME_FILTER][selected]:nth-of-type(odd) {
-				border: 2px solid rgba(86, 191, 209, 0.3) !important;
-			}
-
-			yt-chip-cloud-chip-renderer[chip-style=STYLE_DEFAULT][selected]:nth-of-type(even),
-			yt-chip-cloud-chip-renderer[chip-style=STYLE_HOME_FILTER][selected]:nth-of-type(even) {
-				border: 2px solid rgba(255, 99, 71, 0.3) !important; 
-			}
-
-			#text.yt-chip-cloud-chip-renderer {
-				color: white !important;
 			}
 
 			div#container.style-scope.ytd-searchbox {
@@ -662,6 +642,26 @@ const config = {
 			}
 			.ytp-time-display {
 				text-shadow: none !important;
+			}
+
+			/* Restore old sidebar order */
+			#sections.ytd-guide-renderer {
+				display: flex !important;
+				flex-direction: column !important;
+			}
+
+			#sections.ytd-guide-renderer > :nth-child(1) {
+				order: -3 !important;
+			}
+
+			/* Move Subscriptions down */
+			#sections.ytd-guide-renderer > ytd-guide-section-renderer:nth-child(2):has(a[href="/feed/subscriptions"]) {
+				order: -1 !important;
+			}
+
+			/* Move You up */
+			#sections.ytd-guide-renderer > ytd-guide-section-renderer:nth-child(3):has(a[href="/feed/you"]) {
+				order: -2 !important;
 			}
 
 			/* Restore old player icons */
