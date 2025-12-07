@@ -6,17 +6,9 @@
 			if (/https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/\S+/i.test(text) && /[?&]si=[^&\s]*/.test(text)) {
 				const originalText = text;
 
-				// Remove 'si' param but keep others
-				text = text.replaceAll(/([?&])si=[^&\s]*/g, (m, p1, i, s) =>
-					p1 === '?' && s.includes('&', i) ? '?' : ''
-				).replace(/\?&/, '?').replace(/[?&]$/, '');
-
-				// Convert youtu.be short URL to youtube.com full URL
-				// const m = /youtu\.be\/([a-zA-Z0-9_-]{11})/.exec(text);
-				// if (m) {
-					// const params = text.split('?')[1] || '';
-					// text = `www.youtube.com/watch?v=${m[1]}` + (params ? `&${params}` : '');
-				// }
+				const url = new URL(text);
+				url.searchParams.delete('si');
+				text = url.toString();
 
 				await navigator.clipboard.writeText(text);
 

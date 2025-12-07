@@ -376,6 +376,10 @@ const config = {
 			.ytVideoMetadataCarouselViewModelHost {
 				background: black !important;
 			}
+			
+			.yt-spec-dialog-layout {
+				background-color: black !important;
+			}
 		`,
 		default: false
 	},
