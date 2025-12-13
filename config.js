@@ -184,13 +184,6 @@ const config = {
 		default: true
 	},
 
-	hideLoadingMocking: {
-		label: "Hide 'Video is not loading?' Message",
-		description: 'Removes mocking from hindus youtube devs \'Video is not loading?\' (<a href="https://www.reddit.com/r/youtube/comments/1lafhcc/youtube_is_now_artificially_slowing_down_youtube/" target="_blank" rel="noopener noreferrer">reddit.com</a>)',
-		style: `#text-container.style-scope.yt-notification-action-renderer { display: none !important; }`,
-		default: true
-	},
-
 	hideYoutubeSelfPromotions: {
 		label: "Hide YouTube Self Promotions",
 		description: "Hides self promotions from YouTube such as YouTube Music and YouTube Premium",
@@ -224,7 +217,23 @@ const config = {
 	hideUselessThings: {
 		label: "Hide useless things",
 		description: "Hides useless elements as copyright notifications etc.",
-		style: `#footer:has(#guide-links-primary) { display: none !important; }`,
+		style: `
+			#footer:has(#guide-links-primary),
+			#text-container.style-scope.yt-notification-action-renderer {
+				display: none !important;
+			}
+		`,
+		default: true
+	},
+
+	hideChatFullscreen: {
+		label: "Hide fullscreen chat",
+		description: "Hides youtube stream chat (that now opens automatically and lags for a minute) in fullscreen.",
+		style: `
+			#panels-full-bleed-container {
+				display: none !important;
+			}
+		`,
 		default: true
 	},
 
