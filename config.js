@@ -204,6 +204,7 @@ const config = {
 			ytd-video-description-transcript-section-renderer,
 			a[href="/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ"].yt-spec-button-shape-next,
 			#expandable-metadata,
+			#video-summary,
 			ytd-video-description-infocards-section-renderer a#header,
 			ytd-metadata-row-container-renderer,
 			#teaser-carousel
@@ -506,6 +507,23 @@ const config = {
 				padding-top: 10px;
 			}
 
+			/* fullscreen button corner click */
+			.ytp-delhi-modern {
+				.ytp-fullscreen-button {
+					overflow: visible;
+				}
+				.ytp-fullscreen-button::after {
+					top: 0;
+					left: 0;
+					width: 84px;
+					height: 76px;
+				}
+			}
+
+			.ytp-delhi-modern:is(.ytp-grid-scrolling, .ytp-fullscreen-grid-active) .ytp-chrome-bottom {
+				pointer-events: auto !important;
+			}
+		  
 			/* COLORS */
 			.ytp-delhi-modern .ytp-time-wrapper:not(.ytp-miniplayer-ui *),
 			.ytp-delhi-modern.ytp-delhi-horizontal-volume-controls .ytp-volume-area,
