@@ -519,10 +519,6 @@ const config = {
 					height: 76px;
 				}
 			}
-
-			.ytp-delhi-modern:is(.ytp-grid-scrolling, .ytp-fullscreen-grid-active) .ytp-chrome-bottom {
-				pointer-events: auto !important;
-			}
 		  
 			/* COLORS */
 			.ytp-delhi-modern .ytp-time-wrapper:not(.ytp-miniplayer-ui *),
@@ -634,12 +630,6 @@ const config = {
 			.ytp-fullscreen-grid-expand-button,
 			.ytp-fullscreen-grid-hover-overlay {
 				display: none !important;
-				opacity: 0 !important;
-				visibility: hidden !important;
-				pointer-events: none !important;
-				height: 0 !important;
-				max-height: 0 !important;
-				overflow: hidden !important;
 			}
 			.ytp-overlays-container {
 				display: none !important;
