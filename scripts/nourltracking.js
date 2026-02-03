@@ -18,7 +18,11 @@
 			}
 		} catch (err) {
 			if (document.documentElement.dataset.loggingEnabled === 'true') {
-				console.error(`${document.documentElement.dataset.extensionName}: Error processing copy event:`, err);
+				console.error(
+					`${document.documentElement.dataset.extensionName}:`,
+					err.name,
+					err.message
+				);
 			}
 		}
 	});
