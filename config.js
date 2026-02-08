@@ -145,8 +145,8 @@ const config = {
 	},
 
 	hideHorizontalScrollbar: {
-		label: "Hide Horizontal Scrollbar",
-		description: "Removes horizontal scrollbar on the page",
+		label: "Hide scrollbars",
+		description: "Removes scrollbars on the page",
 		style: `* { scrollbar-width: none !important; }`,
 		default: true
 	},
@@ -220,7 +220,19 @@ const config = {
 		description: "Hides useless elements as copyright notifications etc.",
 		style: `
 			#footer:has(#guide-links-primary),
-			#text-container.style-scope.yt-notification-action-renderer {
+			#text-container.style-scope.yt-notification-action-renderer,
+			.ytp-settings-menu .ytp-menuitem[role="menuitemradio"]:has(.ytp-menuitem-premium-badge),
+			/* Sidebar item */
+			#endpoint.ytd-guide-entry-renderer[href="/premium"],
+			/* Download menu item */
+			ytd-menu-service-item-download-renderer,
+			yt-download-list-item-view-model,
+			/* 1080p Premium quality menu item */
+			.ytp-quality-menu .ytp-menuitem:has(.ytp-premium-label),
+			/* 4x Premium playback speed menu item */
+			.ytp-settings-menu .ytp-menuitem[role="menuitemradio"]:has(.ytp-menuitem-premium-badge),
+			/* Download button */
+			ytd-download-button-renderer {
 				display: none !important;
 			}
 		`,
