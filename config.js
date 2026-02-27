@@ -45,6 +45,13 @@ const config = {
 		default: true
 	},
 
+	noautomix: {
+		label: "No auto mixing",
+		description: 'Disable auto mix generation on music videos',
+		script: 'scripts/noautomix.js',
+		default: true
+	},
+
 	returnNextButton: {
 		label: "Return 'Next' button",
 		description: "Returns next button in video player",
@@ -535,6 +542,63 @@ const config = {
 				}
 			}
 		  
+			/* Giant related panel revert */
+
+			/* Reduce width of secondary sidebar (from 550px when 2 column grid is being used) */
+			ytd-watch-flexy #secondary {
+				max-width: 402px;
+			}
+			#secondary #related {
+				/* Apply --horizontal styles when --vertical is used */
+				.yt-lockup-view-model--vertical {
+					-moz-box-orient:vertical;
+					-moz-box-direction:normal;
+					flex-direction:row;
+					height:inherit
+				}
+				.yt-lockup-view-model--vertical .yt-lockup-view-model__content-image {
+					display:-moz-box;
+					display:flex;
+					-moz-box-flex:0;
+					flex:none;
+					padding-right:16px;
+					-moz-box-pack:center;
+					justify-content:center;
+					max-width:500px
+				}
+				.yt-lockup-view-model--vertical .yt-lockup-view-model__metadata {
+					-moz-box-flex:1;
+					flex:1
+				}
+				.yt-lockup-view-model--vertical.yt-lockup-view-model--collection-stack-1 {
+					position:relative;
+					margin-top:6px
+				}
+				.yt-lockup-view-model--vertical.yt-lockup-view-model--collection-stack-2 {
+					position:relative;
+					margin-top:10px
+				}
+				.yt-lockup-view-model--vertical.yt-lockup-view-model--compact .yt-lockup-view-model__content-image {
+					padding-right:8px
+				}
+				.yt-lockup-metadata-view-model--vertical .yt-lockup-metadata-view-model__avatar {
+					display:none;
+				}
+
+				/* Fix display of images */
+				.yt-lockup-view-model--vertical .yt-lockup-view-model__content-image {
+					padding-bottom:0;
+				}
+				.yt-lockup-view-model__content-image {
+					max-width: 168px;
+				}
+
+				/* When 2 column grid is being used, force it to be 1 column */
+				ytd-watch-next-secondary-results-renderer[use-dynamic-secondary-columns] #items.ytd-watch-next-secondary-results-renderer {
+					grid-template-columns:1fr;
+				}
+			}
+
 			/* COLORS */
 			.ytp-delhi-modern .ytp-time-wrapper:not(.ytp-miniplayer-ui *),
 			.ytp-delhi-modern.ytp-delhi-horizontal-volume-controls .ytp-volume-area,
