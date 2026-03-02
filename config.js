@@ -2,7 +2,7 @@ const config = {
 	logging: {
 		label: "Logging",
 		description: "Logging things extension doing in console",
-		default: false
+		default: true
 	},
 
 	nosleeptimer: {
@@ -14,7 +14,7 @@ const config = {
 			}
 		`,
 		default: true
-	}, // TODO: Make this multirule to hide various .ytp-menuitem entries  
+	},
 
 	noStops: {
 		label: "No random video stops",
@@ -40,7 +40,7 @@ const config = {
 
 	returnyoutubedislike: {
 		label: "Return Youtube Dislike",
-		description: 'Integration with (<a href="https://github.com/Anarios/return-youtube-dislike" target="_blank" rel="noopener noreferrer">Return Youtube Dislike</a>) userscript (only GET)',
+		description: 'Integration with (<a href="https://github.com/Anarios/return-youtube-dislike" target="_blank" rel="noopener noreferrer">Return Youtube Dislike</a>) userscript',
 		script: 'scripts/returnyoutubedislike.js',
 		default: true
 	},

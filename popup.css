@@ -120,3 +120,41 @@ input:checked + .toggle-slider::before {
 	display: inline-block;
 	color: var(--primary);
 }
+.ryd-token-panel {
+	margin-top: 0.8rem;
+	border-top: 1px solid var(--accent);
+	padding-top: 0.6rem;
+}
+
+.ryd-token-title {
+	font-weight: 700;
+	margin-bottom: 0.3rem;
+}
+
+.ryd-token-value {
+	font-family: monospace;
+	font-size: 12px;
+	word-break: break-all;
+	color: #f8a5a0;
+	margin-bottom: 0.3rem;
+}
+
+.ryd-token-status {
+	font-size: 12px;
+	color: var(--lightGrey);
+	margin-bottom: 0.45rem;
+}
+
+.ryd-token-actions {
+	display: flex;
+}
+
+.ryd-token-actions button {
+	background: var(--secondary);
+	color: var(--primary);
+	border: 1px solid var(--accent);
+	border-radius: 4px;
+	padding: 4px 6px;
+	cursor: pointer;
+	font-size: 12px;
+}
