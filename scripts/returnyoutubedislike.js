@@ -6,7 +6,6 @@
 (function() {
 	const extConfig = {
 		showUpdatePopup: false, // [true, false*] Show a popup tab after extension update (See what's new)
-		disableVoteSubmission: false, // [true, false*] Disable like/dislike submission (Stops counting your likes and dislikes)
 		// disableLogging: true, 				 // [true*, false] Disable Logging API Response in JavaScript Console.
 		disableLogging: document.documentElement.dataset.loggingEnabled !== 'true',
 		coloredThumbs: false, // [true, false*] Colorize thumbs (Use custom colors for thumb icons)
@@ -20,9 +19,13 @@
 	};
 
 	let previousState = 3; //1=LIKED, 2=DISLIKED, 3=NEUTRAL
+	const apiUrl = "https://returnyoutubedislikeapi.com";
+	const rydMessageType = "RYD_CLIENT_BRIDGE";
 	let likesvalue = 0;
 	let dislikesvalue = 0;
 	let preNavigateLikeButton = null;
+	let registrationPromise = null;
+	let lastRegistrationBootstrapVideoId = null;
 
 	let isMobile = location.hostname == "m.youtube.com";
 	let isShorts = () => location.pathname.startsWith("/shorts");
@@ -33,6 +36,230 @@
 			subtext = subtext.trim() === "" ? "" : `(${subtext})`;
 			console.log(`${document.documentElement.dataset.extensionName}: ${text} ${subtext}`);
 		}
+	}
+
+
+	function generateUserID(length = 36) {
+		const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		let result = "";
+		if (crypto && crypto.getRandomValues) {
+			const values = new Uint32Array(length);
+			crypto.getRandomValues(values);
+			for (let i = 0; i < length; i++) {
+				result += charset[values[i] % charset.length];
+			}
+			return result;
+		}
+		for (let i = 0; i < length; i++) {
+			result += charset[Math.floor(Math.random() * charset.length)];
+		}
+		return result;
+	}
+
+	function sendBridgeRequest(action, payload = {}) {
+		return new Promise((resolve) => {
+			const requestId = `${Date.now()}-${Math.random()}`;
+			const onMessage = (event) => {
+				if (event.source !== window) return;
+				if (event.data?.type !== rydMessageType) return;
+				if (event.data?.source !== "extension") return;
+				if (event.data?.requestId !== requestId) return;
+				window.removeEventListener("message", onMessage);
+				resolve(event.data.payload || {});
+			};
+			window.addEventListener("message", onMessage);
+			window.postMessage({
+				type: rydMessageType,
+				source: "page",
+				action,
+				requestId,
+				payload,
+			}, window.location.origin);
+		});
+	}
+
+	async function getRydTokenState() {
+		const state = await sendBridgeRequest("getTokenState");
+		if (!state || !state.userId) {
+			const newState = {
+				userId: generateUserID(),
+				registrationConfirmed: false,
+			};
+			await sendBridgeRequest("setTokenState", newState);
+			return newState;
+		}
+		return state;
+	}
+
+	function countLeadingZeroes(uInt8View, limit) {
+		let zeroes = 0;
+		let value = 0;
+		for (let i = 0; i < uInt8View.length; i++) {
+			value = uInt8View[i];
+			if (value === 0) {
+				zeroes += 8;
+			} else {
+				let count = 1;
+				if (value >>> 4 === 0) {
+					count += 4;
+					value <<= 4;
+				}
+				if (value >>> 6 === 0) {
+					count += 2;
+					value <<= 2;
+				}
+				zeroes += count - (value >>> 7);
+				break;
+			}
+			if (zeroes >= limit) break;
+		}
+		return zeroes;
+	}
+
+	async function solvePuzzle(puzzle) {
+		const challenge = Uint8Array.from(atob(puzzle.challenge), (c) => c.charCodeAt(0));
+		const buffer = new ArrayBuffer(20);
+		const uInt8View = new Uint8Array(buffer);
+		const uInt32View = new Uint32Array(buffer);
+		const multipliers = [3, 6, 12];
+
+		for (let i = 4; i < 20; i++) {
+			uInt8View[i] = challenge[i - 4];
+		}
+
+		for (const multiplier of multipliers) {
+			const maxCount = Math.pow(2, puzzle.difficulty) * multiplier;
+			cLog("puzzle brute force start", `difficulty=${puzzle.difficulty}, multiplier=${multiplier}, maxCount=${maxCount}`);
+			for (let i = 0; i < maxCount; i++) {
+				uInt32View[0] = i;
+				const hash = await crypto.subtle.digest("SHA-512", buffer);
+				const hashUint8 = new Uint8Array(hash);
+				if (countLeadingZeroes(hashUint8) >= puzzle.difficulty) {
+					cLog("puzzle solved", `multiplier=${multiplier}, iteration=${i}`);
+					return {
+						solution: btoa(String.fromCharCode.apply(null, uInt8View.slice(0, 4))),
+					};
+				}
+			}
+			cLog("puzzle not solved for multiplier", String(multiplier));
+		}
+		return {};
+	}
+
+	async function register(userId) {
+		for (let attempt = 1; attempt <= 3; attempt++) {
+			cLog("registration attempt", `${attempt}/3 for ${userId}`);
+			const registrationResponse = await fetch(`${apiUrl}/puzzle/registration?userId=${userId}`, {
+				method: "GET",
+				headers: { Accept: "application/json" },
+			}).then((response) => response.json());
+			cLog("registration challenge response", JSON.stringify(registrationResponse));
+
+			const solvedPuzzle = await solvePuzzle(registrationResponse);
+			cLog("registration puzzle solved", String(!!solvedPuzzle.solution));
+			if (!solvedPuzzle.solution) {
+				continue;
+			}
+
+			cLog("registration confirm request", userId);
+			const result = await fetch(`${apiUrl}/puzzle/registration?userId=${userId}`, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(solvedPuzzle),
+			}).then((response) => response.json());
+			cLog("registration confirm response", JSON.stringify(result));
+
+			if (result === true) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	async function ensureRegistrationOnPageLoad() {
+		const videoId = getVideoId();
+		if (videoId && lastRegistrationBootstrapVideoId === videoId) {
+			cLog("registration bootstrap skip", `already attempted for video ${videoId}`);
+			return;
+		}
+		if (videoId) lastRegistrationBootstrapVideoId = videoId;
+
+		if (registrationPromise) {
+			cLog("registration bootstrap skip", "registration already in progress");
+			return registrationPromise;
+		}
+
+		registrationPromise = (async () => {
+			const tokenState = await getRydTokenState();
+			cLog("registration bootstrap check", JSON.stringify(tokenState));
+			if (!tokenState.userId || tokenState.registrationConfirmed) {
+				cLog("registration bootstrap skip", tokenState.registrationConfirmed ? "already confirmed" : "missing userId");
+				return;
+			}
+			cLog("registration bootstrap start", tokenState.userId);
+			const registered = await register(tokenState.userId);
+			await sendBridgeRequest("setTokenState", { userId: tokenState.userId, registrationConfirmed: registered });
+			cLog("registration bootstrap result", String(registered));
+		})();
+
+		try {
+			await registrationPromise;
+		} finally {
+			registrationPromise = null;
+		}
+	}
+
+	async function sendVote(videoId, vote) {
+		const tokenState = await getRydTokenState();
+		cLog("sendVote start", `videoId=${videoId}, vote=${vote}, userId=${tokenState.userId}`);
+		if (!tokenState.userId) return;
+
+		if (!tokenState.registrationConfirmed) {
+			cLog("registration required", tokenState.userId);
+			if (registrationPromise) {
+				cLog("awaiting active registration", tokenState.userId);
+				await registrationPromise;
+			}
+			let refreshedTokenState = await getRydTokenState();
+			if (!refreshedTokenState.registrationConfirmed) {
+				const registered = await register(tokenState.userId);
+				cLog("registration result", String(registered));
+				await sendBridgeRequest("setTokenState", { userId: tokenState.userId, registrationConfirmed: registered });
+				if (!registered) return;
+				refreshedTokenState = await getRydTokenState();
+			}
+			if (!refreshedTokenState.registrationConfirmed) return;
+		}
+
+		cLog("sending vote", JSON.stringify({ userId: tokenState.userId, videoId, value: vote }));
+		const voteResponse = await fetch(`${apiUrl}/interact/vote`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ userId: tokenState.userId, videoId, value: vote }),
+		});
+
+		if (voteResponse.status === 401) {
+			const newUserId = generateUserID();
+			cLog("vote got 401, rotating token", newUserId);
+			await sendBridgeRequest("setTokenState", { userId: newUserId, registrationConfirmed: false });
+			return;
+		}
+
+		const voteResponseJson = await voteResponse.json();
+		cLog("vote response", JSON.stringify(voteResponseJson));
+		const solvedPuzzle = await solvePuzzle(voteResponseJson);
+		if (!solvedPuzzle.solution) {
+			cLog("vote puzzle solve failed");
+			return;
+		}
+
+		cLog("sending confirmVote");
+		await fetch(`${apiUrl}/interact/confirmVote`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ ...solvedPuzzle, userId: tokenState.userId, videoId }),
+		});
+		cLog("confirmVote done");
 	}
 
 	function isInViewport(element) {
@@ -361,7 +588,8 @@
 		let statsSet = false;
 
 		try {
-			const response = await fetch(`https://returnyoutubedislikeapi.com/votes?videoId=${getVideoId()}`);
+			const likeCount = getLikeCountFromButton();
+			const response = await fetch(`${apiUrl}/votes?videoId=${getVideoId()}&likeCount=${likeCount >= 0 ? likeCount : ""}`);
 			const json = await response.json();
 
 			if (!json || statsSet || "traceId" in response) return;
@@ -421,15 +649,18 @@
 		if (!checkForUserAvatarButton()) return;
 
 		if (previousState === 1) {
+			sendVote(getVideoId(), 0).catch((error) => cLog("Vote submit error", String(error)));
 			likesvalue--;
 			updateDOMDislikes();
 			previousState = 3;
 		} else if (previousState === 2) {
+			sendVote(getVideoId(), 1).catch((error) => cLog("Vote submit error", String(error)));
 			likesvalue++;
 			dislikesvalue--;
 			updateDOMDislikes();
 			previousState = 1;
 		} else if (previousState === 3) {
+			sendVote(getVideoId(), 1).catch((error) => cLog("Vote submit error", String(error)));
 			likesvalue++;
 			updateDOMDislikes();
 			previousState = 1;
@@ -447,14 +678,17 @@
 		if (!checkForUserAvatarButton()) return;
 
 		if (previousState === 3) {
+			sendVote(getVideoId(), -1).catch((error) => cLog("Vote submit error", String(error)));
 			dislikesvalue++;
 			updateDOMDislikes();
 			previousState = 2;
 		} else if (previousState === 2) {
+			sendVote(getVideoId(), 0).catch((error) => cLog("Vote submit error", String(error)));
 			dislikesvalue--;
 			updateDOMDislikes();
 			previousState = 3;
 		} else if (previousState === 1) {
+			sendVote(getVideoId(), -1).catch((error) => cLog("Vote submit error", String(error)));
 			likesvalue--;
 			dislikesvalue++;
 			updateDOMDislikes();
@@ -636,6 +870,7 @@
 				}
 				if (dislikeButton) {
 					setInitialState();
+					ensureRegistrationOnPageLoad().catch((error) => cLog("registration bootstrap error", String(error)));
 					clearInterval(jsInitChecktimer);
 				}
 			}
