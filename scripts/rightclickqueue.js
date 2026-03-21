@@ -1,60 +1,48 @@
 (function() {
 	function addToQueue(videoId) {
-		const event = new CustomEvent('yt-action', {
-			bubbles: true,
-			composed: true,
-			detail: {
-				actionName: 'yt-add-to-playlist-command',
-				args: [
-					{
-						addToPlaylistCommand: {
-							openMiniplayer: true,
-							videoId: videoId,
-							videoIds: [videoId],
-							listType: 'PLAYLIST_EDIT_LIST_TYPE_QUEUE'
-						}
-					},
-					document.body,
-					{ sourceData: {}, mutationContext: undefined }
-				],
-				optionalAction: true,
-				returnValue: []
-			}
-		});
-		document.querySelector('ytd-app')?.dispatchEvent(event);
-		if (document.documentElement.dataset.loggingEnabled === 'true') {
-			const extName = document.documentElement.dataset.extensionName;
-			console.log(`${extName}: added to queue:`, videoId);
-		}
-	}
-
-	function attachContextMenuHandler(root = document) {
-		const links = root.querySelectorAll('a.yt-lockup-view-model__content-image');
-		links.forEach(link => {
-			if (link.dataset.queueHandlerAttached) return;
-			link.dataset.queueHandlerAttached = 'true';
-
-			link.addEventListener('contextmenu', e => {
-				e.preventDefault();
-				e.stopPropagation();
-				const url = new URL(link.href, location.origin);
-				const videoId = url.searchParams.get('v');
-				if (videoId) addToQueue(videoId);
+		const videoEl = Array.from(document.querySelectorAll('yt-lockup-view-model, ytd-video-preview'))
+			.find(el => {
+				const link = el.querySelector('a.yt-lockup-view-model__content-image, a#media-container-link');
+				return link && new URL(link.href, location.origin).searchParams.get('v') === videoId;
 			});
-		});
+		if (!videoEl) return;
+
+		const moreBtn = videoEl.querySelector('button[aria-label="More actions"]');
+		if (!moreBtn) return;
+
+		moreBtn.click();
+
+		const start = performance.now();
+		const timeout = 1000;
+
+		(function waitForButton() {
+			const sheets = document.querySelectorAll('tp-yt-iron-dropdown');
+			for (const sheet of sheets) {
+				if (sheet.style.display === 'none') continue;
+				const addBtn = Array.from(sheet.querySelectorAll('button.yt-list-item-view-model__button-or-anchor'))
+					.find(el => /add to queue/i.test(el.textContent));
+				if (addBtn) {
+					addBtn.click();
+					if (document.documentElement.dataset.loggingEnabled === 'true') {
+						const extName = document.documentElement.dataset.extensionName || 'Extension';
+						console.log(`${extName}: added to queue:`, videoId);
+					}
+					sheet.style.display = 'none';
+					return;
+				}
+			}
+			if (performance.now() - start < timeout) {
+				requestAnimationFrame(waitForButton);
+			}
+		})();
 	}
 
-	const observer = new MutationObserver(mutations => {
-		for (const m of mutations) {
-			if (m.addedNodes?.length) {
-				m.addedNodes.forEach(node => {
-					if (node.nodeType !== 1) return;
-					attachContextMenuHandler(node);
-				});
-			}
-		}
+	document.addEventListener('contextmenu', e => {
+		const link = e.target.closest('a.yt-lockup-view-model__content-image, a#media-container-link');
+		if (!link) return;
+		e.preventDefault();
+		e.stopPropagation();
+		const videoId = new URL(link.href, location.origin).searchParams.get('v');
+		if (videoId) addToQueue(videoId);
 	});
-
-	observer.observe(document.documentElement, { childList: true, subtree: true });
-	attachContextMenuHandler(document);
 })();
