@@ -28,7 +28,7 @@ document.addEventListener("click", function (e) {
 		const cleanUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
 		if (document.documentElement.dataset.loggingEnabled === 'true') {
-			const extName = document.documentElement.dataset.extensionName || 'musicVideoCleaner';
+			const extName = document.documentElement.dataset.extensionName;
 			console.log(`${extName}: redirected music video Mix`);
 			console.log(`${extName}: from → ${originalUrl}`);
 			console.log(`${extName}: to   → ${cleanUrl}`);

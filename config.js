@@ -5,15 +5,11 @@ const config = {
 		default: true
 	},
 
-	nosleeptimer: {
-		label: "No 'Sleep timer'",
-		description: "Removes sleep timer from YouTube video settings",
-		style: `
-			.ytp-menuitem:has(svg path[d="M16.67,4.31C19.3,5.92,21,8.83,21,12c0,4.96-4.04,9-9,9c-2.61,0-5.04-1.12-6.72-3.02C5.52,17.99,5.76,18,6,18 c6.07,0,11-4.93,11-11C17,6.08,16.89,5.18,16.67,4.31 M14.89,2.43C15.59,3.8,16,5.35,16,7c0,5.52-4.48,10-10,10 c-1,0-1.97-0.15-2.89-0.43C4.77,19.79,8.13,22,12,22c5.52,0,10-4.48,10-10C22,7.48,19,3.67,14.89,2.43L14.89,2.43z M12,6H6v1h4.5 L6,10.99v0.05V12h6v-1H7.5L12,7.01V6.98V6L12,6z"]) {
-				display: none !important;
-			}
-		`,
-		default: true
+	hookcustomevents: {
+		label: "Hook Custom Events",
+		description: "Logs YouTube custom events to console for debugging",
+		script: 'scripts/hookcustomevents.js',
+		default: false
 	},
 
 	noStops: {
@@ -21,6 +17,13 @@ const config = {
 		description: "Removes YouTube function that randomly stops video and 'Still watching?' popup",
 		style: `tp-yt-paper-toast#toast { display: none !important; }`,
 		script: 'scripts/autoconfirm.js',
+		default: true
+	},
+
+	rightclickqueue: {
+		label: "Right click queue",
+		description: "Adds videos to queue on thumbnail right click",
+		script: 'scripts/rightclickqueue.js',
 		default: true
 	},
 
@@ -49,6 +52,17 @@ const config = {
 		label: "No auto mixing",
 		description: 'Disable auto mix generation on music videos',
 		script: 'scripts/noautomix.js',
+		default: true
+	},
+
+	nosleeptimer: {
+		label: "No 'Sleep timer'",
+		description: "Removes sleep timer from YouTube video settings",
+		style: `
+			.ytp-menuitem:has(svg path[d="M16.67,4.31C19.3,5.92,21,8.83,21,12c0,4.96-4.04,9-9,9c-2.61,0-5.04-1.12-6.72-3.02C5.52,17.99,5.76,18,6,18 c6.07,0,11-4.93,11-11C17,6.08,16.89,5.18,16.67,4.31 M14.89,2.43C15.59,3.8,16,5.35,16,7c0,5.52-4.48,10-10,10 c-1,0-1.97-0.15-2.89-0.43C4.77,19.79,8.13,22,12,22c5.52,0,10-4.48,10-10C22,7.48,19,3.67,14.89,2.43L14.89,2.43z M12,6H6v1h4.5 L6,10.99v0.05V12h6v-1H7.5L12,7.01V6.98V6L12,6z"]) {
+				display: none !important;
+			}
+		`,
 		default: true
 	},
 
