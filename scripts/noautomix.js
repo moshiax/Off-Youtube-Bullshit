@@ -8,7 +8,7 @@ document.addEventListener("click", function (e) {
 		anchor = player;
 	}
 
-	if (!anchor || !anchor.href.includes("/watch")) return;
+	if (!anchor || !anchor.href || !anchor.href.includes("/watch")) return;
 
 	const originalUrl = anchor.href;
 	const url = new URL(originalUrl);

@@ -12,6 +12,13 @@ const config = {
 		default: false
 	},
 
+	noserviceworker: {
+		label: "Disables youtube service worker",
+		description: "Helps if youtube live chat not loading for you",
+		script: 'scripts/noserviceworker.js',
+		default: false
+	},
+
 	noStops: {
 		label: "No random video stops",
 		description: "Removes YouTube function that randomly stops video and 'Still watching?' popup",
