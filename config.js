@@ -13,7 +13,7 @@ const config = {
 	},
 
 	noserviceworker: {
-		label: "Disables youtube service worker",
+		label: "Disable youtube service worker",
 		description: "Helps if youtube live chat not loading for you",
 		script: 'scripts/noserviceworker.js',
 		default: false
@@ -652,24 +652,31 @@ const config = {
 			html {
 				--cpfyt-title-color: #0f0f0f;
 				--cpfyt-metadata-color: #606060;
+				--cpfyt-touch-response-color: #000;
 			}
 			html[dark] {
 				--cpfyt-title-color: #f1f1f1;
 				--cpfyt-metadata-color: #aaa;
+				--cpfyt-touch-response-color: #fff;
 			}
-			ytd-browse[page-subtype="home"] {
-				.yt-spec-touch-feedback-shape__hover-effect {
+			ytd-browse:is([page-subtype="home"], [page-subtype="subscriptions"]) {
+				.ytSpecTouchFeedbackShapeHoverEffect {
 					display: none !important;
 				}
-				.yt-lockup-metadata-view-model__title {
+				.ytSpecTouchFeedbackShapeStroke {
+					border-color: var(--yt-spec-touch-response, --cpfyt-touch-response-color) !important;
+				}
+				.ytSpecTouchFeedbackShapeFill {
+					background-color: var(--yt-spec-touch-response, --cpfyt-touch-response-color) !important;
+				}
+				.ytLockupMetadataViewModelTitle {
 					color: var(--cpfyt-title-color) !important;
 				}
-				.yt-lockup-metadata-view-model__metadata {
+				.ytLockupMetadataViewModelMetadata {
 					color: var(--cpfyt-metadata-color) !important;
 				}
 			}
-
-			ytd-browse[page-subtype="home"] ytd-rich-item-renderer[rich-grid-hover-highlight] {
+			ytd-browse:is([page-subtype="home"], [page-subtype="subscriptions"]) ytd-rich-item-renderer[rich-grid-hover-highlight] {
 				background: none !important;
 				box-shadow: none !important;
 			}
