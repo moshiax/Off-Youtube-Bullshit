@@ -1,4 +1,10 @@
 document.addEventListener("click", function (e) {
+
+	const moreActionsBtn = e.target.closest('div.ytLockupMetadataViewModelMenuButton, button[aria-label="More actions"]');
+	if (moreActionsBtn) {
+		return;
+	}
+
 	const container = e.target.closest("yt-lockup-view-model, ytd-video-renderer");
 	let anchor = container?.querySelector("a");
 

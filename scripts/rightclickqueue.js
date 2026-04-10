@@ -2,7 +2,7 @@
 	function addToQueue(videoId) {
 		const videoEl = Array.from(document.querySelectorAll('yt-lockup-view-model, ytd-video-preview'))
 			.find(el => {
-				const link = el.querySelector('a.yt-lockup-view-model__content-image, a#media-container-link');
+				const link = el.querySelector('a.ytLockupViewModelContentImage, a#media-container-link');
 				return link && new URL(link.href, location.origin).searchParams.get('v') === videoId;
 			});
 		if (!videoEl) return;
@@ -18,8 +18,9 @@
 		(function waitForButton() {
 			const sheets = document.querySelectorAll('tp-yt-iron-dropdown');
 			for (const sheet of sheets) {
-				if (sheet.style.display === 'none') continue;
-				const addBtn = Array.from(sheet.querySelectorAll('button.yt-list-item-view-model__button-or-anchor'))
+				if (sheet.offsetWidth === 0 || sheet.offsetHeight === 0) continue;
+
+				const addBtn = Array.from(sheet.querySelectorAll('button.ytListItemViewModelButtonOrAnchor'))
 					.find(el => /add to queue/i.test(el.textContent));
 				if (addBtn) {
 					addBtn.click();
@@ -38,7 +39,7 @@
 	}
 
 	document.addEventListener('contextmenu', e => {
-		const link = e.target.closest('a.yt-lockup-view-model__content-image, a#media-container-link');
+		const link = e.target.closest('a.ytLockupViewModelContentImage, a#media-container-link');
 		if (!link) return;
 		e.preventDefault();
 		e.stopPropagation();
