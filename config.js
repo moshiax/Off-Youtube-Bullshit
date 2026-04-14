@@ -343,6 +343,8 @@ const config = {
 				--yt-spec-raised-background: black !important;
 				--yt-spec-menu-background: black !important;
 				--yt-spec-text-primary-inverse: black !important;
+				--yt-sys-color-baseline--raised-background: black !important;
+				--yt-sys-color-baseline--base-background: black !important;
 			}
 
 			#voice-search-button.ytd-masthead {
