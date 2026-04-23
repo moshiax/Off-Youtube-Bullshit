@@ -98,11 +98,7 @@ const config = {
 			#progress.yt-page-navigation-progress,
 			.ytProgressBarLineProgressBarPlayed,
 			.ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment {
-				background: var(--yt-spec-static-brand-red) !important;
-			}
-
-			.yt-icon-shape > div > svg > g:first-of-type > path:first-of-type {
-				fill: var(--yt-spec-static-brand-red) !important;
+				background: var(--red) !important;
 			}
 
 			.yt-spec-icon-badge-shape--type-notification-refresh .yt-spec-icon-badge-shape__badge {
@@ -345,6 +341,9 @@ const config = {
 				--yt-spec-text-primary-inverse: black !important;
 				--yt-sys-color-baseline--raised-background: black !important;
 				--yt-sys-color-baseline--base-background: black !important;
+				--t3e41d7b17b187f69: #000000 !important;
+				--t518e925f61bdcb91: #000000 !important;
+				--t7f4f2c6d54836ce0: #000000 !important;
 			}
 
 			#voice-search-button.ytd-masthead {
