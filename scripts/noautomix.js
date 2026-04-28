@@ -1,4 +1,12 @@
 document.addEventListener("click", function (e) {
+	if (
+		e.defaultPrevented ||
+		e.ctrlKey ||
+		e.metaKey ||   // cmd on macos
+		e.shiftKey ||
+		e.altKey ||
+		e.button !== 0 // only left mouse button
+	) return;
 
 	const moreActionsBtn = e.target.closest('div.ytLockupMetadataViewModelMenuButton, button[aria-label="More actions"]');
 	if (moreActionsBtn) {
