@@ -191,6 +191,10 @@ const config = {
 				--ytd-rich-grid-item-margin: 16px !important;
 			}
 
+			ytd-browse[page-subtype="channels"] ytd-rich-grid-renderer {
+			  --ytd-rich-grid-items-per-row: 4 !important;
+			}
+
 			ytd-browse:is([page-subtype="home"], [page-subtype="subscriptions"], [page-subtype="channels"]) ytd-rich-item-renderer[rendered-from-rich-grid][is-in-first-column] {
 				margin-left: calc(var(--ytd-rich-grid-item-margin, 16px) / 2) !important;
 			}
