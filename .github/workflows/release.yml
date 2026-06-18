@@ -30,7 +30,7 @@ jobs:
 
       - name: Get commit info
         run: |
-          echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=$(date +%s)" >> $GITHUB_ENV
           COMMIT_SUMMARY=$(git log -1 --pretty=%s)
           COMMIT_BODY=$(git log -1 --pretty=%b | tr '\n' ' ' | tr -s ' ')
           echo "COMMIT_SUMMARY=$COMMIT_SUMMARY" >> $GITHUB_ENV
@@ -48,8 +48,8 @@ jobs:
         id: create_release
         uses: ncipollo/release-action@b7eabc95ff50cbeeedec83973935c8f306dfcd0b
         with:
-          tag: ${{ env.SHORT_SHA }}
-          name: "Release ${{ env.SHORT_SHA }} - ${{ env.COMMIT_SUMMARY }}"
+          tag: ${{ env.RELEASE_VERSION }}
+          name: "Release ${{ env.RELEASE_VERSION }} - ${{ env.COMMIT_SUMMARY }}"
           body: ${{ env.COMMIT_BODY != '' && env.COMMIT_BODY || env.COMMIT_SUMMARY }}
           draft: false
           prerelease: false
