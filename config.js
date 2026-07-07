@@ -267,7 +267,9 @@ const config = {
 			/* Download button */
 			ytd-download-button-renderer,
 			/* Useless subtitles promo tooltip ("Want to change your caption settings?") */
-			.ytp-promotooltip-wrapper {
+			.ytp-promotooltip-wrapper,
+			/* Play on TV button */
+			.ytp-remote-button {
 				display: none !important;
 			}
 		`,
