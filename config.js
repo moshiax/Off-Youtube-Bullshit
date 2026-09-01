@@ -97,7 +97,9 @@ const config = {
 			.YtProgressBarLineProgressBarPlayedRefresh,
 			#progress.yt-page-navigation-progress,
 			.ytProgressBarLineProgressBarPlayed,
-			.ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment {
+			.ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment,
+			.ytwThumbnailOverlayResumePlaybackRendererThumbnailOverlayResumePlaybackProgress
+			{
 				background: red !important;
 			}
 
