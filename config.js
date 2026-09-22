@@ -271,7 +271,9 @@ const config = {
 			/* Useless subtitles promo tooltip ("Want to change your caption settings?") */
 			.ytp-promotooltip-wrapper,
 			/* Play on TV button */
-			.ytp-remote-button {
+			.ytp-remote-button,
+			/* "New" thumbnail badge */
+			.ytThumbnailOverlayBadgeViewModelMedium.ytThumbnailOverlayBadgeViewModelTopStart.ytThumbnailOverlayBadgeViewModelHost {
 				display: none !important;
 			}
 		`,
