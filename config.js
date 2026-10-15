@@ -22,7 +22,13 @@ const config = {
 	noStops: {
 		label: "No random video stops",
 		description: "Removes YouTube function that randomly stops video and 'Still watching?' popup",
-		style: `tp-yt-paper-toast#toast { display: none !important; }`,
+		style: `
+			tp-yt-paper-toast#toast,
+			tp-yt-paper-dialog:has(> ytd-enforcement-message-view-model),
+			.snackbarViewModelEngagementBarWrapper {
+				display: none !important;
+			}
+		`,
 		script: 'scripts/autoconfirm.js',
 		default: true
 	},
