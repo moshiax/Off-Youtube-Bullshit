@@ -7,6 +7,7 @@ on:
     paths-ignore:
       - '.github/**'
       - 'README.md'
+      - 'updates.xml'
   workflow_dispatch:
 
 jobs:
@@ -28,18 +29,27 @@ jobs:
       - name: Install crx packager
         run: npm install -g crx
 
-      - name: Get commit info
+      - name: Get release metadata
         run: |
-          echo "RELEASE_VERSION=$(date +%s)" >> $GITHUB_ENV
+          RELEASE_VERSION="$(date -u +'%Y.%-m.%-d').${GITHUB_RUN_NUMBER}"
+          echo "RELEASE_VERSION=$RELEASE_VERSION" >> "$GITHUB_ENV"
           COMMIT_SUMMARY=$(git log -1 --pretty=%s)
           COMMIT_BODY=$(git log -1 --pretty=%b | tr '\n' ' ' | tr -s ' ')
           echo "COMMIT_SUMMARY=$COMMIT_SUMMARY" >> $GITHUB_ENV
           echo "COMMIT_BODY=$COMMIT_BODY" >> $GITHUB_ENV
 
+      - name: Set extension version
+        run: node -e "const fs=require('fs'); const p='manifest.json'; const m=JSON.parse(fs.readFileSync(p)); m.version=process.env.RELEASE_VERSION; m.update_url='https://raw.githubusercontent.com/'+process.env.GITHUB_REPOSITORY+'/main/updates.xml'; fs.writeFileSync(p, JSON.stringify(m, null, 2)+'\\n');"
+
       - name: Pack extension to CRX
+        id: pack
         run: |
-          echo "$SIGNING_KEY" > key.pem
-          crx pack ./ -o Off-Youtube-Bullshit.crx -p key.pem
+          KEY_FILE="$RUNNER_TEMP/extension-key.pem"
+          echo "$SIGNING_KEY" > "$KEY_FILE"
+          crx pack ./ -o Off-Youtube-Bullshit.crx -p "$KEY_FILE"
+          PUBLIC_KEY_HASH=$(openssl pkey -in "$KEY_FILE" -pubout -outform DER | sha256sum | cut -c1-32)
+          EXTENSION_ID=$(python3 -c 'import sys; print("".join(chr(97 + int(n, 16)) for n in sys.argv[1]))' "$PUBLIC_KEY_HASH")
+          echo "extension_id=$EXTENSION_ID" >> "$GITHUB_OUTPUT"
         shell: bash
         env:
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
@@ -59,3 +69,22 @@ jobs:
           makeLatest: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update extension update manifest
+        shell: bash
+        run: |
+          cat > updates.xml <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <gupdate xmlns="http://www.google.com/update2/response" protocol="2.0">
+            <app appid="${{ steps.pack.outputs.extension_id }}">
+              <updatecheck codebase="https://github.com/${GITHUB_REPOSITORY}/releases/download/${RELEASE_VERSION}/Off-Youtube-Bullshit.crx" version="${RELEASE_VERSION}" />
+            </app>
+          </gupdate>
+          EOF
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add updates.xml
+          if ! git diff --cached --quiet; then
+            git commit -m "Update extension update manifest to ${RELEASE_VERSION}"
+            git push
+          fi
