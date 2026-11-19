@@ -3,11 +3,12 @@
 		try {
 			let text = await navigator.clipboard.readText();
 
-			if (/https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/\S+/i.test(text) && /[?&]si=[^&\s]*/.test(text)) {
+			if (/https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/\S+/i.test(text) && /[?&](si|pp)=[^&\s]*/.test(text)) {
 				const originalText = text;
 
 				const url = new URL(text);
 				url.searchParams.delete('si');
+				url.searchParams.delete('pp');
 				text = url.toString();
 
 				await navigator.clipboard.writeText(text);
