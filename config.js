@@ -221,7 +221,13 @@ const config = {
 	hidePropaganda: {
 		label: "Hide propaganda",
 		description: 'Removes propaganda (<a href="https://support.google.com/youtube/answer/9004474" target="_blank" rel="noopener noreferrer">support.google.com</a>) and elements that thinking instead of you',
-		style: `#clarify-box, .ytp-paid-content-overlay { display: none !important; }`,
+		style: `
+			#clarify-box,
+			.ytp-paid-content-overlay,
+			ytd-info-panel-container-renderer {
+				display: none !important;
+			}
+		`,
 		default: true
 	},
 
